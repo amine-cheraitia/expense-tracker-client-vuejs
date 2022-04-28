@@ -19,7 +19,13 @@
 		<h3>History</h3>
 		<ul id="list" class="list">
 			<li class="minus">
-				Cash <span>-$400</span><button class="delete-btn">x</button>
+				Cash <span>-$400</span><button class="delete-btn">x</button
+				><button class="edit-btn">-</button>
+			</li>
+			<li class="plus">
+				Achat fourniture <span>+$30.000,00</span
+				><button class="delete-btn">x</button
+				><button class="edit-btn">-</button>
 			</li>
 		</ul>
 		<button class="btn" @click="hidden = !hidden">Ajouter transaction</button>
@@ -60,7 +66,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 @import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
 
 :root {
@@ -73,10 +79,10 @@ export default {
 
 body {
 	background-color: #f7f7f7;
-	display: flex;
+	/* display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	justify-content: center; */
 	min-height: 100vh;
 	margin: 0;
 	font-family: "Lato", sans-serif;
@@ -164,7 +170,8 @@ input[type="number"] {
 }
 
 .btn:focus,
-.delete-btn:focus {
+.delete-btn:focus,
+.edit-btn:focus {
 	outline: 0;
 }
 
@@ -198,9 +205,11 @@ input[type="number"] {
 	background-color: #e74c3c;
 	border: 0;
 	color: #fff;
-	font-size: 20px;
-	line-height: 20px;
-	padding: 2px 5px;
+	width: 20px;
+	height: 20px;
+	font-size: 18px;
+	line-height: 50%;
+	padding: 0px 5px 2px 5px;
 	position: absolute;
 	top: 50%;
 	left: 0;
@@ -208,8 +217,26 @@ input[type="number"] {
 	opacity: 0;
 	transition: opacity 0.3s ease;
 }
+.edit-btn {
+	cursor: pointer;
+	background-color: #363570;
+	border: 0;
+	color: #fff;
+	width: 20px;
+	height: 20px;
+	font-size: 18px;
+	line-height: 50%;
+	padding: 0px 5px 2px 5px;
+	position: absolute;
+	top: 50%;
+	left: -22px;
+	transform: translate(-100%, -50%);
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
 
-.list li:hover .delete-btn {
+.list li:hover .delete-btn,
+.list li:hover .edit-btn {
 	opacity: 1;
 }
 </style>

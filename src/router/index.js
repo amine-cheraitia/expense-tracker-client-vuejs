@@ -5,7 +5,7 @@ import Dashboard from "../views/DashboardView.vue";
 const routes = [
 	{
 		path: "/",
-		name: "home",
+		name: "/",
 		component: HomeView,
 	},
 	{
@@ -21,6 +21,11 @@ const routes = [
 		path: "/dashboard",
 		name: "dashboard",
 		component: Dashboard,
+	},
+	{
+		path: "/:pathMatch(.*)*",
+		name: "NotFound",
+		component: HomeView,
 	},
 ];
 

@@ -16,7 +16,7 @@
 			</div>
 		</div>
 
-		<h3>History</h3>
+		<h3>Historique</h3>
 		<ul id="list" class="list">
 			<li class="minus">
 				Cash <span>-$400</span><button class="delete-btn">x</button
@@ -66,7 +66,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
 
 :root {
@@ -219,7 +219,7 @@ input[type="number"] {
 }
 .edit-btn {
 	cursor: pointer;
-	background-color: #363570;
+	background-color: #9c88ff;
 	border: 0;
 	color: #fff;
 	width: 20px;

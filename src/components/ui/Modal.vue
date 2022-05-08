@@ -2,17 +2,27 @@
 	<div class="warpper">
 		<div class="overlay" @click="toggelHiden"></div>
 		<div class="modal">
-			<h3>Add new transaction</h3>
+			<h3 style="color: #9c88ff">Ajouter un mouvement</h3>
 			<form id="form">
 				<div class="form-control">
-					<label for="text">Text</label>
+					<label for="text">Description</label>
 					<input type="text" id="text" placeholder="Enter text..." />
 				</div>
 				<div class="form-control">
-					<label for="amount"
-						>Amount <br />
-						(negative - expense, positive - income)</label
-					>
+					<label for="type_mvm">Ressources</label>
+					<select>
+						<option value="">...</option>
+						<option value="banque">Banque</option>
+						<option value="poste">Poste</option>
+						<option value="cash">Cash</option>
+					</select>
+				</div>
+				<div class="form-control">
+					<label for="type_mvm">Date du mouvement</label>
+					<input type="date" />
+				</div>
+				<div class="form-control">
+					<label for="amount">Montant <br /> </label>
 					<input type="number" id="amount" placeholder="Enter amount..." />
 				</div>
 				<button class="btn">Add transaction</button>
@@ -50,6 +60,11 @@ export default {
 	opacity: 1;
 	transform: translate(-50%, -50%);
 	padding: 50px;
+	width: 450px;
+	border-radius: 15px;
+
+	-webkit-box-shadow: 1px 1px 15px 1px #443b6d;
+	box-shadow: 1px 1px 15px 1px #9c88ff;
 }
 .overlay {
 	background: #333;
@@ -141,7 +156,10 @@ label {
 }
 
 input[type="text"],
-input[type="number"] {
+input[type="number"],
+input[type="date"],
+option,
+select {
 	border: 1px solid #dedede;
 	border-radius: 2px;
 	display: block;

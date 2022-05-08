@@ -1,6 +1,6 @@
 <template>
 	<sidebar></sidebar>
-	<div :style="{ 'margin-left': sidebarWith }">
+	<div id="main" :style="{ 'margin-left': sidebarWith }">
 		<nav>
 			<router-link to="/">Home</router-link> |
 			<router-link to="/about">About</router-link>
@@ -40,5 +40,8 @@ nav a {
 
 nav a.router-link-exact-active {
 	color: #42b983;
+}
+#main {
+	transition: 0.4s margin-left ease-in;
 }
 </style>

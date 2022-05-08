@@ -1,4 +1,7 @@
 import { createStore } from "vuex";
+import mouvements from "./modules/mouvements/mouvements";
+import ressources from "./modules/ressources/ressources";
+import auth from "./modules/Auth/auth";
 
 export default createStore({
 	state() {
@@ -36,5 +39,9 @@ export default createStore({
 			context.commit("toggleSidebar");
 		},
 	},
-	modules: {},
+	modules: {
+		mouvements: mouvements,
+		ressources: ressources,
+		auth: auth,
+	},
 });

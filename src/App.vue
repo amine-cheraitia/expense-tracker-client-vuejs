@@ -1,10 +1,14 @@
 <template>
 	<sidebar></sidebar>
-	<div id="main" :style="{ 'margin-left': sidebarWith }">
-		<nav>
+	<div
+		style="padding-top: 30px"
+		id="main"
+		:style="{ 'margin-left': sidebarWith }"
+	>
+		<!-- 		<nav>
 			<router-link to="/">Home</router-link> |
 			<router-link to="/about">About</router-link>
-		</nav>
+		</nav> -->
 		<router-view />
 	</div>
 </template>

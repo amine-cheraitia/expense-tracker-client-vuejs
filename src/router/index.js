@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import Dashboard from "../views/DashboardView.vue";
+import Ressources from "../views/RessourcesView.vue";
+import Analytics from "../views/AnalyticsView.vue";
 
 const routes = [
 	{
@@ -21,6 +23,16 @@ const routes = [
 		path: "/dashboard",
 		name: "dashboard",
 		component: Dashboard,
+	},
+	{
+		path: "/ressources",
+		name: "ressources",
+		component: Ressources,
+	},
+	{
+		path: "/analytics",
+		name: "Analytics",
+		component: Analytics,
 	},
 	{
 		path: "/:pathMatch(.*)*",

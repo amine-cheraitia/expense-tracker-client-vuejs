@@ -11,8 +11,10 @@
 		</h2>
 		<sidebarlink to="/" icon="fas fa-home"> home </sidebarlink>
 		<sidebarlink to="dashboard" icon="fas fa-columns"> Dashboard </sidebarlink>
-		<sidebarlink to="about" icon="fas fa-chart-bar"> Analytics </sidebarlink>
-		<sidebarlink to="friends" icon="fas fa-users"> Friends </sidebarlink>
+		<sidebarlink to="Analytics" icon="fas fa-chart-bar">
+			Analytics
+		</sidebarlink>
+		<sidebarlink to="ressources" icon="fas fa-users"> Ressources </sidebarlink>
 		<sidebarlink to="images" icon="fas fa-image"> Images </sidebarlink>
 		<span
 			class="collapse-icon"
@@ -72,7 +74,7 @@ export default {
 	flex-direction: column;
 }
 .collapse-icon {
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	padding: 0.75em;
 	color: rgba(255, 255, 255, 0.7);

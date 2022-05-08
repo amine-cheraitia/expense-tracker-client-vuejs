@@ -14,7 +14,7 @@ export default {
 	props: ["to", "icon"],
 	computed: {
 		isActive() {
-			console.log(" route actuel " + this.$route.name + this.to);
+			console.log(" route actuel " + this.$route.name + " --- " + this.to);
 			return this.$route.name == this.to;
 		},
 		collapsed() {

@@ -18,12 +18,24 @@
 
 		<h3>Historique</h3>
 		<ul id="list" class="list">
-			<li class="minus">
+			<!-- <li class="minus">
 				Cash <span>-$400</span><button class="delete-btn">x</button
 				><button class="edit-btn">-</button>
 			</li>
 			<li class="plus">
 				Achat fourniture <span>+$30.000,00</span
+				><button class="delete-btn">x</button
+				><button class="edit-btn">-</button>
+			</li> -->
+			<li
+				v-for="(mouvement, index) in mouvements"
+				:key="index"
+				:class="mvmType(mouvement.type_mouvement_id)"
+			>
+				{{ mouvement.description }}
+				<span
+					>{{ mouvement.type_mouvement_id == 1 ? "+" : "-" }}
+					{{ mouvement.montant }} DA</span
 				><button class="delete-btn">x</button
 				><button class="edit-btn">-</button>
 			</li>
@@ -46,6 +58,13 @@ export default {
 		toggelHiden() {
 			this.hidden = !this.hidden;
 		},
+		mvmType(mvm) {
+			if (mvm === 1) {
+				return "plus";
+			} else {
+				return "minus";
+			}
+		},
 	},
 	mounted() {
 		/* 		const plugin = document.createElement("script");
@@ -62,6 +81,14 @@ export default {
 		plugin3.setAttribute("src", "js/demo/chart-area-demo.js");
 		plugin3.async = true;
 		document.body.appendChild(plugin3); */
+	},
+	created() {
+		this.$store.getters["mouvements/mouvements"];
+	},
+	computed: {
+		mouvements() {
+			return this.$store.getters["mouvements/mouvements"];
+		},
 	},
 };
 </script>

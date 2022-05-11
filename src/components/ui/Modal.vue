@@ -3,14 +3,19 @@
 		<div class="overlay" @click="toggelHiden"></div>
 		<div class="modal">
 			<h3 style="color: #9c88ff">Ajouter un mouvement</h3>
-			<form id="form">
+			<form id="form" @submit.prevent="sendData">
 				<div class="form-control">
 					<label for="text">Description</label>
-					<input type="text" id="text" placeholder="Enter text..." />
+					<input
+						type="text"
+						id="text"
+						v-model="mouvement.description"
+						placeholder="Enter text..."
+					/>
 				</div>
 				<div class="form-control">
 					<label for="type_mvm">Ressources</label>
-					<select>
+					<select v-model="mouvement.ressource_id">
 						<option value="">...</option>
 						<option value="banque">Banque</option>
 						<option value="poste">Poste</option>
@@ -19,11 +24,21 @@
 				</div>
 				<div class="form-control">
 					<label for="type_mvm">Date du mouvement</label>
-					<input type="date" />
+					<input type="date" v-model="mouvement.date_mouvement" />
+				</div>
+				<div class="form-control">
+					<label for="" style="margin-right: 10px">Type de mouvement</label>
+					<input type="radio" name="es" value="1" /> Entré
+					<input type="radio" name="es" value="2" /> Sortie
 				</div>
 				<div class="form-control">
 					<label for="amount">Montant <br /> </label>
-					<input type="number" id="amount" placeholder="Enter amount..." />
+					<input
+						type="number"
+						id="amount"
+						v-model="mouvement.montant"
+						placeholder="Enter amount..."
+					/>
 				</div>
 				<button class="btn">Add transaction</button>
 			</form>
@@ -34,9 +49,34 @@
 <script>
 export default {
 	props: {},
+	data() {
+		return {
+			mouvement: {
+				description: null,
+				ressource_id: null,
+				date_mouvement: null,
+				montant: null,
+			},
+		};
+	},
 	methods: {
 		toggelHiden() {
 			this.$emit("toggelModal");
+		},
+		sendData() {
+			const data = { ...this.mouvement };
+			data;
+			console.log(data);
+			/* 
+			console.log(data);
+			console.log("---");
+			const NewData = {
+				description: this.mouvement.description,
+				ressource: this.mouvement.ressource,
+				date_mouvement: this.mouvement.date_mouvement,
+				montant: this.mouvement.montant,
+			};
+			console.log(NewData); */
 		},
 	},
 };
@@ -157,6 +197,7 @@ label {
 
 input[type="text"],
 input[type="number"],
+input[type="date"],
 input[type="date"],
 option,
 select {

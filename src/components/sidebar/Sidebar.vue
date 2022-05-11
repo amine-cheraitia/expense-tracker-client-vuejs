@@ -1,6 +1,6 @@
 <template>
 	<div class="sidebar" :style="{ width: sidebarWith }">
-		<h2>
+		<h2 style="margin-bottom: 60px">
 			<transition name="swap" mode="out-in">
 				<span v-if="collapsed">
 					ET <br />
@@ -11,11 +11,12 @@
 		</h2>
 		<sidebarlink to="/" icon="fas fa-home"> home </sidebarlink>
 		<sidebarlink to="dashboard" icon="fas fa-columns"> Dashboard </sidebarlink>
+
+		<sidebarlink to="ressources" icon="fas fa-users"> Ressources </sidebarlink>
 		<sidebarlink to="Analytics" icon="fas fa-chart-bar">
 			Analytics
 		</sidebarlink>
-		<sidebarlink to="ressources" icon="fas fa-users"> Ressources </sidebarlink>
-		<sidebarlink to="images" icon="fas fa-image"> Images </sidebarlink>
+		<!-- <sidebarlink to="images" icon="fas fa-image"> Images </sidebarlink> -->
 		<span
 			class="collapse-icon"
 			:class="{ 'rotate-180': collapsed }"

@@ -28,8 +28,20 @@
 				</div>
 				<div class="form-control">
 					<label for="" style="margin-right: 10px">Type de mouvement</label>
-					<input type="radio" name="es" value="1" /> Entré
-					<input type="radio" name="es" value="2" /> Sortie
+					<input
+						v-model="mouvement.type_mouvement_id"
+						type="radio"
+						name="es"
+						value="1"
+					/>
+					Entré
+					<input
+						v-model="mouvement.type_mouvement_id"
+						type="radio"
+						name="es"
+						value="2"
+					/>
+					Sortie
 				</div>
 				<div class="form-control">
 					<label for="amount">Montant <br /> </label>
@@ -56,6 +68,7 @@ export default {
 				ressource_id: null,
 				date_mouvement: null,
 				montant: null,
+				type_mouvement_id: null,
 			},
 		};
 	},

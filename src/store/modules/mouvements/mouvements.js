@@ -1,3 +1,4 @@
+import axios from "axios";
 export default {
 	namespaced: true,
 	state() {
@@ -24,9 +25,29 @@ export default {
 			],
 		};
 	},
-	mutations: {},
+	mutations: {
+		setMouvement(state, payload) {
+			state.mouvements = [...payload];
+		},
+	},
 	actions: {
-		loadMouvement() {},
+		/* 		loadMouvement() {
+			let ressource = axios
+				.get("http://127.0.0.1:8000/api/ressource")
+				.then((e) => {
+					console.log(e.data);
+				});
+			console.log("new " + ressource.data.data);
+		}, */
+		async loadMouvement(context) {
+			let ressource = await axios.get("http://127.0.0.1:8000/api/mouvement");
+			/* 				.then((e) => {
+					console.log(e.data);
+				}); */
+			let mouvements = ressource.data;
+
+			context.commit("setMouvement", mouvements);
+		},
 	},
 	getters: {
 		mouvements(state) {

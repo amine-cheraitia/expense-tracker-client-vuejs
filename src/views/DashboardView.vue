@@ -32,7 +32,11 @@
 				:key="index"
 				:class="mvmType(mouvement.type_mouvement_id)"
 			>
-				{{ mouvement.description }}
+				{{
+					mouvement.description.length > 25
+						? mouvement.description.slice(0, 22) + "..."
+						: mouvement.description
+				}}
 				<span
 					>{{ mouvement.type_mouvement_id == 1 ? "+" : "-" }}
 					{{ mouvement.montant }} DA</span
@@ -46,12 +50,15 @@
 </template>
 
 <script>
+import axios from "axios";
+
 import Modal from "../components/ui/Modal.vue";
 export default {
 	components: { Modal },
 	data() {
 		return {
 			hidden: false,
+			mouvementsData: null,
 		};
 	},
 	methods: {
@@ -64,6 +71,15 @@ export default {
 			} else {
 				return "minus";
 			}
+		},
+
+		async loadMouvement() {
+			let ressource = await axios.get("http://127.0.0.1:8000/api/ressource");
+			/* 				.then((e) => {
+					console.log(e.data);
+				}); */
+			this.mouvementsData = ressource.data.data;
+			/* console.log(ressource.data); */
 		},
 	},
 	mounted() {
@@ -83,11 +99,23 @@ export default {
 		document.body.appendChild(plugin3); */
 	},
 	created() {
-		this.$store.getters["mouvements/mouvements"];
+		/* this.$store.getters["mouvements/mouvements"]; */
+		this.$store.dispatch("mouvements/loadMouvement");
+		this.loadMouvement();
+		const zz = this.$store.getters["mouvements/mouvements"];
+		console.log(zz);
 	},
 	computed: {
 		mouvements() {
 			return this.$store.getters["mouvements/mouvements"];
+		},
+		/* 		async loadMouvementc() {
+			let datas = await axios.get("http://127.0.0.1:8000/api/ressource");
+			console.log(datas);
+			return datas;
+		}, */
+		description(dsc) {
+			return dsc.length;
 		},
 	},
 };
@@ -117,7 +145,7 @@ body {
 
 .container {
 	margin: 30px auto;
-	width: 350px;
+	width: 450px;
 }
 
 h1 {

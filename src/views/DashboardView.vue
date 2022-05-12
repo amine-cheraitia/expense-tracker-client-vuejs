@@ -17,7 +17,8 @@
 		</div>
 
 		<h3>Historique</h3>
-		<ul id="list" class="list">
+		<div class="loading" v-if="loading">Chargement...</div>
+		<ul v-else id="list" class="list">
 			<!-- <li class="minus">
 				Cash <span>-$400</span><button class="delete-btn">x</button
 				><button class="edit-btn">-</button>
@@ -32,11 +33,12 @@
 				:key="index"
 				:class="mvmType(mouvement.type_mouvement_id)"
 			>
-				{{
+				<!-- 				{{
 					mouvement.description.length > 25
 						? mouvement.description.slice(0, 22) + "..."
 						: mouvement.description
-				}}
+				}} -->
+				{{ description(mouvement.description) }}
 				<span
 					>{{ mouvement.type_mouvement_id == 1 ? "+" : "-" }}
 					{{ mouvement.montant }} DA</span
@@ -59,6 +61,7 @@ export default {
 		return {
 			hidden: false,
 			mouvementsData: null,
+			loading: true,
 		};
 	},
 	methods: {
@@ -75,11 +78,13 @@ export default {
 
 		async loadMouvement() {
 			let ressource = await axios.get("http://127.0.0.1:8000/api/ressource");
-			/* 				.then((e) => {
-					console.log(e.data);
-				}); */
+			if (ressource) {
+				this.loading = false;
+			}
 			this.mouvementsData = ressource.data.data;
-			/* console.log(ressource.data); */
+		},
+		description(dsc) {
+			return dsc.length > 25 ? dsc.slice(0, 22) + "..." : dsc;
 		},
 	},
 	mounted() {
@@ -114,9 +119,6 @@ export default {
 			console.log(datas);
 			return datas;
 		}, */
-		description(dsc) {
-			return dsc.length;
-		},
 	},
 };
 </script>

@@ -17,7 +17,8 @@
 		</div>
 
 		<h3>Historique</h3>
-		<div class="loading" v-if="loading">Chargement...</div>
+		<Spinner class="loading" v-if="loading"></Spinner>
+		<span v-else-if="!loading && error">{{ errorText }}</span>
 		<ul v-else id="list" class="list">
 			<!-- <li class="minus">
 				Cash <span>-$400</span><button class="delete-btn">x</button
@@ -33,11 +34,6 @@
 				:key="index"
 				:class="mvmType(mouvement.type_mouvement_id)"
 			>
-				<!-- 				{{
-					mouvement.description.length > 25
-						? mouvement.description.slice(0, 22) + "..."
-						: mouvement.description
-				}} -->
 				{{ description(mouvement.description) }}
 				<span
 					>{{ mouvement.type_mouvement_id == 1 ? "+" : "-" }}
@@ -46,6 +42,7 @@
 				><button class="edit-btn">-</button>
 			</li>
 		</ul>
+
 		<button class="btn" @click="hidden = !hidden">Ajouter transaction</button>
 		<Modal v-show="hidden" v-on:toggelModal="toggelHiden" />
 	</div>
@@ -53,15 +50,17 @@
 
 <script>
 import axios from "axios";
-
+import Spinner from "../components/ui/Spinner.vue";
 import Modal from "../components/ui/Modal.vue";
 export default {
-	components: { Modal },
+	components: { Modal, Spinner },
 	data() {
 		return {
 			hidden: false,
 			mouvementsData: null,
 			loading: true,
+			error: false,
+			errorText: "",
 		};
 	},
 	methods: {
@@ -77,11 +76,19 @@ export default {
 		},
 
 		async loadMouvement() {
-			let ressource = await axios.get("http://127.0.0.1:8000/api/ressource");
-			if (ressource) {
-				this.loading = false;
-			}
-			this.mouvementsData = ressource.data.data;
+			await axios
+				.get("http://127.0.0.1:8000/api/ressource")
+				.then((res) => {
+					this.loading = false;
+					this.mouvementsData = res.data.data;
+				})
+				.catch((err) => {
+					this.loading = false;
+					this.error = true;
+					this.errorText = `Une Erreur s'est produise , code de l'erreur: ${err.response.status}`;
+
+					console.log(this.error);
+				});
 		},
 		description(dsc) {
 			return dsc.length > 25 ? dsc.slice(0, 22) + "..." : dsc;
@@ -108,7 +115,7 @@ export default {
 		this.$store.dispatch("mouvements/loadMouvement");
 		this.loadMouvement();
 		const zz = this.$store.getters["mouvements/mouvements"];
-		console.log(zz);
+		console.log("ss" + zz);
 	},
 	computed: {
 		mouvements() {

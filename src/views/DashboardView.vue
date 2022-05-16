@@ -3,7 +3,9 @@
 
 	<div class="container">
 		<h4>Votre Solde</h4>
-		<h1 id="balance">50 000.00 DA</h1>
+		<h1 id="balance">
+			{{ soldeFinal }}
+		</h1>
 
 		<div class="inc-exp-container">
 			<div>
@@ -59,8 +61,10 @@ export default {
 			hidden: false,
 			mouvementsData: null,
 			loading: true,
+			loadingGeneral: true,
 			error: false,
 			errorText: "",
+			soldeFinal: "null",
 		};
 	},
 	methods: {
@@ -90,37 +94,36 @@ export default {
 					console.log(this.error);
 				});
 		},
+
 		description(dsc) {
 			return dsc.length > 25 ? dsc.slice(0, 22) + "..." : dsc;
 		},
+		async setSolde() {
+			const solde = await this.$store.getters["ressources/solde"];
+			console.log("solide" + typeof solde);
+			this.soldeFinal =
+				new Intl.NumberFormat("fr-FR").format(Number(solde)) + ".00 DA";
+			console.log("++" + this.soldeFinal);
+		},
 	},
 	mounted() {
-		/* 		const plugin = document.createElement("script");
-		plugin.setAttribute("src", "js/ruang-admin.min.js");
-		plugin.async = true;
-		document.body.appendChild(plugin);
-
-		const plugin2 = document.createElement("script");
-		plugin2.setAttribute("src", "vendor/chart.js/Chart.min.js");
-		plugin2.async = true;
-		document.body.appendChild(plugin2);
-
-		const plugin3 = document.createElement("script");
-		plugin3.setAttribute("src", "js/demo/chart-area-demo.js");
-		plugin3.async = true;
-		document.body.appendChild(plugin3); */
+		/* 		const userid = this.$store.getters["auth/userId"];
+		console.log(userid); */
 	},
 	created() {
 		/* this.$store.getters["mouvements/mouvements"]; */
 		this.$store.dispatch("mouvements/loadMouvement");
+		this.setSolde();
 		this.loadMouvement();
-		const zz = this.$store.getters["mouvements/mouvements"];
-		console.log("ss" + zz);
+		/* const zz = this.$store.getters["mouvements/mouvements"]; */
+
+		/* console.log("ss" + zz); */
 	},
 	computed: {
 		mouvements() {
 			return this.$store.getters["mouvements/mouvements"];
 		},
+
 		/* 		async loadMouvementc() {
 			let datas = await axios.get("http://127.0.0.1:8000/api/ressource");
 			console.log(datas);

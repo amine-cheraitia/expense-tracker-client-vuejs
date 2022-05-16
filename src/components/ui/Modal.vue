@@ -17,9 +17,13 @@
 					<label for="type_mvm">Ressources</label>
 					<select v-model="mouvement.ressource_id">
 						<option value="">...</option>
-						<option value="banque">Banque</option>
-						<option value="poste">Poste</option>
-						<option value="cash">Cash</option>
+						<option
+							v-for="(item, index) in ressources"
+							:key="index"
+							:value="item.id"
+						>
+							{{ displayRessource(item.nom_ressource, item.num_compte) }}
+						</option>
 					</select>
 				</div>
 				<div class="form-control">
@@ -59,6 +63,7 @@
 </template>
 
 <script>
+/* import { Axios } from "axios"; */
 export default {
 	props: {},
 	data() {
@@ -76,11 +81,18 @@ export default {
 		toggelHiden() {
 			this.$emit("toggelModal");
 		},
+		displayRessource(ressourcesName, ressorucesNbr) {
+			if (ressorucesNbr) {
+				return ressourcesName + " -  N° " + ressorucesNbr;
+			} else {
+				return ressourcesName;
+			}
+		},
 		sendData() {
 			const data = { ...this.mouvement };
 			data;
 			console.log(data);
-			/* 
+			/*
 			console.log(data);
 			console.log("---");
 			const NewData = {
@@ -91,6 +103,23 @@ export default {
 			};
 			console.log(NewData); */
 		},
+		loadRessource() {
+			this.load = true;
+			this.$store.dispatch("ressources/loadRessources");
+
+			/* await this.$store.getters["ressources/loadRessources"]; */
+		},
+	},
+	computed: {
+		ressources() {
+			return this.$store.getters["ressources/ressources"];
+		},
+	},
+	created() {
+		/* this.$store.getters["ressources/ressources"]; */
+	},
+	mounted() {
+		this.loadRessource();
 	},
 };
 </script>
@@ -230,7 +259,7 @@ select {
 	border: 0;
 	display: block;
 	font-size: 16px;
-	margin: 10px 0 30px;
+	margin: 30px 0 20px;
 	padding: 10px;
 	width: 100%;
 }

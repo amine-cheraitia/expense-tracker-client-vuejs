@@ -17,6 +17,9 @@ export default {
 			/* state.ressources.push(...payload); version qui nest ok 100*/
 			state.ressources = [...payload];
 		},
+		setSolde(state, payload) {
+			state.solde = payload;
+		},
 	},
 	actions: {
 		async loadRessources(context) {
@@ -26,6 +29,13 @@ export default {
 				.get("http://127.0.0.1:8000/api/ressource/user/" + userId)
 				.then((result) => {
 					ressources = result.data;
+					let soldeGlobale = 0;
+					for (const key in ressources) {
+						soldeGlobale += Number(ressources[key].solde);
+					}
+
+					console.log(soldeGlobale.toFixed(2));
+					context.commit("setSolde", soldeGlobale.toFixed(2));
 				})
 				.catch((err) => {
 					console.log(err);

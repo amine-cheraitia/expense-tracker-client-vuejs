@@ -34,7 +34,6 @@ export default {
 						soldeGlobale += Number(ressources[key].solde);
 					}
 
-					console.log(soldeGlobale.toFixed(2));
 					context.commit("setSolde", soldeGlobale.toFixed(2));
 				})
 				.catch((err) => {

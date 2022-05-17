@@ -3,9 +3,7 @@
 
 	<div class="container">
 		<h4>Votre Solde</h4>
-		<h1 id="balance">
-			{{ soldeFinal }}
-		</h1>
+		<h1 id="balance">{{ displaySolde }}</h1>
 
 		<div class="inc-exp-container">
 			<div>
@@ -64,7 +62,6 @@ export default {
 			loadingGeneral: true,
 			error: false,
 			errorText: "",
-			soldeFinal: "null",
 		};
 	},
 	methods: {
@@ -98,37 +95,22 @@ export default {
 		description(dsc) {
 			return dsc.length > 25 ? dsc.slice(0, 22) + "..." : dsc;
 		},
-		async setSolde() {
-			const solde = await this.$store.getters["ressources/solde"];
-			console.log("solide" + typeof solde);
-			this.soldeFinal =
-				new Intl.NumberFormat("fr-FR").format(Number(solde)) + ".00 DA";
-			console.log("++" + this.soldeFinal);
-		},
 	},
-	mounted() {
-		/* 		const userid = this.$store.getters["auth/userId"];
-		console.log(userid); */
-	},
-	created() {
-		/* this.$store.getters["mouvements/mouvements"]; */
-		this.$store.dispatch("mouvements/loadMouvement");
-		this.setSolde();
-		this.loadMouvement();
-		/* const zz = this.$store.getters["mouvements/mouvements"]; */
 
-		/* console.log("ss" + zz); */
+	created() {
+		this.$store.dispatch("mouvements/loadMouvement");
+		this.loadMouvement();
 	},
 	computed: {
 		mouvements() {
 			return this.$store.getters["mouvements/mouvements"];
 		},
+		displaySolde() {
+			const solde = this.$store.getters["ressources/solde"];
+			let s = new Intl.NumberFormat("fr-FR").format(Number(solde)) + ".00 DA";
 
-		/* 		async loadMouvementc() {
-			let datas = await axios.get("http://127.0.0.1:8000/api/ressource");
-			console.log(datas);
-			return datas;
-		}, */
+			return s;
+		},
 	},
 };
 </script>

@@ -4,7 +4,7 @@
 		<div class="modal">
 			<h3 style="color: #9c88ff">Ajouter un mouvement</h3>
 			<form id="form" @submit.prevent="sendData">
-				<div class="form-control">
+				<div class="form-control" :class="{ invalid: Errors.descriptionError }">
 					<label for="text">Description</label>
 					<input
 						type="text"
@@ -13,7 +13,10 @@
 						placeholder="Enter text..."
 					/>
 				</div>
-				<div class="form-control">
+				<div
+					class="form-control"
+					:class="{ invalid: Errors.ressource_idError }"
+				>
 					<label for="type_mvm">Ressources</label>
 					<select v-model="mouvement.ressource_id">
 						<option value="">...</option>
@@ -26,11 +29,17 @@
 						</option>
 					</select>
 				</div>
-				<div class="form-control">
+				<div
+					class="form-control"
+					:class="{ invalid: Errors.date_mouvementError }"
+				>
 					<label for="type_mvm">Date du mouvement</label>
 					<input type="date" v-model="mouvement.date_mouvement" />
 				</div>
-				<div class="form-control">
+				<div
+					class="form-control"
+					:class="{ invalid: Errors.type_mouvement_idError }"
+				>
 					<label for="" style="margin-right: 10px">Type de mouvement</label>
 					<input
 						v-model="mouvement.type_mouvement_id"
@@ -47,7 +56,7 @@
 					/>
 					Sortie
 				</div>
-				<div class="form-control">
+				<div class="form-control" :class="{ invalid: Errors.montantError }">
 					<label for="amount">Montant <br /> </label>
 					<input
 						type="number"
@@ -63,7 +72,8 @@
 </template>
 
 <script>
-/* import { Axios } from "axios"; */
+import axios from "axios";
+
 export default {
 	props: {},
 	data() {
@@ -74,6 +84,13 @@ export default {
 				date_mouvement: null,
 				montant: null,
 				type_mouvement_id: null,
+			},
+			Errors: {
+				descriptionError: false,
+				ressource_idError: false,
+				date_mouvementError: false,
+				montantError: false,
+				type_mouvement_idError: false,
 			},
 		};
 	},
@@ -88,10 +105,57 @@ export default {
 				return ressourcesName;
 			}
 		},
-		sendData() {
-			const data = { ...this.mouvement };
-			data;
-			console.log(data);
+		async sendData() {
+			this.Errors.descriptionError = false;
+			this.Errors.ressource_idError = false;
+			this.Errors.date_mouvementError = false;
+			this.Errors.montantError = false;
+			this.Errors.type_mouvement_idError = false;
+			try {
+				const userID = this.$store.getters["auth/userId"];
+				const data = {
+					user_id: userID,
+					solde_intermediaire: 5000,
+					...this.mouvement,
+				};
+
+				await axios.post("http://127.0.0.1:8000/api/mouvement", data);
+				console.log("success");
+				this.Errors.descriptionError = false;
+				this.Errors.ressource_idError = false;
+				this.Errors.date_mouvementError = false;
+				this.Errors.montantError = false;
+				this.Errors.type_mouvement_idError = false;
+				await this.$store.dispatch("mouvements/loadMouvement");
+				this.mouvement.description = null;
+				this.mouvement.ressource_id = null;
+				this.mouvement.date_mouvement = null;
+				this.mouvement.montant = null;
+				this.mouvement.type_mouvement_id = null;
+				this.toggelHiden();
+			} catch (error) {
+				const errors = error.response.data.errors;
+				errors;
+
+				if (errors.description) {
+					this.Errors.descriptionError = true;
+				}
+				if (errors.ressource_id) {
+					this.Errors.ressource_idError = true;
+				}
+				if (errors.montant) {
+					this.Errors.montantError = true;
+				}
+				if (errors.date_mouvement) {
+					this.Errors.date_mouvementError = true;
+				}
+				if (errors.type_mouvement_id) {
+					this.Errors.type_mouvement_idError = true;
+				}
+
+				console.log(error.response.data.errors);
+			}
+
 			/*
 			console.log(data);
 			console.log("---");
@@ -103,6 +167,11 @@ export default {
 			};
 			console.log(NewData); */
 		},
+		/* 		validationForm(data) {
+			if (data.description === "") {
+				data.some((elem) => elem);
+			}
+		}, */
 		loadRessource() {
 			this.load = true;
 			this.$store.dispatch("ressources/loadRessources");
@@ -249,6 +318,13 @@ select {
 	font-size: 16px;
 	padding: 10px;
 	width: 100%;
+}
+
+.form-control.invalid input {
+	border-color: red;
+}
+.form-control.invalid label {
+	color: red;
 }
 
 .btn {

@@ -3,7 +3,8 @@
 
 	<div class="container">
 		<h4>Votre Solde</h4>
-		<h1 id="balance">{{ displaySolde }}</h1>
+		<Spinner class="loading" v-if="loadingSold"></Spinner>
+		<h1 v-else id="balance">{{ displaySolde }}</h1>
 
 		<div class="inc-exp-container">
 			<div>
@@ -59,7 +60,7 @@ export default {
 			hidden: false,
 			mouvementsData: null,
 			loading: true,
-			loadingGeneral: true,
+			loadingSold: true,
 			error: false,
 			errorText: "",
 		};
@@ -100,6 +101,11 @@ export default {
 	created() {
 		this.$store.dispatch("mouvements/loadMouvement");
 		this.loadMouvement();
+
+		const t = this;
+		setTimeout(function () {
+			t.loadingSold = false;
+		}, 1000);
 	},
 	computed: {
 		mouvements() {

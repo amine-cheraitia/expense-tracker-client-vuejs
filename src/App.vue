@@ -22,6 +22,9 @@ export default {
 			return this.$store.getters.Sidebarwiths;
 		},
 	},
+	mounted() {
+		/* this.$store.dispatch("ressources/loadRessources"); */
+	},
 };
 </script>
 <style>

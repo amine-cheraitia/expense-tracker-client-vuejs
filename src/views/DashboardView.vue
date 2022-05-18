@@ -50,7 +50,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import Spinner from "../components/ui/Spinner.vue";
 import Modal from "../components/ui/Modal.vue";
 export default {
@@ -63,6 +62,10 @@ export default {
 			loadingSold: true,
 			error: false,
 			errorText: "",
+			displaySolde2: null,
+
+			/* 			counter: -10,
+			interval: null, */
 		};
 	},
 	methods: {
@@ -78,11 +81,39 @@ export default {
 		},
 
 		async loadMouvement() {
+			try {
+				await this.$store.dispatch("mouvements/loadMouvement");
+				await this.$store.dispatch("ressources/loadRessources");
+			} catch (error) {
+				this.error = true;
+				this.errorText = `Une Erreur s'est produise , code de l'erreur: ${error.response.status}`;
+			}
+			/* this.counterFNC(); */
+
+			await this.loadSolde();
+
+			/* 			const solde = await this.$store.getters["ressources/solde"];  option a exploré pour le compteur du solde		
+			const t = this;
+			t;
+			this.interval = setInterval(() => {
+				if (t.counter < solde) {
+					console.log("tes");
+					t.counter+=100;
+				} else {
+					console.log("no");
+					clearInterval(t.interval);
+				}
+			}, 1); 
+			 */
+			this.loading = false;
+			this.loadingSold = false;
+			/* 			/* .get("http://127.0.0.1:8000/api/ressource")
 			await axios
-				.get("http://127.0.0.1:8000/api/ressource")
+				.get("http://127.0.0.1:8000/api/mouvement")
 				.then((res) => {
 					this.loading = false;
 					this.mouvementsData = res.data.data;
+					console.log(res);
 				})
 				.catch((err) => {
 					this.loading = false;
@@ -90,29 +121,37 @@ export default {
 					this.errorText = `Une Erreur s'est produise , code de l'erreur: ${err.response.status}`;
 
 					console.log(this.error);
-				});
+				}); */
 		},
 
 		description(dsc) {
 			return dsc.length > 25 ? dsc.slice(0, 22) + "..." : dsc;
 		},
+		async loadSolde() {
+			const solde = await this.$store.getters["ressources/solde"];
+
+			this.displaySolde2 =
+				new Intl.NumberFormat("fr-FR").format(Number(solde)) + ".00 DA";
+		},
 	},
 
 	created() {
-		this.$store.dispatch("mouvements/loadMouvement");
+		this.$store.dispatch("ressources/loadRessources");
 		this.loadMouvement();
 
-		const t = this;
-		setTimeout(function () {
-			t.loadingSold = false;
-		}, 1000);
+		//setinterval for solde
+		//https://www.youtube.com/watch?v=kOcFZV3c75I
 	},
 	computed: {
 		mouvements() {
 			return this.$store.getters["mouvements/mouvements"];
 		},
+		/* 		counterFNC() {
+
+		}, */
 		displaySolde() {
 			const solde = this.$store.getters["ressources/solde"];
+
 			let s = new Intl.NumberFormat("fr-FR").format(Number(solde)) + ".00 DA";
 
 			return s;

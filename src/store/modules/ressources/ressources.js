@@ -4,7 +4,7 @@ export default {
 	namespaced: true,
 	state() {
 		return {
-			solde: 0,
+			solde: null,
 			ressources: [
 				{
 					id: 5,

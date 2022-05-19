@@ -23,14 +23,36 @@ export default {
 					ressource_id: 3,
 				},
 			],
+			totalEntré: 0,
+			totalSortie: 0,
 		};
 	},
 	mutations: {
 		setMouvement(state, payload) {
 			state.mouvements = [...payload];
 		},
+		setEntréSortie(state, payload) {
+			state.totalEntré = payload.entré;
+			state.totalSortie = payload.sortie;
+		},
 	},
 	actions: {
+		async loadEntréSortie(context) {
+			const userId = context.rootGetters["auth/userId"];
+
+			await axios
+				.get("http://127.0.0.1:8000/api/ressourcetotal/user/" + userId)
+				.then((res) => {
+					let payloadEntréSortie = {
+						entré: res.data.entré,
+						sortie: res.data.sortie,
+					};
+					context.commit("setEntréSortie", payloadEntréSortie);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		},
 		async loadMouvement(context) {
 			let ressource = await axios.get("http://127.0.0.1:8000/api/mouvement");
 
@@ -38,8 +60,26 @@ export default {
 
 			context.commit("setMouvement", mouvements);
 		},
+		async deleteMouvement(context, payload) {
+			axios
+				.delete("http://127.0.0.1:8000/api/mouvement/" + payload)
+				.then((res) => {
+					console.log(res);
+					context.dispatch("loadMouvement");
+					context.dispatch("loadEntréSortie");
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		},
 	},
 	getters: {
+		totalEntré(state) {
+			return state.totalEntré;
+		},
+		totalSortie(state) {
+			return state.totalSortie;
+		},
 		mouvements(state) {
 			return state.mouvements;
 		},

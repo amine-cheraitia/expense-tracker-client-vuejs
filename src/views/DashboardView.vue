@@ -9,11 +9,11 @@
 		<div class="inc-exp-container">
 			<div>
 				<h4>Ressources</h4>
-				<p id="money-plus" class="money plus">+0.00 DA</p>
+				<p id="money-plus" class="money plus">+{{ ressources }}</p>
 			</div>
 			<div>
 				<h4>Dépenses</h4>
-				<p id="money-minus" class="money minus">-0.00 DA</p>
+				<p id="money-minus" class="money minus">-{{ depenses }}</p>
 			</div>
 		</div>
 
@@ -39,7 +39,8 @@
 				<span
 					>{{ mouvement.type_mouvement_id == 1 ? "+" : "-" }}
 					{{ mouvement.montant }} DA</span
-				><button class="delete-btn">x</button
+				><button class="delete-btn" @click="deleteMouvement(mouvement.id)">
+					x</button
 				><button class="edit-btn">-</button>
 			</li>
 		</ul>
@@ -79,6 +80,10 @@ export default {
 				return "minus";
 			}
 		},
+		deleteMouvement(id) {
+			this.$store.dispatch("mouvements/deleteMouvement", id);
+			console.log(id);
+		},
 
 		async loadMouvement() {
 			try {
@@ -92,7 +97,7 @@ export default {
 
 			await this.loadSolde();
 
-			/* 			const solde = await this.$store.getters["ressources/solde"];  option a exploré pour le compteur du solde		
+			/* 			const solde = await this.$store.getters["ressources/solde"];  option a exploré pour le compteur du solde
 			const t = this;
 			t;
 			this.interval = setInterval(() => {
@@ -103,7 +108,7 @@ export default {
 					console.log("no");
 					clearInterval(t.interval);
 				}
-			}, 1); 
+			}, 1);
 			 */
 			this.loading = false;
 			this.loadingSold = false;
@@ -137,6 +142,7 @@ export default {
 
 	created() {
 		this.$store.dispatch("ressources/loadRessources");
+		this.$store.dispatch("mouvements/loadEntréSortie");
 		this.loadMouvement();
 
 		//setinterval for solde
@@ -146,9 +152,15 @@ export default {
 		mouvements() {
 			return this.$store.getters["mouvements/mouvements"];
 		},
-		/* 		counterFNC() {
+		ressources() {
+			const entré = this.$store.getters["mouvements/totalEntré"];
+			return new Intl.NumberFormat("fr-FR").format(Number(entré)) + ".00 DA";
+		},
+		depenses() {
+			const sortie = this.$store.getters["mouvements/totalSortie"];
+			return new Intl.NumberFormat("fr-FR").format(Number(sortie)) + ".00 DA";
+		},
 
-		}, */
 		displaySolde() {
 			const solde = this.$store.getters["ressources/solde"];
 

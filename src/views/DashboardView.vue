@@ -45,16 +45,20 @@
 			</li>
 		</ul>
 
-		<button class="btn" @click="hidden = !hidden">Ajouter transaction</button>
-		<Modal v-show="hidden" v-on:toggelModal="toggelHiden" />
+		<button class="btn" @click="hidden = open = true">
+			Ajouter transaction
+		</button>
+		<Modal v-on:toggelModal="toggelHiden" :open="open" />
+		<!-- <ModalEdit v-on:toggelEdit="toggelEdit" :openEdit ="openEdit" ; > -->
 	</div>
 </template>
 
 <script>
 import Spinner from "../components/ui/Spinner.vue";
 import Modal from "../components/ui/Modal.vue";
+/* import ModalEdit from "../components/ui/ModalEdit.vue"; */
 export default {
-	components: { Modal, Spinner },
+	components: { Modal, Spinner /* ModalEdit */ },
 	data() {
 		return {
 			hidden: false,
@@ -64,6 +68,7 @@ export default {
 			error: false,
 			errorText: "",
 			displaySolde2: null,
+			open: false,
 
 			/* 			counter: -10,
 			interval: null, */
@@ -71,7 +76,7 @@ export default {
 	},
 	methods: {
 		toggelHiden() {
-			this.hidden = !this.hidden;
+			this.open = false;
 		},
 		mvmType(mvm) {
 			if (mvm === 1) {

@@ -1,7 +1,7 @@
 <template>
-	<div class="warpper">
-		<div class="overlay" @click="toggelHiden"></div>
-		<div class="modal">
+	<div class="overlay" v-if="open" @click="toggelHiden"></div>
+	<transition name="dialog">
+		<div class="modal" v-if="open">
 			<h3 style="color: #9c88ff">Ajouter un mouvement</h3>
 			<form id="form" @submit.prevent="sendData">
 				<div class="form-control" :class="{ invalid: Errors.descriptionError }">
@@ -68,14 +68,14 @@
 				<button class="btn">Add transaction</button>
 			</form>
 		</div>
-	</div>
+	</transition>
 </template>
 
 <script>
 import axios from "axios";
 
 export default {
-	props: {},
+	props: { open: { type: Boolean, required: true } },
 	data() {
 		return {
 			mouvement: {
@@ -106,6 +106,7 @@ export default {
 			}
 		},
 		async sendData() {
+			//refactore cette partie et la mettre au niveau du store et catch ici que les erreurs
 			this.Errors.descriptionError = false;
 			this.Errors.ressource_idError = false;
 			this.Errors.date_mouvementError = false;
@@ -127,6 +128,7 @@ export default {
 				this.Errors.montantError = false;
 				this.Errors.type_mouvement_idError = false;
 				await this.$store.dispatch("mouvements/loadMouvement");
+				await this.$store.dispatch("mouvements/loadEntréSortie");
 				this.mouvement.description = null;
 				this.mouvement.ressource_id = null;
 				this.mouvement.date_mouvement = null;
@@ -194,7 +196,7 @@ export default {
 </script>
 
 <style scoped>
-.warpper {
+/* .warpper {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -202,13 +204,13 @@ export default {
 	bottom: 0;
 	width: 100%;
 	height: 100%;
-}
+} */
 .modal {
 	position: fixed;
 	top: 50%;
 	left: 50%;
 	background: #f1f1f1;
-	opacity: 1;
+	/* opacity: 1; */
 	transform: translate(-50%, -50%);
 	padding: 50px;
 	width: 450px;
@@ -225,6 +227,8 @@ export default {
 	left: 0;
 	right: 0;
 	bottom: 0;
+	height: 100vh;
+	width: 100%;
 }
 
 @import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
@@ -409,5 +413,28 @@ select {
 .list li:hover .delete-btn,
 .list li:hover .edit-btn {
 	opacity: 1;
+}
+
+.dialog-enter-from,
+.dialog-leave-to {
+	/* 	transform: translateY(40px);
+	opacity: 5; */
+	transform: translate(-50%, -10%);
+	top: 10%;
+	opacity: 0;
+}
+.dialog-enter-active {
+	transition: all 0.5s ease-in;
+}
+.dialog-leave-active {
+	transition: all 0.5s ease-out;
+}
+.dialog-enter-to,
+.dialog-leave-from {
+	/* 	transform: translateY(0px);
+	opacity: 1; */
+	opacity: 1;
+	transform: translate(-50%, -50%);
+	top: 50%;
 }
 </style>

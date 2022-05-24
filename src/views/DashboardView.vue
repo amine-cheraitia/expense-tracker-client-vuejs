@@ -41,24 +41,31 @@
 					{{ mouvement.montant }} DA</span
 				><button class="delete-btn" @click="deleteMouvement(mouvement.id)">
 					x</button
-				><button class="edit-btn">-</button>
+				><button class="edit-btn" @click="editMouvement(mouvement.id)">
+					-
+				</button>
 			</li>
 		</ul>
 
 		<button class="btn" @click="hidden = open = true">
 			Ajouter transaction
 		</button>
-		<Modal v-on:toggelModal="toggelHiden" :open="open" />
-		<!-- <ModalEdit v-on:toggelEdit="toggelEdit" :openEdit ="openEdit" ; > -->
+		<Modal v-on:toggleModal="toggleHiden" :open="open" />
+		<ModalEdit
+			v-on:toggleModal="toggleHiden"
+			:openEdit="openEdit"
+			:editId="editId"
+		/>
 	</div>
 </template>
 
 <script>
 import Spinner from "../components/ui/Spinner.vue";
 import Modal from "../components/ui/Modal.vue";
-/* import ModalEdit from "../components/ui/ModalEdit.vue"; */
+
+import ModalEdit from "../components/ui/ModalEdit.vue";
 export default {
-	components: { Modal, Spinner /* ModalEdit */ },
+	components: { Modal, Spinner, ModalEdit },
 	data() {
 		return {
 			hidden: false,
@@ -69,13 +76,17 @@ export default {
 			errorText: "",
 			displaySolde2: null,
 			open: false,
+			editId: null,
+			openEdit: false,
 
 			/* 			counter: -10,
 			interval: null, */
 		};
 	},
 	methods: {
-		toggelHiden() {
+		toggleHiden() {
+			this.editId = null;
+			this.openEdit = false;
 			this.open = false;
 		},
 		mvmType(mvm) {
@@ -88,6 +99,10 @@ export default {
 		deleteMouvement(id) {
 			this.$store.dispatch("mouvements/deleteMouvement", id);
 			console.log(id);
+		},
+		editMouvement(id) {
+			this.editId = id;
+			this.openEdit = true;
 		},
 
 		async loadMouvement() {

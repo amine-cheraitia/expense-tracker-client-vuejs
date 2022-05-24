@@ -1,5 +1,5 @@
 <template>
-	<div class="overlay" v-if="open" @click="toggelHiden"></div>
+	<div class="overlay" v-if="open" @click="toggleHiden"></div>
 	<transition name="dialog">
 		<div class="modal" v-if="open">
 			<h3 style="color: #9c88ff">Ajouter un mouvement</h3>
@@ -10,7 +10,7 @@
 						type="text"
 						id="text"
 						v-model="mouvement.description"
-						placeholder="Enter text..."
+						placeholder="Saisissez la description..."
 					/>
 				</div>
 				<div
@@ -62,7 +62,7 @@
 						type="number"
 						id="amount"
 						v-model="mouvement.montant"
-						placeholder="Enter amount..."
+						placeholder="Saisissez le montant..."
 					/>
 				</div>
 				<button class="btn">Add transaction</button>
@@ -94,9 +94,10 @@ export default {
 			},
 		};
 	},
+	emits: ["toggleModal"],
 	methods: {
-		toggelHiden() {
-			this.$emit("toggelModal");
+		toggleHiden() {
+			this.$emit("toggleModal");
 		},
 		displayRessource(ressourcesName, ressorucesNbr) {
 			if (ressorucesNbr) {
@@ -134,7 +135,7 @@ export default {
 				this.mouvement.date_mouvement = null;
 				this.mouvement.montant = null;
 				this.mouvement.type_mouvement_id = null;
-				this.toggelHiden();
+				this.toggleHiden();
 			} catch (error) {
 				const errors = error.response.data.errors;
 				errors;

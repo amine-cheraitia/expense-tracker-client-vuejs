@@ -44,18 +44,40 @@
 				</tr>
 			</tbody>
 		</table>
+		<button class="btn" @click="open = !open">Ajouter Ressource</button>
+		<ModalRessource
+			v-on:toggleModal="toggleHiden"
+			:open="open"
+		></ModalRessource>
 	</div>
 </template>
 
 <script>
+import ModalRessource from "../components/ressource/ModalRessource.vue";
+/* import BaseModal from "../components/ui/BaseModal.vue"; */
 export default {
-	props: {},
+	components: { ModalRessource },
+	data() {
+		return {
+			hidden: false,
+			open: false,
+		};
+	},
+	provide() {
+		return {
+			open: this.open,
+		};
+	},
 	methods: {
 		loadRessources() {
 			this.$store.dispatch("ressources/loadRessources");
 		},
 		soldeFormat(solde) {
 			return new Intl.NumberFormat("fr-FR").format(Number(solde)) + ".00 DA";
+		},
+		toggleHiden() {
+			this.hidden = false;
+			this.open = false;
 		},
 	},
 	computed: {
@@ -77,10 +99,31 @@ export default {
 * {
 	box-sizing: border-box;
 }
+
+.btn {
+	cursor: pointer;
+	background-color: #9c88ff;
+	box-shadow: var(--box-shadow);
+	color: #fff;
+	border: 0;
+	display: block;
+	font-size: 16px;
+	margin: 10px 0 30px;
+	padding: 10px;
+	width: 180px;
+}
+
+.btn:focus,
+.delete-btn:focus,
+.edit-btn:focus {
+	outline: 0;
+}
+
 .main {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	flex-direction: column;
 }
 
 table {

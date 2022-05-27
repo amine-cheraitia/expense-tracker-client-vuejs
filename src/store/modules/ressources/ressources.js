@@ -56,6 +56,17 @@ export default {
 					console.log(err);
 				});
 		},
+		async deleteRessource(context, payload) {
+			axios
+				.delete("http://127.0.0.1:8000/api/ressource/" + payload)
+				.then((res) => {
+					console.log(res);
+					context.dispatch("loadRessources");
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		},
 	},
 	getters: {
 		solde(state) {

@@ -11,8 +11,8 @@
 					<th>actions</th>
 				</tr>
 			</thead>
-			<tbody>
-				<!-- 				<tr>
+
+			<!-- 				<tr>
 					<td>a</td>
 					<td>z</td>
 
@@ -27,13 +27,16 @@
 						</button>
 					</td>
 				</tr> -->
+			<transition-group name="list" tag="tbody">
 				<tr v-for="(ressource, index) in ressources" :key="index">
 					<td>{{ ressource.nom_ressource }}</td>
-					<td>{{ ressource.num_compte == "" ? "-" : ressource.num_compte }}</td>
+					<td>
+						{{ ressource.num_compte == "" ? "-" : ressource.num_compte }}
+					</td>
 
 					<td>{{ soldeFormat(ressource.solde) }}</td>
 					<td>
-						<button class="x">
+						<button class="x" @click="deleteRessource(ressource.id)">
 							<i class="fa-solid fa-x"></i>
 						</button>
 						&nbsp;
@@ -42,7 +45,7 @@
 						</button>
 					</td>
 				</tr>
-			</tbody>
+			</transition-group>
 		</table>
 		<button class="btn" @click="open = !open">Ajouter Ressource</button>
 		<ModalRessource
@@ -78,6 +81,10 @@ export default {
 		toggleHiden() {
 			this.hidden = false;
 			this.open = false;
+		},
+		deleteRessource(id) {
+			this.$store.dispatch("ressources/deleteRessource", id);
+			console.log(id);
 		},
 	},
 	computed: {
@@ -205,5 +212,24 @@ th,
 td {
 	border: none;
 	text-align: center;
+}
+
+/* animation groupe */
+
+.list-enter-active,
+.list-leave-active {
+	transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+	opacity: 0;
+	transform: translateX(30px);
+}
+.list-move {
+	transition: transform 1s;
+}
+.list-leave-active {
+	position: absolute;
 }
 </style>

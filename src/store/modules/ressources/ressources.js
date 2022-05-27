@@ -10,6 +10,7 @@ export default {
 					id: 5,
 				},
 			],
+			type_ressources: [],
 		};
 	},
 	mutations: {
@@ -19,6 +20,9 @@ export default {
 		},
 		setSolde(state, payload) {
 			state.solde = payload;
+		},
+		setRessourcesType(state, payload) {
+			state.type_ressources = [...payload];
 		},
 	},
 	actions: {
@@ -42,6 +46,16 @@ export default {
 
 			context.commit("setRessources", ressources);
 		},
+		async loadRessourcesType(context) {
+			await axios
+				.get("http://127.0.0.1:8000/api/typeressource")
+				.then((result) => {
+					context.commit("setRessourcesType", result.data);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		},
 	},
 	getters: {
 		solde(state) {
@@ -49,6 +63,9 @@ export default {
 		},
 		ressources(state) {
 			return state.ressources;
+		},
+		typeressources(state) {
+			return state.type_ressources;
 		},
 	},
 };

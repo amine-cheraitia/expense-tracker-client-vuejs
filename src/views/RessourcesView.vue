@@ -40,7 +40,7 @@
 							<i class="fa-solid fa-x"></i>
 						</button>
 						&nbsp;
-						<button class="minus">
+						<button class="minus" @click="editRessource(ressource.id)">
 							<i class="fa-solid fa-minus"></i>
 						</button>
 					</td>
@@ -52,25 +52,34 @@
 			v-on:toggleModal="toggleHiden"
 			:open="open"
 		></ModalRessource>
+		<ModalRessourceEdit
+			v-on:toggleModal="toggleHiden"
+			:openEdit="openEdit"
+			:editId="editId"
+		>
+		</ModalRessourceEdit>
 	</div>
 </template>
 
 <script>
 import ModalRessource from "../components/ressource/ModalRessource.vue";
+import ModalRessourceEdit from "../components/ressource/ModalRessourceEdit.vue";
 /* import BaseModal from "../components/ui/BaseModal.vue"; */
 export default {
-	components: { ModalRessource },
+	components: { ModalRessource, ModalRessourceEdit },
 	data() {
 		return {
 			hidden: false,
 			open: false,
+			openEdit: false,
+			editId: null,
 		};
 	},
-	provide() {
+	/* 	provide() {
 		return {
 			open: this.open,
 		};
-	},
+	}, */
 	methods: {
 		loadRessources() {
 			this.$store.dispatch("ressources/loadRessources");
@@ -81,10 +90,17 @@ export default {
 		toggleHiden() {
 			this.hidden = false;
 			this.open = false;
+			/*  */
+			this.editId = null;
+			this.openEdit = false;
 		},
 		deleteRessource(id) {
 			this.$store.dispatch("ressources/deleteRessource", id);
 			console.log(id);
+		},
+		editRessource(id) {
+			this.editId = id;
+			this.openEdit = true;
 		},
 	},
 	computed: {

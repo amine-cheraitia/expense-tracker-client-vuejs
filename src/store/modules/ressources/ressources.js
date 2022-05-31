@@ -29,6 +29,7 @@ export default {
 		async loadRessources(context) {
 			let ressources;
 			const userId = context.rootGetters["auth/userId"];
+			let erreur = null;
 			await axios
 				.get("http://127.0.0.1:8000/api/ressource/user/" + userId)
 				.then((result) => {
@@ -41,10 +42,14 @@ export default {
 					context.commit("setSolde", soldeGlobale.toFixed(2));
 				})
 				.catch((err) => {
-					console.log(err);
+					erreur = err.response.status;
+					const error = new Error(err.response.status);
+					throw error;
 				});
 
-			context.commit("setRessources", ressources);
+			if (!erreur) {
+				context.commit("setRessources", ressources);
+			}
 		},
 		async loadRessourcesType(context) {
 			await axios

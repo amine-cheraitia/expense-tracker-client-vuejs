@@ -11,7 +11,16 @@
 					<th>actions</th>
 				</tr>
 			</thead>
-
+			<tr v-if="loading">
+				<td colspan="4">
+					<Spinner class="loading"></Spinner>
+				</td>
+			</tr>
+			<tr v-else-if="!loading && error">
+				<td colspan="4">
+					<span>{{ errorText }}</span>
+				</td>
+			</tr>
 			<!-- 				<tr>
 					<td>a</td>
 					<td>z</td>
@@ -27,7 +36,7 @@
 						</button>
 					</td>
 				</tr> -->
-			<transition-group name="list" tag="tbody">
+			<transition-group name="list" tag="tbody" v-else>
 				<tr v-for="(ressource, index) in ressources" :key="index">
 					<td>{{ ressource.nom_ressource }}</td>
 					<td>
@@ -62,17 +71,21 @@
 </template>
 
 <script>
+import Spinner from "../components/ui/Spinner.vue";
 import ModalRessource from "../components/ressource/ModalRessource.vue";
 import ModalRessourceEdit from "../components/ressource/ModalRessourceEdit.vue";
 /* import BaseModal from "../components/ui/BaseModal.vue"; */
 export default {
-	components: { ModalRessource, ModalRessourceEdit },
+	components: { ModalRessource, ModalRessourceEdit, Spinner },
 	data() {
 		return {
 			hidden: false,
 			open: false,
 			openEdit: false,
 			editId: null,
+			loading: true,
+			errorText: "",
+			error: false,
 		};
 	},
 	/* 	provide() {
@@ -81,8 +94,17 @@ export default {
 		};
 	}, */
 	methods: {
-		loadRessources() {
-			this.$store.dispatch("ressources/loadRessources");
+		async loadRessources() {
+			try {
+				await this.$store.dispatch("ressources/loadRessources");
+			} catch (error) {
+				this.error = true;
+				this.loading = false;
+				this.errorText =
+					`Une Erreur s'est produise , code de l'erreur: ` + error;
+			}
+
+			this.loading = false;
 		},
 		soldeFormat(solde) {
 			return new Intl.NumberFormat("fr-FR").format(Number(solde)) + ".00 DA";
@@ -244,8 +266,9 @@ td {
 }
 .list-move {
 	transition: transform 1s;
+	position: absolute;
 }
 .list-leave-active {
-	position: absolute;
+	/* position: absolute; */
 }
 </style>

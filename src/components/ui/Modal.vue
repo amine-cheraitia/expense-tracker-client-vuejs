@@ -65,6 +65,9 @@
 						placeholder="Saisissez le montant..."
 					/>
 				</div>
+				<div class="form-control invalidTxt" style="margin-top: 10px">
+					<span>{{ errorMessage }}</span>
+				</div>
 				<button class="btn">Add transaction</button>
 			</form>
 		</div>
@@ -92,6 +95,7 @@ export default {
 				montantError: false,
 				type_mouvement_idError: false,
 			},
+			errorMessage: "",
 		};
 	},
 	emits: ["toggleModal"],
@@ -113,6 +117,7 @@ export default {
 			this.Errors.date_mouvementError = false;
 			this.Errors.montantError = false;
 			this.Errors.type_mouvement_idError = false;
+			this.errorMessage = "";
 			try {
 				const userID = this.$store.getters["auth/userId"];
 				const data = {
@@ -128,8 +133,10 @@ export default {
 				this.Errors.date_mouvementError = false;
 				this.Errors.montantError = false;
 				this.Errors.type_mouvement_idError = false;
+				this.errorMessage = "";
 				await this.$store.dispatch("mouvements/loadMouvement");
 				await this.$store.dispatch("mouvements/loadEntréSortie");
+				await this.$store.dispatch("ressources/loadRessources");
 				this.mouvement.description = null;
 				this.mouvement.ressource_id = null;
 				this.mouvement.date_mouvement = null;
@@ -137,9 +144,12 @@ export default {
 				this.mouvement.type_mouvement_id = null;
 				this.toggleHiden();
 			} catch (error) {
+				console.log(error.response.data.solde);
+				console.log("---separation");
+
 				const errors = error.response.data.errors;
 				errors;
-
+				console.log(errors);
 				if (errors.description) {
 					this.Errors.descriptionError = true;
 				}
@@ -147,6 +157,10 @@ export default {
 					this.Errors.ressource_idError = true;
 				}
 				if (errors.montant) {
+					this.Errors.montantError = true;
+				}
+				if (error.response.data.solde) {
+					this.errorMessage = error.response.data.errors;
 					this.Errors.montantError = true;
 				}
 				if (errors.date_mouvement) {
@@ -329,6 +343,9 @@ select {
 	border-color: red;
 }
 .form-control.invalid label {
+	color: red;
+}
+.invalidTxt {
 	color: red;
 }
 

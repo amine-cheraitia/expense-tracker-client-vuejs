@@ -67,16 +67,27 @@
 			:editId="editId"
 		>
 		</ModalRessourceEdit>
+		<ModalConfirmation
+			v-on:toggleModal="toggleModalConfirmation"
+			:openConfirmation="openConfirmation"
+			:idDelete="idDelete"
+		></ModalConfirmation>
 	</div>
 </template>
 
 <script>
+import ModalConfirmation from "../components/ui/ModalConfirmation.vue";
 import Spinner from "../components/ui/Spinner.vue";
 import ModalRessource from "../components/ressource/ModalRessource.vue";
 import ModalRessourceEdit from "../components/ressource/ModalRessourceEdit.vue";
 /* import BaseModal from "../components/ui/BaseModal.vue"; */
 export default {
-	components: { ModalRessource, ModalRessourceEdit, Spinner },
+	components: {
+		ModalRessource,
+		ModalRessourceEdit,
+		Spinner,
+		ModalConfirmation,
+	},
 	data() {
 		return {
 			hidden: false,
@@ -86,6 +97,8 @@ export default {
 			loading: true,
 			errorText: "",
 			error: false,
+			openConfirmation: false,
+			idDelete: null,
 		};
 	},
 	/* 	provide() {
@@ -116,9 +129,13 @@ export default {
 			this.editId = null;
 			this.openEdit = false;
 		},
+		toggleModalConfirmation() {
+			this.idDelete = null;
+			this.openConfirmation = false;
+		},
 		deleteRessource(id) {
-			this.$store.dispatch("ressources/deleteRessource", id);
-			console.log(id);
+			this.idDelete = id;
+			this.openConfirmation = true;
 		},
 		editRessource(id) {
 			this.editId = id;

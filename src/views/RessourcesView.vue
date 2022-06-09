@@ -285,7 +285,7 @@ td {
 	transition: transform 1s;
 	position: absolute;
 }
-.list-leave-active {
-	/* position: absolute; */
-}
+/* .list-leave-active {
+	position: absolute; 
+} */
 </style>

@@ -153,6 +153,9 @@ export default {
 				this.Errors.type_mouvement_idError = false;
 				await this.$store.dispatch("mouvements/loadMouvement");
 				await this.$store.dispatch("mouvements/loadEntréSortie");
+				await this.$store.dispatch(
+					"ressources/loadRessources"
+				); /* check after */
 				this.mouvement.description = null;
 				this.mouvement.ressource_id = null;
 				this.mouvement.date_mouvement = null;

@@ -70,7 +70,7 @@
 	--route beforeEach...etc
 	--déploiement
 */
-import { mapState, mapGetters } from "vuex";
+/* import { mapState, mapGetters } from "vuex"; */
 import Spinner from "../components/ui/Spinner.vue";
 import Modal from "../components/ui/Modal.vue";
 

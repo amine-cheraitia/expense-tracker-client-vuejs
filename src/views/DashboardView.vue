@@ -4,7 +4,9 @@
 	<div class="container">
 		<h4>Votre Solde</h4>
 		<Spinner class="loading" v-if="loadingSold"></Spinner>
-		<h1 v-else id="balance">{{ displaySolde }}</h1>
+		<h1 v-else id="balance">
+			{{ displaySolde }}
+		</h1>
 
 		<div class="inc-exp-container">
 			<div>
@@ -60,6 +62,15 @@
 </template>
 
 <script>
+/* todo
+	--update from ressource a chaque add ou edit
+	--login
+	--sanctum coté laravel
+	--token management vuex
+	--route beforeEach...etc
+	--déploiement
+*/
+/* import { mapState, mapGetters } from "vuex"; */
 import Spinner from "../components/ui/Spinner.vue";
 import Modal from "../components/ui/Modal.vue";
 
@@ -168,7 +179,19 @@ export default {
 		//setinterval for solde
 		//https://www.youtube.com/watch?v=kOcFZV3c75I
 	},
+	/* 	watch: {
+		soldeGet(newValue, oldValue) {
+			console.log(newValue + " " + oldValue);
+		},
+		solde(newValue, oldValue) {
+			console.log(newValue + " " + oldValue);
+		},
+	}, */
 	computed: {
+		/* ...mapGetters({
+			soldeGet: "ressources/solde", // moduleName/getterName
+		}),
+		...mapState("ressources", ["solde"]),*/
 		mouvements() {
 			return this.$store.getters["mouvements/mouvements"];
 		},

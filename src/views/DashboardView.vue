@@ -89,9 +89,6 @@ export default {
 			open: false,
 			editId: null,
 			openEdit: false,
-
-			/* 			counter: -10,
-			interval: null, */
 		};
 	},
 	methods: {

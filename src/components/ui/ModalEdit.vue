@@ -165,7 +165,7 @@ export default {
 			} catch (error) {
 				const errors = error.response.data.errors;
 				errors;
-				/*  */
+
 				if (errors.description) {
 					this.Errors.descriptionError = true;
 				}

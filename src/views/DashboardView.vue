@@ -37,7 +37,10 @@
 				:key="index"
 				:class="mvmType(mouvement.type_mouvement_id)"
 			>
-				{{ description(mouvement.description) }}
+				<div class="description">
+					<span>{{ description(mouvement.description) }}</span>
+					<span class="date">{{ formatDate(mouvement.date_mouvement) }}</span>
+				</div>
 				<span
 					>{{ mouvement.type_mouvement_id == 1 ? "+" : "-" }}
 					{{ mouvement.montant }} DA</span
@@ -92,6 +95,14 @@ export default {
 		};
 	},
 	methods: {
+		formatDate(data) {
+			const date = new Date(data);
+			return [
+				date.getDate().toString().padStart(2, "0"),
+				date.getMonth().toString().padStart(2, "0"),
+				date.getFullYear().toString().padStart(2, "0"),
+			].join("/");
+		},
 		toggleHiden() {
 			this.editId = null;
 			this.openEdit = false;
@@ -222,7 +233,11 @@ export default {
 * {
 	box-sizing: border-box;
 }
-
+.description {
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+}
 body {
 	background-color: #f7f7f7;
 	/* display: flex;
@@ -237,6 +252,10 @@ body {
 .container {
 	margin: 30px auto;
 	width: 450px;
+}
+.date {
+	color: #333;
+	font-size: 14px;
 }
 
 h1 {

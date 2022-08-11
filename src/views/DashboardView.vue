@@ -20,10 +20,12 @@
 		</div>
 
 		<h3>Historique</h3>
-		<Spinner class="loading" v-if="loading"></Spinner>
-		<span v-else-if="!loading && error">{{ errorText }}</span>
-		<ul v-else id="list" class="list">
-			<!-- <li class="minus">
+
+		<div class="inner-container">
+			<Spinner class="loading" v-if="loading"></Spinner>
+			<span v-else-if="!loading && error">{{ errorText }}</span>
+			<ul v-else id="list" class="list">
+				<!-- <li class="minus">
 				Cash <span>-$400</span><button class="delete-btn">x</button
 				><button class="edit-btn">-</button>
 			</li>
@@ -32,26 +34,38 @@
 				><button class="delete-btn">x</button
 				><button class="edit-btn">-</button>
 			</li> -->
-			<li
-				v-for="(mouvement, index) in mouvements"
-				:key="index"
-				:class="mvmType(mouvement.type_mouvement_id)"
-			>
-				<div class="description">
-					<span>{{ description(mouvement.description) }}</span>
-					<span class="date">{{ formatDate(mouvement.date_mouvement) }}</span>
-				</div>
-				<span
-					>{{ mouvement.type_mouvement_id == 1 ? "+" : "-" }}
-					{{ mouvement.montant }} DA</span
-				><button class="delete-btn" @click="deleteMouvement(mouvement.id)">
-					x</button
-				><button class="edit-btn" @click="editMouvement(mouvement.id)">
-					-
-				</button>
-			</li>
-		</ul>
-
+				<li
+					v-for="(mouvement, index) in mouvements"
+					:key="index"
+					:class="mvmType(mouvement.type_mouvement_id)"
+				>
+					<div class="description">
+						<span>{{ description(mouvement.description) }}</span>
+						<span class="date">{{ formatDate(mouvement.date_mouvement) }}</span>
+					</div>
+					<div class="montant">
+						{{ mouvement.type_mouvement_id == 1 ? "+" : "-" }}
+						{{ mouvement.montant }} DA
+						<button
+							class="delete-btn-inside"
+							@click="deleteMouvement(mouvement.id)"
+						>
+							<i class="fa-solid fa-x x"></i></button
+						><button
+							class="edit-btn-inside"
+							@click="editMouvement(mouvement.id)"
+						>
+							<i class="fa-solid fa-minus minus"></i>
+						</button>
+					</div>
+					<button class="delete-btn" @click="deleteMouvement(mouvement.id)">
+						<i class="fa-solid fa-x"></i></button
+					><button class="edit-btn" @click="editMouvement(mouvement.id)">
+						<i class="fa-solid fa-minus"></i>
+					</button>
+				</li>
+			</ul>
+		</div>
 		<button class="btn" @click="hidden = open = true">
 			Ajouter transaction
 		</button>
@@ -222,6 +236,11 @@ export default {
 	},
 };
 </script>
+<style>
+:root {
+	--box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+</style>
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
@@ -237,6 +256,17 @@ export default {
 	display: flex;
 	flex-direction: column;
 	text-align: left;
+	flex-shrink: 3;
+}
+/* .info {
+	display: flex;
+}
+
+.somme {
+	flex-shrink: 0;
+} */
+.montant {
+	flex-shrink: 0;
 }
 body {
 	background-color: #f7f7f7;
@@ -370,38 +400,160 @@ input[type="number"] {
 	background-color: #e74c3c;
 	border: 0;
 	color: #fff;
-	width: 20px;
-	height: 20px;
-	font-size: 18px;
+	width: 25px;
+	height: 25px;
+	font-size: 12px;
 	line-height: 50%;
-	padding: 0px 5px 2px 5px;
+	/* padding: 0px 5px 2px 5px; */
 	position: absolute;
 	top: 50%;
 	left: 0;
 	transform: translate(-100%, -50%);
 	opacity: 0;
 	transition: opacity 0.3s ease;
+	border-radius: 30px;
 }
 .edit-btn {
 	cursor: pointer;
 	background-color: #9c88ff;
 	border: 0;
 	color: #fff;
-	width: 20px;
-	height: 20px;
-	font-size: 18px;
+	width: 25px;
+	height: 25px;
+	font-size: 12px;
 	line-height: 50%;
-	padding: 0px 5px 2px 5px;
+	/* padding: 0px 5px 2px 5px; */
 	position: absolute;
 	top: 50%;
-	left: -22px;
+	left: -25px;
 	transform: translate(-100%, -50%);
 	opacity: 0;
 	transition: opacity 0.3s ease;
+	border-radius: 30px;
+}
+.edit-btn-inside,
+.delete-btn-inside {
+	display: none;
+}
+.edit-btn-inside {
+	cursor: pointer;
+	background-color: #fff;
+	border: 0;
+	color: #fff;
+	width: 20px;
+	height: 20px;
+	font-size: 12px;
+	line-height: 50%;
+	border-radius: 10px;
+	transition: all 0.3s ease;
+}
+.x {
+	color: #e74c3c;
+	transition: all 0.4s ease;
+}
+.minus {
+	color: #9c88ff;
+	transition: all 0.4s ease;
+}
+.delete-btn-inside {
+	cursor: pointer;
+	background-color: #fff;
+	border: 0;
+	color: #fff;
+	width: 20px;
+	height: 20px;
+	font-size: 12px;
+	line-height: 50%;
+	border-radius: 10px;
+	transition: all 0.3s ease;
+}
+.delete-btn-inside:hover {
+	background: #e74c3c;
+}
+.delete-btn-inside:hover .x {
+	color: #fff;
+}
+.edit-btn-inside:hover {
+	background: #9c88ff;
+}
+.edit-btn-inside:hover .minus {
+	color: #fff;
+}
+i {
+	font-size: 10px;
 }
 
 .list li:hover .delete-btn,
 .list li:hover .edit-btn {
 	opacity: 1;
+}
+
+@media (max-width: 600px) {
+	.sidebar {
+		display: none;
+	}
+	.container {
+		margin: 0 auto;
+		width: 90%;
+		display: flex;
+		justify-content: center;
+		align-items: stretch;
+		flex-direction: column;
+	}
+	.inner-container {
+		width: 95%;
+		display: inline-block;
+		align-self: flex-end;
+	}
+	.list li {
+		padding: 10px 2px 10px 10px;
+	}
+	.edit-btn {
+		display: none;
+	}
+	.delete-btn {
+		display: none;
+	}
+
+	.edit-btn-inside,
+	.delete-btn-inside {
+		display: inline-block;
+	}
+	.inc-exp-container > div {
+		display: flex;
+		flex-direction: column;
+		justify-content: stretch;
+		align-items: stretch;
+	}
+
+	.money.minus,
+	.money.plus {
+		flex-shrink: 1;
+		transition: all 0.3s ease;
+	}
+}
+
+@media (max-width: 500px) {
+	#balance {
+		font-size: 28px;
+	}
+	.inc-exp-container h4 {
+		font-size: 14px;
+	}
+	.inc-exp-container {
+		flex-direction: column;
+	}
+	.inc-exp-container p {
+		text-align: center;
+	}
+	.money.plus,
+	.money.minus {
+		font-size: 16px;
+		/* display: flex; */
+		font-weight: bold;
+	}
+	.inc-exp-container > div:first-of-type {
+		border-right: 0px;
+	}
 }
 </style>

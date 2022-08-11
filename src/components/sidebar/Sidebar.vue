@@ -97,4 +97,11 @@ export default {
 .swap-leave-to {
 	opacity: 0;
 }
+
+/*  */
+@media (max-width: 550px) {
+	.sidebar {
+		display: none;
+	}
+}
 </style>

@@ -5,6 +5,9 @@
 		id="main"
 		:style="{ 'margin-left': sidebarWith }"
 	>
+		<!-- 		<div id="navigation-icon">
+			<i class="fas fa-bars"></i>
+		</div> -->
 		<!-- 		<nav>
 			<router-link to="/">Home</router-link> |
 			<router-link to="/about">About</router-link>

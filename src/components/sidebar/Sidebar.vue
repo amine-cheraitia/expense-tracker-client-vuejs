@@ -74,6 +74,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 }
+
 .collapse-icon {
 	position: fixed;
 	bottom: 0;
@@ -93,6 +94,7 @@ export default {
 	transition: opacity 0.3s;
 	transform: translateY(0px);
 }
+
 .swap-enter-from,
 .swap-leave-to {
 	opacity: 0;

@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import Dashboard from "../views/DashboardView.vue";
 import Ressources from "../views/RessourcesView.vue";
 import Analytics from "../views/AnalyticsView.vue";
+import Login from "../views/LoginView.vue";
 
 const routes = [
 	{
@@ -33,6 +34,12 @@ const routes = [
 		path: "/analytics",
 		name: "Analytics",
 		component: Analytics,
+	},
+	{
+		path: "/Login",
+		name: "Login",
+		component: Login,
+		meta: isAuth,
 	},
 	{
 		path: "/:pathMatch(.*)*",

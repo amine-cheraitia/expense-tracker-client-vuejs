@@ -24,26 +24,31 @@ const routes = [
 		path: "/dashboard",
 		name: "dashboard",
 		component: Dashboard,
+		meta: { requiresAuth: true },
 	},
 	{
 		path: "/ressources",
 		name: "ressources",
 		component: Ressources,
+		meta: { requiresAuth: true },
 	},
 	{
 		path: "/analytics",
 		name: "Analytics",
 		component: Analytics,
+		meta: { requiresAuth: true },
 	},
 	{
 		path: "/Login",
 		name: "Login",
 		component: Login,
+		meta: { requiresAuth: false },
 	},
 	{
 		path: "/:pathMatch(.*)*",
 		name: "NotFound",
 		component: Dashboard,
+		meta: { requiresAuth: true },
 	},
 ];
 

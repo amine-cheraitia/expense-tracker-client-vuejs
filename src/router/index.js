@@ -39,7 +39,6 @@ const routes = [
 		path: "/Login",
 		name: "Login",
 		component: Login,
-		meta: isAuth,
 	},
 	{
 		path: "/:pathMatch(.*)*",

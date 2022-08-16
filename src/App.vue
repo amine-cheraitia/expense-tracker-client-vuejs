@@ -1,6 +1,7 @@
 <template>
-	<sidebar class="sidebar"></sidebar>
+	<sidebar class="sidebar" v-if="isAuth"></sidebar>
 	<div
+		v-if="isAuth"
 		style="padding-top: 30px"
 		id="main"
 		:style="{ 'margin-left': sidebarWith }"
@@ -14,6 +15,7 @@
 		</nav> -->
 		<router-view />
 	</div>
+	<router-view v-if="!isAuth" />
 	<!-- <p>Resize me! Current width is: {{ windowWidth }}</p> -->
 </template>
 <script>
@@ -29,6 +31,9 @@ export default {
 		sidebarWith() {
 			/* console.log(this.$store.getters.Sidebarwiths); */
 			return this.$store.getters.Sidebarwiths;
+		},
+		isAuth() {
+			return true;
 		},
 	},
 	watch: {

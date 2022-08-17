@@ -20,7 +20,7 @@
 		</div>
 
 		<h3>Historique</h3>
-		{{ "erreur" + deleteError }}
+
 		<div class="inner-container">
 			<Spinner class="loading" v-if="loading"></Spinner>
 			<span v-else-if="!loading && error">{{ errorText }}</span>
@@ -106,7 +106,6 @@ export default {
 			open: false,
 			editId: null,
 			openEdit: false,
-			deleteError: null,
 		};
 	},
 	methods: {

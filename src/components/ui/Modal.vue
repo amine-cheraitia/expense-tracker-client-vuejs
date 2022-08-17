@@ -143,6 +143,24 @@ export default {
 				this.mouvement.montant = null;
 				this.mouvement.type_mouvement_id = null;
 				this.toggleHiden();
+				/* sweet alert */
+				this.$swal.fire({
+					target: "#custom-target",
+					customClass: {
+						container: "position-absolute",
+					},
+					toast: true,
+					position: "top-end",
+					showConfirmButton: false,
+					timer: 3000,
+					timerProgressBar: true,
+					didOpen: (toast) => {
+						toast.addEventListener("mouseenter", this.$swal.stopTimer);
+						toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+					},
+					icon: "success",
+					title: "Nouveau mouvement créer.",
+				});
 			} catch (error) {
 				console.log(error.response.data.solde);
 				console.log("---separation");

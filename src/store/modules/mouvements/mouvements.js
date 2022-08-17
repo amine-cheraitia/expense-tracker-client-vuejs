@@ -70,7 +70,7 @@ export default {
 				})
 				.catch((err) => {
 					throw new Error(
-						" une erreur s'est produite lors de la suppression " +
+						" une erreur s'est produite lors de la suppression, status : " +
 							err.response.status
 					);
 				});

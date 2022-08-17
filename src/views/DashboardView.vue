@@ -132,10 +132,83 @@ export default {
 		},
 		async deleteMouvement(id) {
 			try {
-				await this.$store.dispatch("mouvements/deleteMouvement", id);
+				await this.$swal({
+					title: "Confirmation",
+					text: "Est-vous sûr de bien vouloir supprimer ce mouvement ?",
+					type: "warning",
+					showCancelButton: true,
+					showCloseButton: true,
+					confirmButtonText: "Oui",
+					cancelButtonText: "Non",
+					showLoaderOnConfirm: true,
+				}).then((res) => {
+					if (res.value) {
+						this.$store.dispatch("mouvements/deleteMouvement", id);
+						this.$swal.fire({
+							target: "#custom-target",
+							customClass: {
+								container: "position-absolute",
+							},
+							toast: true,
+							position: "top-end",
+							showConfirmButton: false,
+							timer: 3000,
+							timerProgressBar: true,
+							didOpen: (toast) => {
+								toast.addEventListener("mouseenter", this.$swal.stopTimer);
+								toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+							},
+							icon: "success",
+							title: "Suppression réussite",
+						});
+					} else {
+						this.$swal("", "Suppression annuler", "info");
+					}
+				});
+
+				console.log("ok");
 			} catch (error) {
-				this.deleteError = error.message;
-				console.log(error.message);
+				const err =
+					error.message.charAt(1).toUpperCase() + error.message.slice(2);
+				/* 				this.$swal({
+					title: "Are you sure?",
+					text: "You can't revert your action",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonText: "Yes Delete it!",
+					cancelButtonText: "No, Keep it!",
+					showCloseButton: true,
+					showLoaderOnConfirm: true,
+				}).then((result) => {
+					if (result.value) {
+						this.$swal(
+							"Deleted",
+							"You successfully deleted this file",
+							"success"
+						);
+					} else {
+						this.$swal("Cancelled", "Your file is still intact", "info");
+					}
+				}); */
+
+				this.$swal.fire({
+					text: `${err}`,
+					target: "#custom-target",
+					customClass: {
+						container: "position-absolute",
+					},
+					toast: true,
+					position: "top-end",
+					showConfirmButton: false,
+					timer: 3000,
+					timerProgressBar: true,
+					didOpen: (toast) => {
+						toast.addEventListener("mouseenter", this.$swal.stopTimer);
+						toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+					},
+					icon: "error",
+					title: "Suppression impossible",
+				});
 			}
 		},
 		editMouvement(id) {

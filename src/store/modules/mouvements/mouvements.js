@@ -61,7 +61,7 @@ export default {
 			context.commit("setMouvement", mouvements);
 		},
 		async deleteMouvement(context, payload) {
-			axios
+			await axios
 				.delete("http://127.0.0.1:8000/api/mouvement/" + payload)
 				.then((res) => {
 					console.log(res);
@@ -69,7 +69,10 @@ export default {
 					context.dispatch("loadEntréSortie");
 				})
 				.catch((err) => {
-					console.log(err);
+					throw new Error(
+						" une erreur s'est produite lors de la suppression " +
+							err.response.status
+					);
 				});
 		},
 	},

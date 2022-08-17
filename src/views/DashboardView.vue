@@ -20,7 +20,7 @@
 		</div>
 
 		<h3>Historique</h3>
-
+		{{ "erreur" + deleteError }}
 		<div class="inner-container">
 			<Spinner class="loading" v-if="loading"></Spinner>
 			<span v-else-if="!loading && error">{{ errorText }}</span>
@@ -106,6 +106,7 @@ export default {
 			open: false,
 			editId: null,
 			openEdit: false,
+			deleteError: null,
 		};
 	},
 	methods: {
@@ -129,9 +130,13 @@ export default {
 				return "minus";
 			}
 		},
-		deleteMouvement(id) {
-			this.$store.dispatch("mouvements/deleteMouvement", id);
-			console.log(id);
+		async deleteMouvement(id) {
+			try {
+				await this.$store.dispatch("mouvements/deleteMouvement", id);
+			} catch (error) {
+				this.deleteError = error.message;
+				console.log(error.message);
+			}
 		},
 		editMouvement(id) {
 			this.editId = id;
@@ -229,9 +234,10 @@ export default {
 		displaySolde() {
 			const solde = this.$store.getters["ressources/solde"];
 
-			let s = new Intl.NumberFormat("fr-FR").format(Number(solde)) + ".00 DA";
+			let soldeGlobal =
+				new Intl.NumberFormat("fr-FR").format(Number(solde)) + ".00 DA";
 
-			return s;
+			return soldeGlobal;
 		},
 	},
 };
@@ -285,7 +291,8 @@ body {
 }
 .date {
 	color: #333;
-	font-size: 14px;
+	font-size: 13px;
+	font-style: italic;
 }
 
 h1 {

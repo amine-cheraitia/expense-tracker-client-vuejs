@@ -189,6 +189,24 @@ export default {
 				}
 
 				console.log(error.response.data.errors);
+
+				this.$swal.fire({
+					target: "#custom-target",
+					customClass: {
+						container: "position-absolute",
+					},
+					toast: true,
+					position: "top-end",
+					showConfirmButton: false,
+					timer: 3000,
+					timerProgressBar: true,
+					didOpen: (toast) => {
+						toast.addEventListener("mouseenter", this.$swal.stopTimer);
+						toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+					},
+					icon: "error",
+					title: "Une erreur s'est produite lors de la création.",
+				});
 			}
 
 			/*

@@ -162,6 +162,24 @@ export default {
 				this.mouvement.montant = null;
 				this.mouvement.type_mouvement_id = null;
 				this.toggleHiden();
+
+				this.$swal.fire({
+					target: "#custom-target",
+					customClass: {
+						container: "position-absolute",
+					},
+					toast: true,
+					position: "top-end",
+					showConfirmButton: false,
+					timer: 3000,
+					timerProgressBar: true,
+					didOpen: (toast) => {
+						toast.addEventListener("mouseenter", this.$swal.stopTimer);
+						toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+					},
+					icon: "success",
+					title: "Le mouvement a bien été mise a jour.",
+				});
 			} catch (error) {
 				const errors = error.response.data.errors;
 				errors;

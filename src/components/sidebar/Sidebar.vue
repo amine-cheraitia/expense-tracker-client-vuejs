@@ -16,6 +16,10 @@
 		<sidebarlink to="Analytics" icon="fas fa-chart-bar">
 			Analytics
 		</sidebarlink>
+		<sidebar-link to="logout" icon="fa fa-sign-out">
+			Se deconnecter
+		</sidebar-link>
+
 		<!-- <sidebarlink to="images" icon="fas fa-image"> Images </sidebarlink> -->
 		<span
 			class="collapse-icon"
@@ -29,9 +33,10 @@
 
 <script>
 import sidebarlink from "./SidebarLink.vue";
+import SidebarLink from "./SidebarLink.vue";
 export default {
 	name: "name",
-	components: { sidebarlink },
+	components: { sidebarlink, SidebarLink },
 	methods: {
 		toggleSidebar() {
 			this.$store.dispatch("toggleSidebar");

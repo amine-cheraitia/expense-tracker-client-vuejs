@@ -33,7 +33,7 @@ export default {
 			return this.$store.getters.Sidebarwiths;
 		},
 		isAuth() {
-			return true;
+			return this.$store.getters["auth/userId"];
 		},
 	},
 	watch: {

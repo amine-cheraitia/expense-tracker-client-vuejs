@@ -178,7 +178,7 @@ export default {
 						toast.addEventListener("mouseleave", this.$swal.resumeTimer);
 					},
 					icon: "success",
-					title: "Le mouvement a bien été mise a jour.",
+					title: "Le mouvement a bien été mise à jour.",
 				});
 			} catch (error) {
 				const errors = error.response.data.errors;

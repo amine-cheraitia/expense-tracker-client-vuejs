@@ -57,6 +57,16 @@ const routes = [
 		},
 	},
 	{
+		path: "/logout",
+		name: "logout",
+		/* meta: { requiresAuth: true }, */
+		beforeEnter: (to, from, next) => {
+			store.dispatch("auth/logout");
+			console.log("deco");
+			next({ name: "Login" });
+		},
+	},
+	{
 		path: "/:pathMatch(.*)*",
 		name: "NotFound",
 		component: Dashboard,

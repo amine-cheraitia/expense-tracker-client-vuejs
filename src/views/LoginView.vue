@@ -1,19 +1,28 @@
 <template>
 	<div class="container">
-		<div class="card">
-			<div class="title">
-				<i class="fa-solid fa-chart-column"></i> Expense Tracker
+		<form action="" method="post" @submit.prevent="sendCridential">
+			<div class="card">
+				<div class="title">
+					<i class="fa-solid fa-chart-column"></i> Expense Tracker
+				</div>
+				<div class="form-container" :class="{ invalid: Errors.email }">
+					<label for="email">Email</label>
+					<input type="email" id="email" v-model="form.email" @change="reset" />
+				</div>
+				<div class="form-container" :class="{ invalid: Errors.password }">
+					<label for="">Password</label>
+					<input type="password" v-model="form.password" @change="reset" />
+				</div>
+				<div
+					class="form-control invalidTxt"
+					style="margin-top: 10px"
+					v-if="Errors.email || Errors.password"
+				>
+					<span>{{ messageError }}</span>
+				</div>
+				<button class="btn">Se Connecter</button>
 			</div>
-			<div class="form-container">
-				<label for="email">Email</label>
-				<input type="text" id="email" v-model="email" />
-			</div>
-			<div class="form-container">
-				<label for="">Password</label>
-				<input type="password" v-model="password" />
-			</div>
-			<button class="btn">Se Connecter</button>
-		</div>
+		</form>
 	</div>
 </template>
 
@@ -25,7 +34,43 @@ export default {
 				email: null,
 				password: null,
 			},
+			Errors: {
+				email: false,
+				password: false,
+			},
+			messageError: "Veuillez saisir correctement vos identifiants",
 		};
+	},
+	methods: {
+		async sendCridential() {
+			/* axios part */
+			const data = { ...this.form };
+			this.messageError = "Veuillez saisir correctement vos identifiants";
+			if (data.email === "" || data.email === null) {
+				console.log("email erreur");
+				this.Errors.email = true;
+			}
+			if (data.password === "" || data.password === null) {
+				console.log("password erreur");
+				this.Errors.password = true;
+			}
+			if (this.Errors.email === false && this.Errors.password === false) {
+				try {
+					await this.$store.dispatch("auth/login", data);
+					this.$router.push("/");
+				} catch (error) {
+					console.log(error);
+					this.Errors.email = true;
+					this.Errors.password = true;
+					this.messageError = error;
+				}
+			}
+			console.log(data.password);
+		},
+		reset() {
+			this.Errors.email = false;
+			this.Errors.password = false;
+		},
 	},
 	props: {},
 };
@@ -68,7 +113,7 @@ export default {
 	font-weight: 700;
 }
 
-input[type="text"],
+input[type="email"],
 input[type="password"] {
 	border: 1px solid #dedede;
 	border-radius: 2px;
@@ -103,5 +148,15 @@ input[type="password"] {
 	width: 80%;
 
 	margin-bottom: 20px;
+}
+
+.form-container.invalid input {
+	border-color: red;
+}
+.form-container.invalid label {
+	color: red;
+}
+.invalidTxt {
+	color: red;
 }
 </style>

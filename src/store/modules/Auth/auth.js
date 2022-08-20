@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export default {
 	namespaced: true,
 	state() {
@@ -13,6 +15,11 @@ export default {
 			state.user = null;
 			state.token = null;
 		},
+		setUser(state, payload) {
+			state.userId = payload.userId;
+			state.user = payload.user;
+			state.token = payload.token;
+		},
 	},
 	actions: {
 		async logout(context) {
@@ -20,6 +27,22 @@ export default {
 			localStorage.removeItem("user");
 			localStorage.removeItem("token");
 			await context.commit("resetUser");
+		},
+		async login(context, payload) {
+			await axios
+				.post("/api/login", payload)
+				.then((res) => {
+					const data = {
+						userId: res.data.user.id,
+						user: res.data.user,
+						token: res.data.token,
+					};
+					context.commit("setUser", data);
+					console.log(res);
+				})
+				.catch((err) => {
+					throw err.response.data.message;
+				});
 		},
 	},
 	getters: {

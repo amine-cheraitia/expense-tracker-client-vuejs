@@ -101,8 +101,13 @@ export default {
 	emits: ["toggleModal"],
 	methods: {
 		async loadEditMouvement() {
+			const config = {
+				headers: {
+					Authorization: `Bearer ${this.$store.getters["auth/getToken"]}`,
+				},
+			};
 			await axios
-				.get("http://127.0.0.1:8000/api/mouvement/" + this.editId)
+				.get("http://127.0.0.1:8000/api/mouvement/" + this.editId, config)
 				.then((res) => {
 					console.log(res.data);
 					this.mouvement.description = res.data.description;
@@ -140,10 +145,15 @@ export default {
 
 					...this.mouvement,
 				};
-
+				const config = {
+					headers: {
+						Authorization: `Bearer ${this.$store.getters["auth/getToken"]}`,
+					},
+				};
 				await axios.patch(
 					"http://127.0.0.1:8000/api/mouvement/" + this.mouvement.id,
-					data
+					data,
+					config
 				);
 				console.log("update");
 				this.Errors.descriptionError = false;

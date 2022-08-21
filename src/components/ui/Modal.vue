@@ -125,8 +125,12 @@ export default {
 					solde_intermediaire: 5000,
 					...this.mouvement,
 				};
-
-				await axios.post("http://127.0.0.1:8000/api/mouvement", data);
+				const config = {
+					headers: {
+						Authorization: `Bearer ${this.$store.getters["auth/getToken"]}`,
+					},
+				};
+				await axios.post("http://127.0.0.1:8000/api/mouvement", data, config);
 				console.log("success");
 				this.Errors.descriptionError = false;
 				this.Errors.ressource_idError = false;

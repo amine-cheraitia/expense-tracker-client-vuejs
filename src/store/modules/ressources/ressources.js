@@ -30,8 +30,13 @@ export default {
 			let ressources;
 			const userId = context.rootGetters["auth/userId"];
 			let erreur = null;
+			const config = {
+				headers: {
+					Authorization: `Bearer ${context.rootGetters["auth/getToken"]}`,
+				},
+			};
 			await axios
-				.get("http://127.0.0.1:8000/api/ressource/user/" + userId)
+				.get("http://127.0.0.1:8000/api/ressource/user/" + userId, config)
 				.then((result) => {
 					ressources = result.data;
 					let soldeGlobale = 0;
@@ -52,8 +57,13 @@ export default {
 			}
 		},
 		async loadRessourcesType(context) {
+			const config = {
+				headers: {
+					Authorization: `Bearer ${context.rootGetters["auth/getToken"]}`,
+				},
+			};
 			await axios
-				.get("http://127.0.0.1:8000/api/typeressource")
+				.get("http://127.0.0.1:8000/api/typeressource", config)
 				.then((result) => {
 					context.commit("setRessourcesType", result.data);
 				})
@@ -62,14 +72,20 @@ export default {
 				});
 		},
 		async deleteRessource(context, payload) {
-			axios
-				.delete("http://127.0.0.1:8000/api/ressource/" + payload)
+			const config = {
+				headers: {
+					Authorization: `Bearer ${context.rootGetters["auth/getToken"]}`,
+				},
+			};
+			await axios
+				.delete("http://127.0.0.1:8000/api/ressource/" + payload, config)
 				.then((res) => {
 					console.log(res);
 					context.dispatch("loadRessources");
 				})
 				.catch((err) => {
-					console.log(err);
+					console.log(err.message);
+					throw err.message;
 				});
 		},
 	},

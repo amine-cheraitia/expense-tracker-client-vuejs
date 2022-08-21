@@ -39,9 +39,13 @@ export default {
 	actions: {
 		async loadEntréSortie(context) {
 			const userId = context.rootGetters["auth/userId"];
-
+			const config = {
+				headers: {
+					Authorization: `Bearer ${context.rootGetters["auth/getToken"]}`,
+				},
+			};
 			await axios
-				.get("http://127.0.0.1:8000/api/ressourcetotal/user/" + userId)
+				.get("http://127.0.0.1:8000/api/ressourcetotal/user/" + userId, config)
 				.then((res) => {
 					let payloadEntréSortie = {
 						entré: res.data.entré,
@@ -54,15 +58,28 @@ export default {
 				});
 		},
 		async loadMouvement(context) {
-			let ressource = await axios.get("http://127.0.0.1:8000/api/mouvement");
+			const config = {
+				headers: {
+					Authorization: `Bearer ${context.rootGetters["auth/getToken"]}`,
+				},
+			};
+			let ressource = await axios.get(
+				"http://127.0.0.1:8000/api/mouvement",
+				config
+			);
 
 			let mouvements = ressource.data;
 
 			context.commit("setMouvement", mouvements);
 		},
 		async deleteMouvement(context, payload) {
+			const config = {
+				headers: {
+					Authorization: `Bearer ${context.rootGetters["auth/getToken"]}`,
+				},
+			};
 			await axios
-				.delete("http://127.0.0.1:8000/api/mouvement/" + payload)
+				.delete("http://127.0.0.1:8000/api/mouvement/" + payload, config)
 				.then((res) => {
 					console.log(res);
 					context.dispatch("loadMouvement");

@@ -52,6 +52,9 @@ export default {
 			this.windowWidth = window.innerWidth;
 		};
 	},
+	created() {
+		this.$store.dispatch("auth/tryLogin");
+	},
 };
 </script>
 <style>

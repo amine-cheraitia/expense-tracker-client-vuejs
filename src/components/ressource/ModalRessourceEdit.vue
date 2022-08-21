@@ -116,10 +116,15 @@ export default {
 					...this.ressource,
 				};
 				console.log(data);
-
+				const config = {
+					headers: {
+						Authorization: `Bearer ${this.$store.getters["auth/getToken"]}`,
+					},
+				};
 				await axios.patch(
 					"http://127.0.0.1:8000/api/ressource/" + this.ressource.id,
-					data
+					data,
+					config
 				);
 				console.log("update");
 				this.Errors.nom_ressourceError = false;

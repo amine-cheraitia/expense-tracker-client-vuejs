@@ -98,8 +98,12 @@ export default {
 					user_id: userID,
 					...this.ressource,
 				};
-
-				await axios.post("http://127.0.0.1:8000/api/ressource", data);
+				const config = {
+					headers: {
+						Authorization: `Bearer ${this.$store.getters["auth/getToken"]}`,
+					},
+				};
+				await axios.post("http://127.0.0.1:8000/api/ressource", data, config);
 				console.log("success");
 				this.Errors.nom_ressourceError = false;
 				this.Errors.num_compteError = false;

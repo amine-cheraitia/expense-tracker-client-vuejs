@@ -57,12 +57,46 @@ export default {
 			if (this.Errors.email === false && this.Errors.password === false) {
 				try {
 					await this.$store.dispatch("auth/login", data);
+					this.$swal.fire({
+						target: "#custom-target",
+						customClass: {
+							container: "position-absolute",
+						},
+						toast: true,
+						position: "top-end",
+						showConfirmButton: false,
+						timer: 3000,
+						timerProgressBar: true,
+						didOpen: (toast) => {
+							toast.addEventListener("mouseenter", this.$swal.stopTimer);
+							toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+						},
+						icon: "success",
+						title: "Authentification réussite",
+					});
 					this.$router.push("/");
 				} catch (error) {
 					console.log(error);
 					this.Errors.email = true;
 					this.Errors.password = true;
 					this.messageError = error;
+					this.$swal.fire({
+						target: "#custom-target",
+						customClass: {
+							container: "position-absolute",
+						},
+						toast: true,
+						position: "top-end",
+						showConfirmButton: false,
+						timer: 3000,
+						timerProgressBar: true,
+						didOpen: (toast) => {
+							toast.addEventListener("mouseenter", this.$swal.stopTimer);
+							toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+						},
+						icon: "error",
+						title: "Authentification impossible",
+					});
 				}
 			}
 			console.log(data.password);

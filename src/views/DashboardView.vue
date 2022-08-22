@@ -278,6 +278,14 @@ export default {
 		//setinterval for solde
 		//https://www.youtube.com/watch?v=kOcFZV3c75I
 	},
+	beforeMount() {
+		console.log("before mount");
+		this.$store.dispatch("auth/checkToken");
+	},
+	beforeCreate() {
+		console.log("before create");
+		this.$store.dispatch("auth/checkToken");
+	},
 	/* 	watch: {
 		soldeGet(newValue, oldValue) {
 			console.log(newValue + " " + oldValue);

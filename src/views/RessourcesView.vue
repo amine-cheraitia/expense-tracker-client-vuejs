@@ -150,6 +150,14 @@ export default {
 	created() {
 		this.loadRessources();
 	},
+	beforeMount() {
+		console.log("before mount");
+		this.$store.dispatch("auth/checkToken");
+	},
+	beforeCreate() {
+		console.log("before create");
+		this.$store.dispatch("auth/checkToken");
+	},
 };
 </script>
 

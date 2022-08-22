@@ -48,7 +48,7 @@ export default {
 				})
 				.catch((err) => {
 					erreur = err.response.status;
-					const error = new Error(err.response.status);
+					const error = err.response.status;
 					throw error;
 				});
 

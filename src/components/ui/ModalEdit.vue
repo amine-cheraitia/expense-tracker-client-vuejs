@@ -65,6 +65,9 @@
 						placeholder="Saisissez le montant..."
 					/>
 				</div>
+				<div class="form-control invalidTxt" style="margin-top: 10px">
+					<span>{{ errorMessage }}</span>
+				</div>
 				<button class="btn">Enregistrer la transaction</button>
 			</form>
 		</div>
@@ -96,11 +99,18 @@ export default {
 				montantError: false,
 				type_mouvement_idError: false,
 			},
+			errorMessage: "",
 		};
 	},
 	emits: ["toggleModal"],
 	methods: {
 		async loadEditMouvement() {
+			this.Errors.descriptionError = false;
+			this.Errors.ressource_idError = false;
+			this.Errors.date_mouvementError = false;
+			this.Errors.montantError = false;
+			this.Errors.type_mouvement_idError = false;
+			this.errorMessage = "";
 			const config = {
 				headers: {
 					Authorization: `Bearer ${this.$store.getters["auth/getToken"]}`,
@@ -138,6 +148,7 @@ export default {
 			this.Errors.date_mouvementError = false;
 			this.Errors.montantError = false;
 			this.Errors.type_mouvement_idError = false;
+			this.errorMessage = "";
 			try {
 				const userID = this.$store.getters["auth/userId"];
 				const data = {
@@ -161,6 +172,7 @@ export default {
 				this.Errors.date_mouvementError = false;
 				this.Errors.montantError = false;
 				this.Errors.type_mouvement_idError = false;
+				this.errorMessage = "";
 				await this.$store.dispatch("mouvements/loadMouvement");
 				await this.$store.dispatch("mouvements/loadEntréSortie");
 				await this.$store.dispatch(
@@ -203,6 +215,10 @@ export default {
 				if (errors.montant) {
 					this.Errors.montantError = true;
 				}
+				if (error.response.data.solde) {
+					this.errorMessage = error.response.data.errors;
+					this.Errors.montantError = true;
+				}
 				if (errors.date_mouvement) {
 					this.Errors.date_mouvementError = true;
 				}
@@ -226,6 +242,7 @@ export default {
 					icon: "error",
 					title: "Une erreur s'est produite lors de l'enregistrement.",
 				});
+				this.errorMessage = error.response.data.errors;
 				console.log(error.response.data.errors);
 			}
 		},
@@ -377,7 +394,9 @@ select {
 .form-control.invalid label {
 	color: red;
 }
-
+.invalidTxt {
+	color: red;
+}
 .btn {
 	cursor: pointer;
 	background-color: #9c88ff;

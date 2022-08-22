@@ -1,32 +1,37 @@
 <template>
-	<sidebar class="sidebar" v-if="isAuth"></sidebar>
-	<div
-		v-if="isAuth"
-		style="padding-top: 30px"
-		id="main"
-		:style="{ 'margin-left': sidebarWith }"
-	>
-		<!-- 		<div id="navigation-icon">
+	<Spinner v-if="loading"></Spinner>
+	<div v-else>
+		<sidebar class="sidebar" v-if="isAuth"></sidebar>
+		<div
+			v-if="isAuth"
+			style="padding-top: 30px"
+			id="main"
+			:style="{ 'margin-left': sidebarWith }"
+		>
+			<!-- 		<div id="navigation-icon">
 			<i class="fas fa-bars"></i>
 		</div> -->
-		<!-- 		<nav>
+			<!-- 		<nav>
 			<router-link to="/">Home</router-link> |
 			<router-link to="/about">About</router-link>
 		</nav> -->
-		<router-view />
+			<router-view />
+		</div>
+		<router-view v-if="!isAuth" />
 	</div>
-	<router-view v-if="!isAuth" />
 	<!-- <p>Resize me! Current width is: {{ windowWidth }}</p> -->
 </template>
 <script>
 import sidebar from "./components/sidebar/Sidebar.vue";
+import Spinner from "./components/ui/Spinner.vue";
 export default {
 	data() {
 		return {
 			windowWidth: window.innerWidth,
+			loading: true,
 		};
 	},
-	components: { sidebar },
+	components: { sidebar, Spinner },
 	computed: {
 		sidebarWith() {
 			/* console.log(this.$store.getters.Sidebarwiths); */
@@ -45,6 +50,12 @@ export default {
 			}
 		},
 	},
+	methods: {
+		async trytologin() {
+			await this.$store.dispatch("auth/tryLogin");
+			this.loading = false;
+		},
+	},
 	mounted() {
 		/* this.$store.dispatch("ressources/loadRessources"); */
 
@@ -53,7 +64,8 @@ export default {
 		};
 	},
 	created() {
-		this.$store.dispatch("auth/tryLogin");
+		/* this.$store.dispatch("auth/tryLogin"); */
+		this.trytologin();
 	},
 };
 </script>

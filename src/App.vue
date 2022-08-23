@@ -1,5 +1,7 @@
 <template>
-	<Spinner v-if="loading"></Spinner>
+	<div v-if="loading" class="center-spinner">
+		<Spinner></Spinner>
+	</div>
 	<div v-else>
 		<sidebar class="sidebar" v-if="isAuth"></sidebar>
 		<div
@@ -103,7 +105,13 @@ nav a.router-link-exact-active {
 #main {
 	transition: 0.4s margin-left ease-in;
 }
-
+.center-spinner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100vh;
+}
 /* responsive */
 @media (max-width: 600px) {
 	.sidebar {

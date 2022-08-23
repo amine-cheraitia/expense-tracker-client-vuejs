@@ -21,6 +21,7 @@
 					<span>{{ messageError }}</span>
 				</div>
 				<button class="btn">Se Connecter</button>
+				<router-link to="/signup" class="btn"> signup</router-link>
 			</div>
 		</form>
 	</div>

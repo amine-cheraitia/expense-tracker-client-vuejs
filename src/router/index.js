@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import Dashboard from "../views/DashboardView.vue";
 import Ressources from "../views/RessourcesView.vue";
 import Analytics from "../views/AnalyticsView.vue";
+import Signup from "../views/SignUpView.vue";
 import Login from "../views/LoginView.vue";
 import store from "../store/index.js";
 
@@ -44,10 +45,23 @@ const routes = [
 		meta: { requiresAuth: true },
 	},
 	{
-		path: "/Login",
+		path: "/login",
 		name: "Login",
 		component: Login,
 		meta: { requiresAuth: false },
+		beforeEnter: (to, from, next) => {
+			if (store.getters["auth/userId"]) {
+				next({ name: "/" });
+			} else {
+				next();
+			}
+		},
+	},
+	{
+		path: "/signup",
+		name: "Signup",
+		component: Signup,
+		/* meta: { requiresAuth: false }, */
 		beforeEnter: (to, from, next) => {
 			if (store.getters["auth/userId"]) {
 				next({ name: "/" });

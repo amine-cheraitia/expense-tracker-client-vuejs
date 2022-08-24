@@ -63,14 +63,17 @@ export default {
 					Authorization: `Bearer ${context.rootGetters["auth/getToken"]}`,
 				},
 			};
-			let ressource = await axios.get(
-				"http://127.0.0.1:8000/api/mouvement",
-				config
-			);
-
-			let mouvements = ressource.data;
-
-			context.commit("setMouvement", mouvements);
+			const userId = context.rootGetters["auth/userId"];
+			await axios
+				.get("http://127.0.0.1:8000/api/mouvement/user/" + userId, config)
+				.then((res) => {
+					console.log(userId);
+					console.log(res);
+					context.commit("setMouvement", res.data);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 		},
 		async deleteMouvement(context, payload) {
 			const config = {

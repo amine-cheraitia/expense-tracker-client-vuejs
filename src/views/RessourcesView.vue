@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="wrapper">
 		<h2>Liste des ressources</h2>
 		<div class="main">
 			<table class="table">

@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="wrapper">
 		<h2>Expense Tracker</h2>
 
 		<div class="container">

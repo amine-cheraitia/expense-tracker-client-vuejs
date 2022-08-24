@@ -1,5 +1,5 @@
 <template>
-	<div>analytics</div>
+	<div class="wrapper">analytics</div>
 </template>
 
 <script>

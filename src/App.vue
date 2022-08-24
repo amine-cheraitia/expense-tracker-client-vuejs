@@ -4,12 +4,7 @@
 	</div>
 	<div v-else>
 		<sidebar class="sidebar" v-if="isAuth"></sidebar>
-		<div
-			v-if="isAuth"
-			style="padding-top: 30px"
-			id="main"
-			:style="{ 'margin-left': sidebarWith }"
-		>
+		<div id="main" :style="{ 'margin-left': sidebarWith }">
 			<!-- 		<div id="navigation-icon">
 			<i class="fas fa-bars"></i>
 		</div> -->
@@ -17,9 +12,18 @@
 			<router-link to="/">Home</router-link> |
 			<router-link to="/about">About</router-link>
 		</nav> -->
-			<router-view />
+			<router-view v-slot="slotProps">
+				<transition name="route" appear mode="out-in">
+					<component :is="slotProps.Component"></component>
+				</transition>
+			</router-view>
 		</div>
-		<router-view v-if="!isAuth" />
+		<router-view v-slot="slotProps" v-if="!isAuth">
+			<transition name="route" appear mode="out-in">
+				<component :is="slotProps.Component"></component>
+			</transition>
+		</router-view>
+		<!-- <router-view v-if="!isAuth" /> -->
 	</div>
 	<!-- <p>Resize me! Current width is: {{ windowWidth }}</p> -->
 </template>
@@ -72,6 +76,9 @@ export default {
 };
 </script>
 <style>
+.wrapper {
+	padding-top: 30px;
+}
 body {
 	background-color: #f7f7f7;
 	/* display: flex;
@@ -111,6 +118,27 @@ nav a.router-link-exact-active {
 	justify-content: center;
 	width: 100%;
 	height: 100vh;
+}
+/* animation router */
+.route-enter-from {
+	opacity: 0;
+	transform: translateY(-30px);
+}
+.route-leave-to {
+	opacity: 0;
+	transform: translateY(30px);
+}
+.route-enter-active {
+	transition: all 0.3s ease-out;
+}
+.route-leave-active {
+	transition: all 0.3s ease-in;
+}
+
+.route-leave-from,
+.route-enter-to {
+	opacity: 1;
+	transform: translateY(0px);
 }
 /* responsive */
 @media (max-width: 600px) {

@@ -1,32 +1,33 @@
 <template>
-	<h2>Liste des ressources</h2>
-	<div class="main">
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Ressource</th>
-					<th>N° de compte</th>
+	<div>
+		<h2>Liste des ressources</h2>
+		<div class="main">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Ressource</th>
+						<th>N° de compte</th>
 
-					<th>Solde</th>
-					<th>actions</th>
+						<th>Solde</th>
+						<th>actions</th>
+					</tr>
+				</thead>
+				<tr v-if="loading">
+					<td colspan="4">
+						<Spinner class="loading"></Spinner>
+					</td>
 				</tr>
-			</thead>
-			<tr v-if="loading">
-				<td colspan="4">
-					<Spinner class="loading"></Spinner>
-				</td>
-			</tr>
-			<tr v-else-if="!loading && error">
-				<td colspan="4">
-					<span>{{ errorText }} </span>
-				</td>
-			</tr>
-			<tr v-else-if="ressources.length === 0">
-				<td colspan="4">
-					<span>Il y'a pas de ressource enregistrer pour l'instant</span>
-				</td>
-			</tr>
-			<!-- 				<tr>
+				<tr v-else-if="!loading && error">
+					<td colspan="4">
+						<span>{{ errorText }} </span>
+					</td>
+				</tr>
+				<tr v-else-if="ressources.length === 0">
+					<td colspan="4">
+						<span>Il y'a pas de ressource enregistrer pour l'instant</span>
+					</td>
+				</tr>
+				<!-- 				<tr>
 					<td>a</td>
 					<td>z</td>
 
@@ -41,42 +42,43 @@
 						</button>
 					</td>
 				</tr> -->
-			<transition-group name="list" tag="tbody" v-else>
-				<tr v-for="(ressource, index) in ressources" :key="index">
-					<td>{{ ressource.nom_ressource }}</td>
-					<td>
-						{{ ressource.num_compte == "" ? "-" : ressource.num_compte }}
-					</td>
+				<transition-group name="list" tag="tbody" v-else>
+					<tr v-for="(ressource, index) in ressources" :key="index">
+						<td>{{ ressource.nom_ressource }}</td>
+						<td>
+							{{ ressource.num_compte == "" ? "-" : ressource.num_compte }}
+						</td>
 
-					<td>{{ soldeFormat(ressource.solde) }}</td>
-					<td>
-						<button class="x" @click="deleteRessource(ressource.id)">
-							<i class="fa-solid fa-x"></i>
-						</button>
-						&nbsp;
-						<button class="minus" @click="editRessource(ressource.id)">
-							<i class="fa-solid fa-minus"></i>
-						</button>
-					</td>
-				</tr>
-			</transition-group>
-		</table>
-		<button class="btn" @click="open = !open">Ajouter Ressource</button>
-		<ModalRessource
-			v-on:toggleModal="toggleHiden"
-			:open="open"
-		></ModalRessource>
-		<ModalRessourceEdit
-			v-on:toggleModal="toggleHiden"
-			:openEdit="openEdit"
-			:editId="editId"
-		>
-		</ModalRessourceEdit>
-		<ModalConfirmation
-			v-on:toggleModal="toggleModalConfirmation"
-			:openConfirmation="openConfirmation"
-			:idDelete="idDelete"
-		></ModalConfirmation>
+						<td>{{ soldeFormat(ressource.solde) }}</td>
+						<td>
+							<button class="x" @click="deleteRessource(ressource.id)">
+								<i class="fa-solid fa-x"></i>
+							</button>
+							&nbsp;
+							<button class="minus" @click="editRessource(ressource.id)">
+								<i class="fa-solid fa-minus"></i>
+							</button>
+						</td>
+					</tr>
+				</transition-group>
+			</table>
+			<button class="btn" @click="open = !open">Ajouter Ressource</button>
+			<ModalRessource
+				v-on:toggleModal="toggleHiden"
+				:open="open"
+			></ModalRessource>
+			<ModalRessourceEdit
+				v-on:toggleModal="toggleHiden"
+				:openEdit="openEdit"
+				:editId="editId"
+			>
+			</ModalRessourceEdit>
+			<ModalConfirmation
+				v-on:toggleModal="toggleModalConfirmation"
+				:openConfirmation="openConfirmation"
+				:idDelete="idDelete"
+			></ModalConfirmation>
+		</div>
 	</div>
 </template>
 

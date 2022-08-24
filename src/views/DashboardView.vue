@@ -1,31 +1,32 @@
 <template>
-	<h2>Expense Tracker</h2>
+	<div>
+		<h2>Expense Tracker</h2>
 
-	<div class="container">
-		<h4>Votre Solde</h4>
-		<Spinner class="loading" v-if="loadingSold"></Spinner>
-		<h1 v-else id="balance">
-			{{ displaySolde }}
-		</h1>
+		<div class="container">
+			<h4>Votre Solde</h4>
+			<Spinner class="loading" v-if="loadingSold"></Spinner>
+			<h1 v-else id="balance">
+				{{ displaySolde }}
+			</h1>
 
-		<div class="inc-exp-container">
-			<div>
-				<h4>Ressources</h4>
-				<p id="money-plus" class="money plus">+{{ ressources }}</p>
+			<div class="inc-exp-container">
+				<div>
+					<h4>Ressources</h4>
+					<p id="money-plus" class="money plus">+{{ ressources }}</p>
+				</div>
+				<div>
+					<h4>Dépenses</h4>
+					<p id="money-minus" class="money minus">-{{ depenses }}</p>
+				</div>
 			</div>
-			<div>
-				<h4>Dépenses</h4>
-				<p id="money-minus" class="money minus">-{{ depenses }}</p>
-			</div>
-		</div>
 
-		<h3>Historique</h3>
+			<h3>Historique</h3>
 
-		<div class="inner-container">
-			<Spinner class="loading" v-if="loading"></Spinner>
-			<span v-else-if="!loading && error">{{ errorText }}</span>
-			<ul v-else id="list" class="list">
-				<!-- <li class="minus">
+			<div class="inner-container">
+				<Spinner class="loading" v-if="loading"></Spinner>
+				<span v-else-if="!loading && error">{{ errorText }}</span>
+				<ul v-else id="list" class="list">
+					<!-- <li class="minus">
 				Cash <span>-$400</span><button class="delete-btn">x</button
 				><button class="edit-btn">-</button>
 			</li>
@@ -34,47 +35,50 @@
 				><button class="delete-btn">x</button
 				><button class="edit-btn">-</button>
 			</li> -->
-				<li
-					v-for="(mouvement, index) in mouvements"
-					:key="index"
-					:class="mvmType(mouvement.type_mouvement_id)"
-				>
-					<div class="description">
-						<span>{{ description(mouvement.description) }}</span>
-						<span class="date">{{ formatDate(mouvement.date_mouvement) }}</span>
-					</div>
-					<div class="montant">
-						{{ mouvement.type_mouvement_id == 1 ? "+" : "-" }}
-						{{ mouvement.montant }} DA
-						<button
-							class="delete-btn-inside"
-							@click="deleteMouvement(mouvement.id)"
-						>
-							<i class="fa-solid fa-x x"></i></button
-						><button
-							class="edit-btn-inside"
-							@click="editMouvement(mouvement.id)"
-						>
-							<i class="fa-solid fa-minus minus"></i>
+					<li
+						v-for="(mouvement, index) in mouvements"
+						:key="index"
+						:class="mvmType(mouvement.type_mouvement_id)"
+					>
+						<div class="description">
+							<span>{{ description(mouvement.description) }}</span>
+							<span class="date">{{
+								formatDate(mouvement.date_mouvement)
+							}}</span>
+						</div>
+						<div class="montant">
+							{{ mouvement.type_mouvement_id == 1 ? "+" : "-" }}
+							{{ mouvement.montant }} DA
+							<button
+								class="delete-btn-inside"
+								@click="deleteMouvement(mouvement.id)"
+							>
+								<i class="fa-solid fa-x x"></i></button
+							><button
+								class="edit-btn-inside"
+								@click="editMouvement(mouvement.id)"
+							>
+								<i class="fa-solid fa-minus minus"></i>
+							</button>
+						</div>
+						<button class="delete-btn" @click="deleteMouvement(mouvement.id)">
+							<i class="fa-solid fa-x"></i></button
+						><button class="edit-btn" @click="editMouvement(mouvement.id)">
+							<i class="fa-solid fa-minus"></i>
 						</button>
-					</div>
-					<button class="delete-btn" @click="deleteMouvement(mouvement.id)">
-						<i class="fa-solid fa-x"></i></button
-					><button class="edit-btn" @click="editMouvement(mouvement.id)">
-						<i class="fa-solid fa-minus"></i>
-					</button>
-				</li>
-			</ul>
+					</li>
+				</ul>
+			</div>
+			<button class="btn" @click="hidden = open = true">
+				Ajouter transaction
+			</button>
+			<Modal v-on:toggleModal="toggleHiden" :open="open" />
+			<ModalEdit
+				v-on:toggleModal="toggleHiden"
+				:openEdit="openEdit"
+				:editId="editId"
+			/>
 		</div>
-		<button class="btn" @click="hidden = open = true">
-			Ajouter transaction
-		</button>
-		<Modal v-on:toggleModal="toggleHiden" :open="open" />
-		<ModalEdit
-			v-on:toggleModal="toggleHiden"
-			:openEdit="openEdit"
-			:editId="editId"
-		/>
 	</div>
 </template>
 

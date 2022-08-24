@@ -57,7 +57,10 @@ export default {
 			const userId = localStorage.getItem("userId");
 			const user = JSON.parse(localStorage.getItem("user"));
 			const token = localStorage.getItem("token");
-
+			if (user && token) {
+				commit("setUser", { userId: userId, user: user, token: token });
+				/* router.push("/"); */
+			}
 			const config = {
 				headers: {
 					Authorization: `Bearer ${token}`,
@@ -67,10 +70,9 @@ export default {
 				.post("/api/checktoken", user, config)
 				.then((res) => {
 					console.log(res);
-					if (user && token) {
-						commit("setUser", { userId: userId, user: user, token: token });
-						router.push("/");
-					}
+
+					commit("setUser", { userId: userId, user: user, token: token });
+					/* router.push("/"); */
 				})
 				.catch((err) => {
 					console.log(err);

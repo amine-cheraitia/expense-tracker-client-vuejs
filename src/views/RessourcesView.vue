@@ -18,7 +18,12 @@
 			</tr>
 			<tr v-else-if="!loading && error">
 				<td colspan="4">
-					<span>{{ errorText }}</span>
+					<span>{{ errorText }} </span>
+				</td>
+			</tr>
+			<tr v-else-if="ressources.length === 0">
+				<td colspan="4">
+					<span>Il y'a pas de ressource enregistrer pour l'instant</span>
 				</td>
 			</tr>
 			<!-- 				<tr>

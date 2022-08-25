@@ -21,7 +21,8 @@
 					<span>{{ messageError }}</span>
 				</div>
 				<button class="btn">Se Connecter</button>
-				<router-link to="/signup" class="btn"> signup</router-link>
+
+				<button class="btn" @click="$router.push('/signup')">S'inscrire</button>
 			</div>
 		</form>
 	</div>
@@ -173,6 +174,10 @@ input[type="password"] {
 	padding: 10px;
 	width: 100%;
 	border-radius: 5px;
+	transition: 0.4s ease-in;
+}
+.btn:hover {
+	background-color: #6d5eb4;
 }
 
 .form-container {

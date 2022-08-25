@@ -51,7 +51,10 @@ const routes = [
 		meta: { requiresAuth: false },
 		beforeEnter: (to, from, next) => {
 			if (store.getters["auth/userId"]) {
-				next({ name: "/" });
+				console.log(from);
+				console.log(to.name);
+				next({ name: from.name });
+				/* next({ name: "/" }); */
 			} else {
 				next();
 			}

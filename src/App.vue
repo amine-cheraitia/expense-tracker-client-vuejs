@@ -18,11 +18,11 @@
 				</transition>
 			</router-view>
 		</div>
-		<router-view v-slot="slotProps" v-if="!isAuth">
+		<!-- 		<router-view v-slot="slotProps" v-if="!isAuth">
 			<transition name="route" appear mode="out-in">
 				<component :is="slotProps.Component"></component>
 			</transition>
-		</router-view>
+		</router-view> -->
 		<!-- <router-view v-if="!isAuth" /> -->
 	</div>
 	<!-- <p>Resize me! Current width is: {{ windowWidth }}</p> -->

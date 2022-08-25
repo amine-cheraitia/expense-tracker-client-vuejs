@@ -53,6 +53,25 @@ export default {
 					throw err.response.data.message;
 				});
 		},
+		async signUp(context, payload) {
+			await axios
+				.post("/api/signup", payload)
+				.then((res) => {
+					const data = {
+						userId: res.data.user.id,
+						user: res.data.user,
+						token: res.data.token,
+					};
+					localStorage.setItem("userId", res.data.user.id);
+					localStorage.setItem("user", JSON.stringify(res.data.user));
+					localStorage.setItem("token", res.data.token);
+					context.commit("setUser", data);
+					console.log(res);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		},
 		async tryLogin({ commit }) {
 			const userId = localStorage.getItem("userId");
 			const user = JSON.parse(localStorage.getItem("user"));

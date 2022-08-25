@@ -5,6 +5,10 @@
 				<div class="title">
 					<i class="fa-solid fa-chart-column"></i> Expense Tracker
 				</div>
+				<div class="form-container" :class="{ invalid: Errors.name }">
+					<label for="name">Name</label>
+					<input type="text" id="name" v-model="form.name" @change="reset" />
+				</div>
 				<div class="form-container" :class="{ invalid: Errors.email }">
 					<label for="email">Email</label>
 					<input type="email" id="email" v-model="form.email" @change="reset" />
@@ -13,15 +17,27 @@
 					<label for="">Password</label>
 					<input type="password" v-model="form.password" @change="reset" />
 				</div>
-				<div class="form-container" :class="{ invalid: Errors.password }">
+				<div
+					class="form-container"
+					:class="{ invalid: Errors.password_confirmation }"
+				>
 					<label for="">Password confirmation</label>
-					<input type="password" v-model="form.password" @change="reset" />
+					<input
+						type="password"
+						v-model="form.password_confirmation"
+						@change="reset"
+					/>
 				</div>
 
 				<div
 					class="form-control invalidTxt"
 					style="margin-top: 10px"
-					v-if="Errors.email || Errors.password"
+					v-if="
+						Errors.email ||
+						Errors.password ||
+						Errors.name ||
+						Errors.password_confirmation
+					"
 				>
 					<span>{{ messageError }}</span>
 				</div>
@@ -38,19 +54,23 @@ export default {
 			form: {
 				email: null,
 				password: null,
+				password_confirmation: null,
+				name: null,
 			},
 			Errors: {
 				email: false,
 				password: false,
+				password_confirmation: null,
+				name: null,
 			},
-			messageError: "Veuillez saisir correctement vos identifiants",
+			messageError: "Veuillez saisir correctement vos donnés",
 		};
 	},
 	methods: {
 		async sendCridential() {
 			/* axios part */
 			const data = { ...this.form };
-			this.messageError = "Veuillez saisir correctement vos identifiants";
+			this.messageError = "Veuillez saisir correctement vos donnés";
 			if (data.email === "" || data.email === null) {
 				console.log("email erreur");
 				this.Errors.email = true;
@@ -59,9 +79,26 @@ export default {
 				console.log("password erreur");
 				this.Errors.password = true;
 			}
-			if (this.Errors.email === false && this.Errors.password === false) {
+			if (
+				data.password_confirmation === "" ||
+				data.password_confirmation === null ||
+				data.password_confirmation !== data.password
+			) {
+				console.log("password erreur");
+				this.Errors.password_confirmation = true;
+				this.messageError += ", veuillez saisir le même mots de passe";
+			}
+			if (data.name === "" || data.name === null) {
+				this.Errors.name = true;
+			}
+			if (
+				this.Errors.email === false &&
+				this.Errors.password === false &&
+				this.Errors.password_confirmation === false &&
+				this.Errors.name === false
+			) {
 				try {
-					await this.$store.dispatch("auth/login", data);
+					await this.$store.dispatch("auth/signUp", data);
 					this.$swal.fire({
 						target: "#custom-target",
 						customClass: {
@@ -77,13 +114,15 @@ export default {
 							toast.addEventListener("mouseleave", this.$swal.resumeTimer);
 						},
 						icon: "success",
-						title: "Authentification réussite",
+						title: "Inscription réussite",
 					});
 					this.$router.push("/");
 				} catch (error) {
 					console.log(error);
 					this.Errors.email = true;
 					this.Errors.password = true;
+					this.Errors.password_confirmation = true;
+					this.Errors.name = true;
 					this.messageError = error;
 					this.$swal.fire({
 						target: "#custom-target",
@@ -100,7 +139,7 @@ export default {
 							toast.addEventListener("mouseleave", this.$swal.resumeTimer);
 						},
 						icon: "error",
-						title: "Authentification impossible",
+						title: "Une erreur est survenue lors de votre inscription",
 					});
 				}
 			}
@@ -109,6 +148,8 @@ export default {
 		reset() {
 			this.Errors.email = false;
 			this.Errors.password = false;
+			this.Errors.password_confirmation = false;
+			this.Errors.name = false;
 		},
 	},
 	props: {},
@@ -151,7 +192,7 @@ export default {
 	color: #9c88ff;
 	font-weight: 700;
 }
-
+input[type="text"],
 input[type="email"],
 input[type="password"] {
 	border: 1px solid #dedede;

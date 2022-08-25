@@ -6,11 +6,11 @@
 					<i class="fa-solid fa-chart-column"></i> Expense Tracker
 				</div>
 				<div class="form-container" :class="{ invalid: Errors.email }">
-					<label for="email">Email</label>
+					<label for="email"><i class="fa-solid fa-envelope"></i> Email</label>
 					<input type="email" id="email" v-model="form.email" @change="reset" />
 				</div>
 				<div class="form-container" :class="{ invalid: Errors.password }">
-					<label for="">Password</label>
+					<label for=""><i class="fa-solid fa-lock"></i> Password</label>
 					<input type="password" v-model="form.password" @change="reset" />
 				</div>
 				<div

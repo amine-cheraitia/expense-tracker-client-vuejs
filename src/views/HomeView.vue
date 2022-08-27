@@ -28,21 +28,27 @@ export default {
 </script>
 <style scoped>
 .home {
-	border: 1px solid red;
+	/* border: 1px solid red; */
 	display: flex;
 	/* justify-content: space-evenly; */
 	align-items: center;
 	min-height: 90vh;
 	flex-direction: column;
 }
+.number-section,
+.chart-section {
+	border-radius: 18px;
+	padding: 15px;
+	border: #9c88ff 0.5px solid;
+	box-shadow: 2px 2px 5px #9c88ff;
+}
 .number-section {
 	width: 90%;
-	height: 400px;
-	border: 1px solid blue;
+	height: 150px;
+	margin-bottom: 20px;
 }
 .chart-section {
 	width: 90%;
-
-	border: 1px solid green;
+	height: 350px;
 }
 </style>

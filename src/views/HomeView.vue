@@ -2,7 +2,8 @@
 	<div class="home wrapper">
 		<!-- 		<img alt="Vue logo" src="../assets/logo.png" />
 		<HelloWorld msg="Welcome to Your Vue.js App" /> -->
-		<div class="number-section">
+		<Spinner class="loading" v-if="loading"></Spinner>
+		<div class="number-section" v-else>
 			<div class="number-box">
 				<div>Montant des entrés total :</div>
 				<span class="money solde">50 000.00 DA</span>
@@ -17,18 +18,20 @@
 			</div>
 		</div>
 		<div class="chart-section">
-			<div class="chart-box">
-				<div class="chart-wrapper">
-					<canvas id="recetteChart"></canvas>
+			<div class="row">
+				<div class="chart-box">
+					<div class="chart-wrapper">
+						<canvas id="recetteChart"></canvas>
+					</div>
+				</div>
+				<div class="chart-box">
+					<div class="chart-wrapper">
+						<canvas id="depenseChart"></canvas>
+					</div>
 				</div>
 			</div>
-			<div class="chart-box">
-				<div class="chart-wrapper">
-					<canvas id="depenseChart"></canvas>
-				</div>
-			</div>
-			<div class="chart-box">
-				<div class="chart-wrapper">
+			<div class="chart-box wide">
+				<div class="chart-wrapper wide">
 					<canvas id="annuelChart"></canvas>
 				</div>
 			</div>
@@ -41,17 +44,57 @@
 /* import HelloWorld from "@/components/HelloWorld.vue"; */
 /* import { BarChart } from "@/components/Charts/BarChart.vue"; */
 import Chart from "chart.js/auto";
-
+import Spinner from "../components/ui/Spinner.vue";
 export default {
 	data() {
 		return {
+			loading: true,
 			montant: [150, 0, 2000, 300, 40040, 0, 0, 0, 50, 10000, 10, 100],
+			montant2: [
+				30000, 500, 250, 0, 13000, 0, 50500, 0, 0, 45000, 45000, 22000,
+			],
 		};
 	},
 	name: "HomeView",
-	/* 	components: {
-		HelloWorld,
-	}, */
+	components: {
+		Spinner,
+	},
+	methods: {
+		async loadMouvement() {
+			try {
+				await this.$store.dispatch("mouvements/loadMouvement");
+				await this.$store.dispatch("ressources/loadRessources");
+			} catch (error) {
+				error;
+				/* 	this.error = true;
+				this.errorText = `Une Erreur s'est produise , code de l'erreur: ${error.response.status}`; */
+			}
+			/* this.counterFNC(); */
+
+			await this.loadSolde();
+
+			/* 			const solde = await this.$store.getters["ressources/solde"];  option a exploré pour le compteur du solde
+			const t = this;
+			t;
+			this.interval = setInterval(() => {
+				if (t.counter < solde) {
+					console.log("tes");
+					t.counter+=100;
+				} else {
+					console.log("no");
+					clearInterval(t.interval);
+				}
+			}, 1);
+			 */
+			this.loading = false;
+		},
+		async loadSolde() {
+			const solde = await this.$store.getters["ressources/solde"];
+
+			this.displaySolde2 =
+				new Intl.NumberFormat("fr-FR").format(Number(solde)) + ".00 DA";
+		},
+	},
 	mounted() {
 		const labels = [
 			"Jan.",
@@ -72,20 +115,19 @@ export default {
 			labels: labels,
 			datasets: [
 				{
-					label: "Recette",
-					backgroundColor: "#fff" /* */,
-					borderColor: "#fff",
-					/* 					borderColor: "rgb(255, 99, 132)", */
+					label: "Dépenses",
+					backgroundColor: "rgb(255, 99, 132)" /* #c0392b*/,
+					borderColor: "rgb(255, 99, 132)",
 					data: this.montant,
 					borderWidth: 5,
-					hoverBackgroundColor: "#514785 ",
-					hoverBorderColor: "yellow",
+					hoverBackgroundColor: "#9c88ff",
+					hoverBorderColor: "#c0392b",
 					scaleStepWidth: 4,
 				},
 			],
 		};
 
-		const config = {
+		const config1 = {
 			type: "line",
 			responsive: true,
 			scaleFontColor: "#FFFFFF",
@@ -94,6 +136,88 @@ export default {
 			},
 			data: data,
 			options: {
+				responsive: true,
+				scales: {
+					x: {
+						grid: {
+							display: false,
+							borderColor: "#514785",
+						},
+
+						ticks: {
+							/* font: { weight: 500 }, */
+							maxTicksLimit: 12,
+							color: "#514785",
+							padding: 8,
+						},
+						min: 0,
+					},
+
+					y: {
+						ticks: {
+							/* font: { weight: 550 }, */
+							color: "#514785",
+							min: 0,
+							padding: 8,
+							max: 1000000,
+							maxTicksLimit: 7,
+							callback: function (value) {
+								return value + " DA";
+							},
+						},
+						grid: {
+							borderColor: "#514785",
+							borderWidth: 1,
+							/* color: "black", */
+							/* borderDash: [5], */
+							/* drawBorder: false, */
+							/* tickLength: 3, */
+						},
+					},
+				},
+			},
+			/* 			color: "red",
+			backgroundColor: "red", */
+			plugins: [
+				{
+					beforeDraw: (chart) => {
+						const { ctx } = chart;
+						ctx.save();
+						ctx.globalCompositeOperation = "destination-over";
+						ctx.fillStyle = "#fff";
+						ctx.fillRect(0, 0, chart.width, chart.height);
+						ctx.restore();
+					},
+				},
+			],
+		};
+
+		const data2 = {
+			labels: labels,
+			datasets: [
+				{
+					label: "Recette",
+					backgroundColor: "#fff" /* */,
+					borderColor: "#fff",
+					/* 					borderColor: "rgb(255, 99, 132)", */
+					data: this.montant2,
+					borderWidth: 5,
+					hoverBackgroundColor: "#514785 ",
+					hoverBorderColor: "yellow",
+					scaleStepWidth: 4,
+				},
+			],
+		};
+		const config2 = {
+			type: "line",
+			responsive: true,
+			scaleFontColor: "#FFFFFF",
+			legend: {
+				display: false,
+			},
+			data: data2,
+			options: {
+				responsive: true,
 				scales: {
 					x: {
 						grid: {
@@ -145,12 +269,99 @@ export default {
 				},
 			],
 		};
-		const myChart = new Chart(document.getElementById("recetteChart"), config);
+
+		const data3 = {
+			labels: labels,
+			datasets: [
+				{
+					label: "Recette",
+					backgroundColor: "#fff" /* */,
+					borderColor: "#fff",
+					/* 					borderColor: "rgb(255, 99, 132)", */
+					data: this.montant,
+					borderWidth: 5,
+					hoverBackgroundColor: "#514785 ",
+					hoverBorderColor: "yellow",
+					scaleStepWidth: 4,
+				},
+			],
+		};
+		const config3 = {
+			type: "line",
+			responsive: true,
+			scaleFontColor: "#FFFFFF",
+			legend: {
+				display: false,
+			},
+			data: data3,
+			options: {
+				responsive: true,
+				scales: {
+					x: {
+						grid: {
+							display: false,
+						},
+
+						ticks: {
+							font: { weight: 550 },
+							maxTicksLimit: 12,
+							color: "#fff",
+							padding: 8,
+						},
+						min: 0,
+					},
+
+					y: {
+						ticks: {
+							font: { weight: 550 },
+							color: "#fff",
+							min: 0,
+							padding: 8,
+							max: 1000000,
+							maxTicksLimit: 7,
+							callback: function (value) {
+								return value + " DA";
+							},
+						},
+						grid: {
+							color: "#fff",
+							borderDash: [5],
+							drawBorder: false,
+							tickLength: 3,
+						},
+					},
+				},
+			},
+			color: "red",
+			backgroundColor: "red",
+			plugins: [
+				{
+					beforeDraw: (chart) => {
+						const { ctx } = chart;
+						ctx.save();
+						ctx.globalCompositeOperation = "destination-over";
+						ctx.fillStyle = "#9c88ff";
+						ctx.fillRect(0, 0, chart.width, chart.height);
+						ctx.restore();
+					},
+				},
+			],
+		};
+		const myChart = new Chart(document.getElementById("recetteChart"), config1);
 		myChart;
-		const myChart2 = new Chart(document.getElementById("depenseChart"), config);
+		const myChart2 = new Chart(
+			document.getElementById("depenseChart"),
+			config2
+		);
 		myChart2;
-		const myChart3 = new Chart(document.getElementById("annuelChart"), config);
+		const myChart3 = new Chart(document.getElementById("annuelChart"), config3);
 		myChart3;
+	},
+	created() {
+		this.$store.dispatch("ressources/loadRessources");
+		this.$store.dispatch("mouvements/loadEntréSortie");
+
+		this.loadMouvement();
 	},
 };
 </script>
@@ -158,19 +369,24 @@ export default {
 .chart-wrapper {
 	display: inline-block;
 	position: relative;
-	width: 450px;
+	width: 550px;
+	margin: 10px;
+}
+.chart-wrapper.wide {
 }
 #recetteChart,
-#depenseChart {
+#depenseChart,
+#annuelChart {
 	border-radius: 15px;
 }
-
+.chart-box.wide {
+}
 .home {
 	/* border: 1px solid red; */
 	display: flex;
 	/* justify-content: space-evenly; */
 	align-items: center;
-	min-height: 90vh;
+	/* min-height: 90vh; */
 	flex-direction: column;
 }
 .number-section,
@@ -191,7 +407,7 @@ export default {
 }
 .chart-section {
 	width: 100%;
-	height: 500px;
+	/* height: 500px; */
 	display: flex;
 	justify-content: space-around;
 }

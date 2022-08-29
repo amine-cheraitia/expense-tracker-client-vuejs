@@ -17,9 +17,21 @@
 			</div>
 		</div>
 		<div class="chart-section">
-			<div class="chart-box">chart1</div>
-			<div class="chart-box">chart2</div>
-			<div class="chart-box">chart3</div>
+			<div class="chart-box">
+				<div class="chart-wrapper">
+					<canvas id="recetteChart"></canvas>
+				</div>
+			</div>
+			<div class="chart-box">
+				<div class="chart-wrapper">
+					<canvas id="depenseChart"></canvas>
+				</div>
+			</div>
+			<div class="chart-box">
+				<div class="chart-wrapper">
+					<canvas id="annuelChart"></canvas>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -28,15 +40,131 @@
 // @ is an alias to /src
 /* import HelloWorld from "@/components/HelloWorld.vue"; */
 /* import { BarChart } from "@/components/Charts/BarChart.vue"; */
+import Chart from "chart.js/auto";
 
 export default {
+	data() {
+		return {
+			montant: [150, 0, 2000, 300, 40040, 0, 0, 0, 50, 10000, 10, 100],
+		};
+	},
 	name: "HomeView",
 	/* 	components: {
 		HelloWorld,
 	}, */
+	mounted() {
+		const labels = [
+			"Jan.",
+			"Fev.",
+			"Mars",
+			"Avr.",
+			"Mai.",
+			"Juin",
+			"Juil",
+			"Août",
+			"Sep.",
+			"Oct.",
+			"Nov.",
+			"Déc.",
+		];
+
+		const data = {
+			labels: labels,
+			datasets: [
+				{
+					label: "Recette",
+					backgroundColor: "#fff" /* */,
+					borderColor: "#fff",
+					/* 					borderColor: "rgb(255, 99, 132)", */
+					data: this.montant,
+					borderWidth: 5,
+					hoverBackgroundColor: "#514785 ",
+					hoverBorderColor: "yellow",
+					scaleStepWidth: 4,
+				},
+			],
+		};
+
+		const config = {
+			type: "line",
+			responsive: true,
+			scaleFontColor: "#FFFFFF",
+			legend: {
+				display: false,
+			},
+			data: data,
+			options: {
+				scales: {
+					x: {
+						grid: {
+							display: false,
+						},
+
+						ticks: {
+							font: { weight: 550 },
+							maxTicksLimit: 12,
+							color: "#fff",
+							padding: 8,
+						},
+						min: 0,
+					},
+
+					y: {
+						ticks: {
+							font: { weight: 550 },
+							color: "#fff",
+							min: 0,
+							padding: 8,
+							max: 1000000,
+							maxTicksLimit: 7,
+							callback: function (value) {
+								return value + " DA";
+							},
+						},
+						grid: {
+							color: "#fff",
+							borderDash: [5],
+							drawBorder: false,
+							tickLength: 3,
+						},
+					},
+				},
+			},
+			color: "red",
+			backgroundColor: "red",
+			plugins: [
+				{
+					beforeDraw: (chart) => {
+						const { ctx } = chart;
+						ctx.save();
+						ctx.globalCompositeOperation = "destination-over";
+						ctx.fillStyle = "#9c88ff";
+						ctx.fillRect(0, 0, chart.width, chart.height);
+						ctx.restore();
+					},
+				},
+			],
+		};
+		const myChart = new Chart(document.getElementById("recetteChart"), config);
+		myChart;
+		const myChart2 = new Chart(document.getElementById("depenseChart"), config);
+		myChart2;
+		const myChart3 = new Chart(document.getElementById("annuelChart"), config);
+		myChart3;
+	},
 };
 </script>
 <style scoped>
+.chart-wrapper {
+	display: inline-block;
+	position: relative;
+	width: 450px;
+}
+#recetteChart,
+#depenseChart {
+	border-radius: 15px;
+}
+
 .home {
 	/* border: 1px solid red; */
 	display: flex;
@@ -52,6 +180,7 @@ export default {
 	border: #9c88ff 0.5px solid;
 	box-shadow: 2px 2px 5px #9c88ff;
 }
+
 .number-section {
 	width: 90%;
 	height: 150px;
@@ -61,8 +190,10 @@ export default {
 	justify-content: space-evenly;
 }
 .chart-section {
-	width: 90%;
-	height: 350px;
+	width: 100%;
+	height: 500px;
+	display: flex;
+	justify-content: space-around;
 }
 .number-box {
 	padding: 15px;

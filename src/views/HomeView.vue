@@ -2,19 +2,25 @@
 	<div class="home wrapper">
 		<!-- 		<img alt="Vue logo" src="../assets/logo.png" />
 		<HelloWorld msg="Welcome to Your Vue.js App" /> -->
-		<Spinner class="loading" v-if="loading"></Spinner>
-		<div class="number-section" v-else>
+		<h2>Expense Tracker</h2>
+		<div class="number-section">
 			<div class="number-box">
+				<span class="mark"><i class="fa-solid fa-sack-dollar"></i></span>
 				<div>Montant des entrés total :</div>
-				<span class="money solde">50 000.00 DA</span>
+				<Loader class="loading" v-if="loading"></Loader>
+				<span class="money solde" v-else>50 000.00 DA</span>
 			</div>
 			<div class="number-box">
+				<span class="mark"><i class="fa-solid fa-arrow-trend-down"></i></span>
 				<div>Montant des sortie total :</div>
-				<span class="money minus">-50 000.00 DA</span>
+				<Loader class="loading" v-if="loading"></Loader>
+				<span class="money minus" v-else>-50 000.00 DA</span>
 			</div>
 			<div class="number-box">
+				<span class="mark"><i class="fa-solid fa-arrow-trend-up"></i></span>
 				<div>Le solde total :</div>
-				<span class="money plus">50 000.00 DA</span>
+				<Loader class="loading" v-if="loading"></Loader>
+				<span class="money plus" v-else>50 000.00 DA</span>
 			</div>
 		</div>
 		<div class="chart-section">
@@ -44,7 +50,8 @@
 /* import HelloWorld from "@/components/HelloWorld.vue"; */
 /* import { BarChart } from "@/components/Charts/BarChart.vue"; */
 import Chart from "chart.js/auto";
-import Spinner from "../components/ui/Spinner.vue";
+import Loader from "@/components/ui/Loader.vue";
+/* import Spinner from "../components/ui/Spinner.vue"; */
 export default {
 	data() {
 		return {
@@ -57,7 +64,7 @@ export default {
 	},
 	name: "HomeView",
 	components: {
-		Spinner,
+		Loader,
 	},
 	methods: {
 		async loadMouvement() {
@@ -93,6 +100,11 @@ export default {
 
 			this.displaySolde2 =
 				new Intl.NumberFormat("fr-FR").format(Number(solde)) + ".00 DA";
+		},
+	},
+	computed: {
+		loadEntré() {
+			return false;
 		},
 	},
 	mounted() {
@@ -358,9 +370,6 @@ export default {
 		myChart3;
 	},
 	created() {
-		this.$store.dispatch("ressources/loadRessources");
-		this.$store.dispatch("mouvements/loadEntréSortie");
-
 		this.loadMouvement();
 	},
 };
@@ -391,10 +400,11 @@ export default {
 }
 .number-section,
 .chart-section {
-	border-radius: 18px;
+	/* border-radius: 18px; */
 	padding: 15px;
-	border: #9c88ff 0.5px solid;
+	/* 	border: #9c88ff 0.5px solid;
 	box-shadow: 2px 2px 5px #9c88ff;
+	background: #fff; */
 }
 
 .number-section {
@@ -421,8 +431,53 @@ export default {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	border: #9c88ff 0.5px solid;
+	box-shadow: 2px 2px 5px #9c88ff;
+	background: #fff;
+	border-radius: 18px;
 }
 
+.number-box > div {
+	text-align: right;
+	width: 100%;
+}
+.mark {
+	/* width: 100%; */
+	position: relative;
+}
+.mark .fa-arrow-trend-up {
+	border: #9c88ff 0.5px solid;
+	background: #2ecc71; /* 9c88ff */
+	color: #fff;
+	font-size: 24px;
+	padding: 20px;
+	position: absolute;
+	top: -50px;
+	left: -145px;
+	border-radius: 18px;
+}
+.mark .fa-arrow-trend-down {
+	border: #c0392b 0.5px solid;
+	background: #fff;
+	color: #c0392b;
+	font-size: 24px;
+	padding: 20px;
+	position: absolute;
+	top: -50px;
+	left: -145px;
+	border-radius: 18px;
+}
+.mark .fa-sack-dollar {
+	border: 0.5px solid;
+	background: #9c88ff;
+	color: #fff;
+	font-size: 24px;
+	padding: 20px;
+	position: absolute;
+	top: -50px;
+	left: -145px;
+	border-radius: 18px;
+}
 .money {
 	font-size: 20px;
 	letter-spacing: 1px;

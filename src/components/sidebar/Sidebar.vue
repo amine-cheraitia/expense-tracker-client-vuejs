@@ -65,24 +65,24 @@ export default {
 .sidebar {
 	color: white;
 	background-color: var(--sidebar-bg-color);
-
 	float: left;
 	position: fixed;
+	margin: 1rem;
+	border-radius: 15px;
 	z-index: 1;
 	top: 0;
 	left: 0;
 	bottom: 0;
-	padding: 0.5em;
+	padding: 0.7em;
 
 	transition: 0.3s ease;
-
 	display: flex;
 	flex-direction: column;
 }
 
 .collapse-icon {
 	position: fixed;
-	bottom: 0;
+	bottom: 18px;
 	padding: 0.75em;
 	color: rgba(255, 255, 255, 0.7);
 

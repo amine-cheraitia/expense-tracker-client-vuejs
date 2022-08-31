@@ -6,36 +6,54 @@
 		<div class="number-section">
 			<div class="number-box">
 				<span class="mark"><i class="fa-solid fa-sack-dollar"></i></span>
-				<div>Montant des entrés total :</div>
+				<div class="titre">Le solde total</div>
 				<Loader class="loading" v-if="loading"></Loader>
 				<span class="money solde" v-else>50 000.00 DA</span>
+				<hr class="dark-horizontal" />
+				<div class="link-to">
+					<router-link to="/ressources" class="link-to"
+						>Voir plus <i class="fa-solid fa-arrow-right"></i
+					></router-link>
+				</div>
 			</div>
 			<div class="number-box">
 				<span class="mark"><i class="fa-solid fa-arrow-trend-down"></i></span>
-				<div>Montant des sortie total :</div>
+				<div class="titre">Montant des sortie</div>
 				<Loader class="loading" v-if="loading"></Loader>
 				<span class="money minus" v-else>-50 000.00 DA</span>
+				<hr class="dark-horizontal" />
+				<div class="link-to">
+					<router-link to="/ressources" class="link-to"
+						>Voir plus <i class="fa-solid fa-arrow-right"></i
+					></router-link>
+				</div>
 			</div>
 			<div class="number-box">
 				<span class="mark"><i class="fa-solid fa-arrow-trend-up"></i></span>
-				<div>Le solde total :</div>
+				<div class="titre">Montant des entrés</div>
 				<Loader class="loading" v-if="loading"></Loader>
 				<span class="money plus" v-else>50 000.00 DA</span>
+				<hr class="dark-horizontal" />
+				<div class="link-to">
+					<router-link to="/ressources" class="link-to"
+						>Voir plus <i class="fa-solid fa-arrow-right"></i
+					></router-link>
+				</div>
 			</div>
 		</div>
 		<div class="chart-section">
-			<div class="row">
-				<div class="chart-box">
-					<div class="chart-wrapper">
-						<canvas id="recetteChart"></canvas>
-					</div>
+			<!-- <div class="row"> -->
+			<div class="chart-box">
+				<div class="chart-wrapper">
+					<canvas id="recetteChart"></canvas>
 				</div>
-				<div class="chart-box">
+			</div>
+			<!-- 				<div class="chart-box">
 					<div class="chart-wrapper">
 						<canvas id="depenseChart"></canvas>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<div class="chart-box wide">
 				<div class="chart-wrapper wide">
 					<canvas id="annuelChart"></canvas>
@@ -361,12 +379,13 @@ export default {
 		};
 		const myChart = new Chart(document.getElementById("recetteChart"), config1);
 		myChart;
-		const myChart2 = new Chart(
+		/* 		const myChart2 = new Chart(
 			document.getElementById("depenseChart"),
 			config2
 		);
-		myChart2;
-		const myChart3 = new Chart(document.getElementById("annuelChart"), config3);
+		myChart2; */
+		config3;
+		const myChart3 = new Chart(document.getElementById("annuelChart"), config2);
 		myChart3;
 	},
 	created() {
@@ -381,7 +400,8 @@ export default {
 	width: 550px;
 	margin: 10px;
 }
-.chart-wrapper.wide {
+.chart-box {
+	margin: 10px;
 }
 #recetteChart,
 #depenseChart,
@@ -419,17 +439,17 @@ export default {
 	width: 100%;
 	/* height: 500px; */
 	display: flex;
-	justify-content: space-around;
+	justify-content: center;
 }
 .number-box {
 	padding: 15px;
 	border: #9c88ff 0.5px solid;
 	width: 280px;
-	height: 70px;
+	height: 100px;
 	flex: 0 0 280px;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	/* justify-content: center; */
 	align-items: center;
 	border: #9c88ff 0.5px solid;
 	box-shadow: 2px 2px 5px #9c88ff;
@@ -437,16 +457,56 @@ export default {
 	border-radius: 18px;
 }
 
-.number-box > div {
+.number-box .titre,
+.number-box .money {
 	text-align: right;
 	width: 100%;
+}
+.dark-horizontal {
+	background-image: linear-gradient(
+		90deg,
+		transparent,
+		rgba(0, 0, 0, 0.4),
+		transparent
+	);
+	border-top: none;
+	margin-right: 0;
+	margin-left: 0;
+	margin-top: 20px;
+	width: 80%;
+	height: 1px;
+	background-color: transparent;
+	opacity: 0.25;
+}
+.titre {
+	font-weight: 300;
+	color: #9c88ff;
+	text-transform: capitalize;
+	padding: 3px;
+}
+.link-to {
+	color: #9c88ff;
+	font-weight: 300;
+	text-align: left;
+	width: 100%;
+	text-decoration: none;
+	margin-left: 10px;
+	transition: 0.5 ease;
+}
+.link-to:hover {
+	text-decoration: underline;
+	font-weight: 500;
+}
+.fa-arrow-right {
+	float: right;
+	margin-right: 10px;
 }
 .mark {
 	/* width: 100%; */
 	position: relative;
 }
 .mark .fa-arrow-trend-up {
-	border: #9c88ff 0.5px solid;
+	border: 0.5px solid;
 	background: #2ecc71; /* 9c88ff */
 	color: #fff;
 	font-size: 24px;

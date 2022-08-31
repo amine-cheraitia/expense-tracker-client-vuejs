@@ -87,6 +87,7 @@ body {
 	justify-content: center; */
 	min-height: 100vh;
 	margin: 0;
+
 	font-family: "Lato", sans-serif;
 }
 #app {

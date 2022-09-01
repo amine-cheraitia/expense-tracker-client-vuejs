@@ -46,6 +46,9 @@
 			<div class="chart-box">
 				<div class="chart-wrapper">
 					<canvas id="recetteChart"></canvas>
+					<div class="sub-title">
+						Evolution mensuelle des dépenses et des recettes
+					</div>
 				</div>
 			</div>
 			<!-- 				<div class="chart-box">
@@ -54,9 +57,12 @@
 					</div>
 				</div>
 			</div> -->
-			<div class="chart-box wide">
-				<div class="chart-wrapper wide">
+			<div class="chart-box">
+				<div class="chart-wrapper">
 					<canvas id="annuelChart"></canvas>
+					<div class="sub-title">
+						Evolution annuel des dépenses et des recettes
+					</div>
 				</div>
 			</div>
 		</div>
@@ -395,21 +401,33 @@ export default {
 </script>
 <style scoped>
 .chart-wrapper {
-	display: inline-block;
 	position: relative;
-	width: 550px;
-	margin: 10px;
+	width: 520px;
+	height: 100%;
 }
 .chart-box {
 	margin: 10px;
+
+	border-radius: 18px;
+	background: #fff;
+	height: 320px;
+	position: relative;
+}
+
+.sub-title {
+	position: absolute;
+	bottom: 35px;
+	left: 25px;
 }
 #recetteChart,
 #depenseChart,
 #annuelChart {
 	border-radius: 15px;
+	position: absolute;
+	top: -15px;
+	width: 100%;
 }
-.chart-box.wide {
-}
+
 .home {
 	/* border: 1px solid red; */
 	display: flex;
@@ -436,7 +454,7 @@ export default {
 	justify-content: space-evenly;
 }
 .chart-section {
-	width: 100%;
+	/* width: 100%; */
 	/* height: 500px; */
 	display: flex;
 	justify-content: center;
@@ -512,7 +530,7 @@ export default {
 	font-size: 24px;
 	padding: 20px;
 	position: absolute;
-	top: -50px;
+	top: -35px;
 	left: -145px;
 	border-radius: 18px;
 }
@@ -523,7 +541,7 @@ export default {
 	font-size: 24px;
 	padding: 20px;
 	position: absolute;
-	top: -50px;
+	top: -35px;
 	left: -145px;
 	border-radius: 18px;
 }
@@ -534,7 +552,7 @@ export default {
 	font-size: 24px;
 	padding: 20px;
 	position: absolute;
-	top: -50px;
+	top: -35px;
 	left: -145px;
 	border-radius: 18px;
 }

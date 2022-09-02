@@ -45,7 +45,9 @@
 			<!-- <div class="row"> -->
 			<div class="chart-box">
 				<div class="chart-wrapper">
-					<canvas id="recetteChart"></canvas>
+					<div class="chart-container">
+						<canvas id="recetteChart"></canvas>
+					</div>
 					<div class="sub-title">
 						Evolution mensuelle des dépenses et des recettes
 					</div>
@@ -59,7 +61,9 @@
 			</div> -->
 			<div class="chart-box">
 				<div class="chart-wrapper">
-					<canvas id="annuelChart"></canvas>
+					<div class="chart-container">
+						<canvas id="annuelChart"></canvas>
+					</div>
 					<div class="sub-title">
 						Evolution annuel des dépenses et des recettes
 					</div>
@@ -403,7 +407,7 @@ export default {
 .chart-wrapper {
 	position: relative;
 	width: 520px;
-	height: 100%;
+	height: 350px;
 }
 .chart-box {
 	margin: 10px;
@@ -413,10 +417,12 @@ export default {
 	height: 320px;
 	position: relative;
 }
-
+.chart-container {
+	position: relative;
+}
 .sub-title {
 	position: absolute;
-	bottom: 35px;
+	bottom: 40px;
 	left: 25px;
 }
 #recetteChart,
@@ -426,6 +432,7 @@ export default {
 	position: absolute;
 	top: -15px;
 	width: 100%;
+	height: 260px;
 }
 
 .home {

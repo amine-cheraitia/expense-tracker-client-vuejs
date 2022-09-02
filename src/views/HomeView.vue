@@ -8,7 +8,7 @@
 				<span class="mark"><i class="fa-solid fa-sack-dollar"></i></span>
 				<div class="titre">Le solde total</div>
 				<Loader class="loading" v-if="loading"></Loader>
-				<span class="money solde" v-else>50 000.00 DA</span>
+				<span class="money solde" v-else>+{{ displaySolde }}</span>
 				<hr class="dark-horizontal" />
 				<div class="link-to">
 					<router-link to="/ressources" class="link-to"
@@ -20,7 +20,7 @@
 				<span class="mark"><i class="fa-solid fa-arrow-trend-down"></i></span>
 				<div class="titre">Montant des sortie</div>
 				<Loader class="loading" v-if="loading"></Loader>
-				<span class="money minus" v-else>-50 000.00 DA</span>
+				<span class="money minus" v-else>-{{ depenses }}</span>
 				<hr class="dark-horizontal" />
 				<div class="link-to">
 					<router-link to="/ressources" class="link-to"
@@ -32,7 +32,7 @@
 				<span class="mark"><i class="fa-solid fa-arrow-trend-up"></i></span>
 				<div class="titre">Montant des entrés</div>
 				<Loader class="loading" v-if="loading"></Loader>
-				<span class="money plus" v-else>50 000.00 DA</span>
+				<span class="money plus" v-else>{{ ressources }}</span>
 				<hr class="dark-horizontal" />
 				<div class="link-to">
 					<router-link to="/ressources" class="link-to"
@@ -133,6 +133,23 @@ export default {
 	computed: {
 		loadEntré() {
 			return false;
+		},
+
+		displaySolde() {
+			const solde = this.$store.getters["ressources/solde"];
+
+			let soldeGlobal =
+				new Intl.NumberFormat("fr-FR").format(Number(solde)) + ".00 DA";
+
+			return soldeGlobal;
+		},
+		ressources() {
+			const entré = this.$store.getters["mouvements/totalEntré"];
+			return new Intl.NumberFormat("fr-FR").format(Number(entré)) + ".00 DA";
+		},
+		depenses() {
+			const sortie = this.$store.getters["mouvements/totalSortie"];
+			return new Intl.NumberFormat("fr-FR").format(Number(sortie)) + ".00 DA";
 		},
 	},
 	mounted() {

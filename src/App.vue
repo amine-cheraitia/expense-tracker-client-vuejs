@@ -59,6 +59,7 @@ export default {
 	methods: {
 		async trytologin() {
 			await this.$store.dispatch("auth/tryLogin");
+			await this.$store.dispatch("mouvements/loadKpi");
 			this.loading = false;
 		},
 	},

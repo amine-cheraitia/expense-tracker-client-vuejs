@@ -147,8 +147,11 @@ export default {
 		mouvements(state) {
 			return state.mouvements;
 		},
-		test() {
-			console.log("hello");
+		monthly_kpi_recette(state) {
+			return state.monthly_kpi_recette;
+		},
+		monthly_kpi_depense(state) {
+			return state.monthly_kpi_depense;
 		},
 	},
 };

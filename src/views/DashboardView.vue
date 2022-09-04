@@ -290,6 +290,9 @@ export default {
 		console.log("before create");
 		this.$store.dispatch("auth/checkToken");
 	},
+	beforeUpdate() {
+		this.$store.dispatch("mouvements/loadKpi");
+	},
 	/* 	watch: {
 		soldeGet(newValue, oldValue) {
 			console.log(newValue + " " + oldValue);

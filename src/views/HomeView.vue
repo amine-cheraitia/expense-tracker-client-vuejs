@@ -129,6 +129,9 @@ export default {
 			this.displaySolde2 =
 				new Intl.NumberFormat("fr-FR").format(Number(solde)) + ".00 DA";
 		},
+		async loadKpi() {
+			await this.$store.dispatch("mouvements/loadKpi");
+		},
 	},
 	computed: {
 		loadEntré() {
@@ -151,6 +154,16 @@ export default {
 			const sortie = this.$store.getters["mouvements/totalSortie"];
 			return new Intl.NumberFormat("fr-FR").format(Number(sortie)) + ".00 DA";
 		},
+		kpiMonthlyDepense() {
+			return this.$store.getters["mouvements/monthly_kpi_depense"];
+		},
+		kpiMonthlyRecette() {
+			return this.$store.getters["mouvements/monthly_kpi_recette"];
+		},
+	},
+	beforeMount() {
+		console.log("beforemount");
+		this.loadKpi();
 	},
 	mounted() {
 		const labels = [
@@ -173,9 +186,19 @@ export default {
 			datasets: [
 				{
 					label: "Dépenses",
-					backgroundColor: "rgb(255, 99, 132)" /* #c0392b*/,
-					borderColor: "rgb(255, 99, 132)",
-					data: this.montant,
+					backgroundColor: "#c0392b" /* #c0392b*/,
+					borderColor: "#c0392b",
+					data: this.kpiMonthlyDepense,
+					borderWidth: 5,
+					hoverBackgroundColor: "#9c88ff",
+					hoverBorderColor: "#c0392b",
+					scaleStepWidth: 4,
+				},
+				{
+					label: "Recette",
+					backgroundColor: "#2ecc71" /* #c0392b*/,
+					borderColor: "#2ecc71",
+					data: this.kpiMonthlyRecette,
 					borderWidth: 5,
 					hoverBackgroundColor: "#9c88ff",
 					hoverBorderColor: "#c0392b",
@@ -192,6 +215,7 @@ export default {
 				display: false,
 			},
 			data: data,
+			stacked: false,
 			options: {
 				responsive: true,
 				scales: {

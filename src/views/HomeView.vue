@@ -277,14 +277,25 @@ export default {
 			labels: labels,
 			datasets: [
 				{
-					label: "Recette",
+					label: "Dépense",
 					backgroundColor: "#fff" /* */,
 					borderColor: "#fff",
 					/* 					borderColor: "rgb(255, 99, 132)", */
-					data: this.montant2,
+					data: this.kpiMonthlyDepense,
 					borderWidth: 5,
 					hoverBackgroundColor: "#514785 ",
 					hoverBorderColor: "yellow",
+					scaleStepWidth: 4,
+				},
+
+				{
+					label: "Recette",
+					backgroundColor: "#514785" /* #c0392b*/,
+					borderColor: "#514785",
+					data: this.kpiMonthlyRecette,
+					borderWidth: 5,
+					hoverBackgroundColor: "#514785",
+					hoverBorderColor: "#514785",
 					scaleStepWidth: 4,
 				},
 			],
@@ -451,8 +462,10 @@ export default {
 	height: 350px;
 }
 .chart-box {
-	margin: 10px;
-
+	margin: 40px;
+	box-shadow: 2px 2px 5px #9c88ff;
+	border: #9c88ff 0.5px solid;
+	outline: none;
 	border-radius: 18px;
 	background: #fff;
 	height: 320px;
@@ -460,6 +473,9 @@ export default {
 }
 .chart-container {
 	position: relative;
+	border: #9c88ff 0.5px solid;
+
+	width: 100%;
 }
 .sub-title {
 	position: absolute;
@@ -474,6 +490,7 @@ export default {
 	top: -15px;
 	width: 100%;
 	height: 260px;
+	border-top: #9c88ff 0.5px solid;
 }
 
 .home {

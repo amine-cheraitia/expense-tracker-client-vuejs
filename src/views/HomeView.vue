@@ -160,6 +160,12 @@ export default {
 		kpiMonthlyRecette() {
 			return this.$store.getters["mouvements/monthly_kpi_recette"];
 		},
+		kpiYearlyRecette() {
+			return this.$store.getters["mouvements/yearly_kpi_recette"];
+		},
+		kpiYearlyDepense() {
+			return this.$store.getters["mouvements/yearly_kpi_depense"];
+		},
 	},
 	beforeMount() {
 		console.log("beforemount");
@@ -281,7 +287,8 @@ export default {
 					backgroundColor: "#fff" /* */,
 					borderColor: "#fff",
 					/* 					borderColor: "rgb(255, 99, 132)", */
-					data: this.kpiMonthlyDepense,
+
+					data: this.kpiYearlyRecette,
 					borderWidth: 5,
 					hoverBackgroundColor: "#514785 ",
 					hoverBorderColor: "yellow",
@@ -292,7 +299,7 @@ export default {
 					label: "Recette",
 					backgroundColor: "#514785" /* #c0392b*/,
 					borderColor: "#514785",
-					data: this.kpiMonthlyRecette,
+					data: this.kpiYearlyDepense,
 					borderWidth: 5,
 					hoverBackgroundColor: "#514785",
 					hoverBorderColor: "#514785",

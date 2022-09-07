@@ -28,6 +28,8 @@ export default {
 			totalSortie: 0,
 			monthly_kpi_recette: null,
 			monthly_kpi_depense: null,
+			yearly_kpi_recette: null,
+			yearly_kpi_depense: null,
 		};
 	},
 	mutations: {
@@ -41,40 +43,75 @@ export default {
 		set_monthly_kpi(state, payload) {
 			state.monthly_kpi_recette = [...payload.recette];
 			state.monthly_kpi_depense = [...payload.depense];
-			console.log(state.monthly_kpi_recette);
+		},
+		set_yearly_kpi(state, payload) {
+			state.yearly_kpi_recette = payload.yearlyRecette;
+			state.yearly_kpi_depense = [...payload.yearlyDepense];
 		},
 	},
 	actions: {
 		async loadKpi(context) {
 			const userid = context.rootGetters["auth/userId"];
-			/* 			const config = {
+			const config = {
 				headers: {
 					Authorization: `Bearer ${context.rootGetters["auth/getToken"]}`,
 				},
-			}; */
+			};
 			/* Todo call api and retrive data for monthly and yearly kpi */
 			const depense = [];
 			const recette = [];
+			const yearlyDepense = [];
+			const yearlyRecette = [];
+			const years = [];
+
+			const thisYear = new Date().getFullYear();
+
 			for (let index = 0; index < 12; index++) {
 				depense.push(0);
 				recette.push(0);
 			}
-			console.log(depense);
-			await axios(`http://127.0.0.1:8000/api/mouvement/kpi/${userid}`)
+
+			for (let index = thisYear - 4; index <= thisYear; index++) {
+				years.push(index);
+				yearlyDepense.push(0);
+				yearlyRecette.push(0);
+			}
+
+			await axios(`http://127.0.0.1:8000/api/mouvement/kpi/${userid}`, config)
 				.then((res) => {
-					console.log(res.data);
-					res.data.forEach((mouvement) => {
-						for (let key in mouvement) {
-							console.log(`${key}: ${mouvement[key].m}`);
-							depense[mouvement[key].m - 1] = parseInt(mouvement[key].depense);
-							recette[mouvement[key].m - 1] = parseInt(mouvement[key].recette);
-							console.log(recette);
-						}
-						context.commit("set_monthly_kpi", {
-							depense: depense,
-							recette: recette,
-						});
+					/* console.log(res.data[0]); */
+					const mouvement = res.data[0];
+
+					for (let key in mouvement) {
+						/* console.log("key is " + key); */
+						/* 	console.log(`${key}: ${mouvement[key].m}`); */
+						depense[mouvement[key].m - 1] = parseInt(mouvement[key].depense);
+						recette[mouvement[key].m - 1] = parseInt(mouvement[key].recette);
+					}
+
+					const mouvementAnnuel = res.data[1];
+					console.log(mouvementAnnuel);
+
+					for (let key in mouvementAnnuel) {
+						let index = years.findIndex(
+							(index) => index === mouvementAnnuel[key].y
+						);
+						yearlyDepense[index] = parseInt(mouvementAnnuel[key].depense);
+						yearlyRecette[index] = parseInt(mouvementAnnuel[key].recette);
+					}
+					console.log("1er commit");
+
+					context.commit("set_monthly_kpi", {
+						depense: depense,
+						recette: recette,
 					});
+
+					context.commit("set_yearly_kpi", {
+						yearlyDepense: yearlyDepense,
+						yearlyRecette: yearlyRecette,
+					});
+
+					/* res.data.forEach; */
 				})
 				.catch((err) => err);
 		},
@@ -152,6 +189,12 @@ export default {
 		},
 		monthly_kpi_depense(state) {
 			return state.monthly_kpi_depense;
+		},
+		yearly_kpi_depense(state) {
+			return state.yearly_kpi_depense;
+		},
+		yearly_kpi_recette(state) {
+			return state.yearly_kpi_recette;
 		},
 	},
 };

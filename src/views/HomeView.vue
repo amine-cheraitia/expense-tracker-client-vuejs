@@ -166,6 +166,9 @@ export default {
 		kpiYearlyDepense() {
 			return this.$store.getters["mouvements/yearly_kpi_depense"];
 		},
+		years_kpi() {
+			return this.$store.getters["mouvements/years_kpi"];
+		},
 	},
 	beforeMount() {
 		console.log("beforemount");
@@ -186,7 +189,9 @@ export default {
 			"Nov.",
 			"Déc.",
 		];
-		const labels2 = ["2018", "2019", "2020", "2021", "2022"];
+		console.log("ici");
+		console.log(this.years_kpi);
+		const labels2 = this.years_kpi;
 
 		const data = {
 			labels: labels,

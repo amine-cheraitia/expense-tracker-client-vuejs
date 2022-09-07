@@ -30,6 +30,7 @@ export default {
 			monthly_kpi_depense: null,
 			yearly_kpi_recette: null,
 			yearly_kpi_depense: null,
+			years_kpi: null,
 		};
 	},
 	mutations: {
@@ -47,6 +48,7 @@ export default {
 		set_yearly_kpi(state, payload) {
 			state.yearly_kpi_recette = [...payload.yearlyRecette];
 			state.yearly_kpi_depense = [...payload.yearlyDepense];
+			state.years_kpi = [...payload.years];
 		},
 	},
 	actions: {
@@ -79,18 +81,14 @@ export default {
 
 			await axios(`http://127.0.0.1:8000/api/mouvement/kpi/${userid}`, config)
 				.then((res) => {
-					/* console.log(res.data[0]); */
 					const mouvement = res.data[0];
 
 					for (let key in mouvement) {
-						/* console.log("key is " + key); */
-						/* 	console.log(`${key}: ${mouvement[key].m}`); */
 						depense[mouvement[key].m - 1] = parseInt(mouvement[key].depense);
 						recette[mouvement[key].m - 1] = parseInt(mouvement[key].recette);
 					}
 
 					const mouvementAnnuel = res.data[1];
-					console.log(mouvementAnnuel);
 
 					for (let key in mouvementAnnuel) {
 						let index = years.findIndex(
@@ -99,19 +97,18 @@ export default {
 						yearlyDepense[index] = parseInt(mouvementAnnuel[key].depense);
 						yearlyRecette[index] = parseInt(mouvementAnnuel[key].recette);
 					}
-					console.log("1er commit");
 
 					context.commit("set_monthly_kpi", {
 						depense: depense,
 						recette: recette,
 					});
+					const yearsStr = years.map((val) => String(val));
 
 					context.commit("set_yearly_kpi", {
 						yearlyDepense: yearlyDepense,
 						yearlyRecette: yearlyRecette,
+						years: yearsStr,
 					});
-
-					/* res.data.forEach; */
 				})
 				.catch((err) => err);
 		},
@@ -195,6 +192,9 @@ export default {
 		},
 		yearly_kpi_recette(state) {
 			return state.yearly_kpi_recette;
+		},
+		years_kpi(state) {
+			return state.years_kpi;
 		},
 	},
 };

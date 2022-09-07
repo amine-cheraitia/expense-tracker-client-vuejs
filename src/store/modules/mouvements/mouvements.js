@@ -45,7 +45,7 @@ export default {
 			state.monthly_kpi_depense = [...payload.depense];
 		},
 		set_yearly_kpi(state, payload) {
-			state.yearly_kpi_recette = payload.yearlyRecette;
+			state.yearly_kpi_recette = [...payload.yearlyRecette];
 			state.yearly_kpi_depense = [...payload.yearlyDepense];
 		},
 	},

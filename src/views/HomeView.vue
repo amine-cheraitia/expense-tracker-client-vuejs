@@ -186,6 +186,7 @@ export default {
 			"Nov.",
 			"Déc.",
 		];
+		const labels2 = ["2018", "2019", "2020", "2021", "2022"];
 
 		const data = {
 			labels: labels,
@@ -280,7 +281,7 @@ export default {
 		};
 
 		const data2 = {
-			labels: labels,
+			labels: labels2,
 			datasets: [
 				{
 					label: "Dépense",

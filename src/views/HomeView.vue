@@ -194,25 +194,25 @@ export default {
 		const labels2 = this.years_kpi;
 
 		const data = {
-			labels: labels,
+			labels: labels2,
 			datasets: [
 				{
 					label: "Dépenses",
-					backgroundColor: "#c0392b" /* #c0392b*/,
-					borderColor: "#c0392b",
-					data: this.kpiMonthlyDepense,
-					borderWidth: 5,
-					hoverBackgroundColor: "#9c88ff",
-					hoverBorderColor: "#c0392b",
+					backgroundColor: "#fff",
+					borderColor: "#fff",
+					data: this.kpiYearlyRecette,
+					borderWidth: 3,
+					hoverBackgroundColor: "#f7f7f7",
+					hoverBorderColor: "#2ecc71",
 					scaleStepWidth: 4,
 				},
 				{
 					label: "Recette",
-					backgroundColor: "#2ecc71" /* #c0392b*/,
-					borderColor: "#2ecc71",
-					data: this.kpiMonthlyRecette,
-					borderWidth: 5,
-					hoverBackgroundColor: "#9c88ff",
+					backgroundColor: "#514785" /* #c0392b*/,
+					borderColor: "#514785",
+					data: this.kpiYearlyDepense,
+					borderWidth: 3,
+					hoverBackgroundColor: "#6d5eb4",
 					hoverBorderColor: "#c0392b",
 					scaleStepWidth: 4,
 				},
@@ -220,14 +220,14 @@ export default {
 		};
 
 		const config1 = {
-			type: "line",
+			type: "bar",
 			responsive: true,
 			scaleFontColor: "#FFFFFF",
 			legend: {
 				display: false,
 			},
 			data: data,
-			stacked: false,
+			stacked: true,
 			options: {
 				responsive: true,
 				scales: {
@@ -238,9 +238,9 @@ export default {
 						},
 
 						ticks: {
-							/* font: { weight: 500 }, */
+							font: { weight: 500 },
 							maxTicksLimit: 12,
-							color: "#514785",
+							color: "#fff",
 							padding: 8,
 						},
 						min: 0,
@@ -248,8 +248,8 @@ export default {
 
 					y: {
 						ticks: {
-							/* font: { weight: 550 }, */
-							color: "#514785",
+							font: { weight: 550 },
+							color: "#fff",
 							min: 0,
 							padding: 8,
 							max: 1000000,
@@ -259,25 +259,25 @@ export default {
 							},
 						},
 						grid: {
-							borderColor: "#514785",
-							borderWidth: 1,
-							/* color: "black", */
-							/* borderDash: [5], */
-							/* drawBorder: false, */
-							/* tickLength: 3, */
+							color: "#fff",
+							borderDash: [5],
+							drawBorder: false,
+							tickLength: 3,
 						},
 					},
 				},
 			},
 			/* 			color: "red",
 			backgroundColor: "red", */
+			color: "red",
+			backgroundColor: "red",
 			plugins: [
 				{
 					beforeDraw: (chart) => {
 						const { ctx } = chart;
 						ctx.save();
 						ctx.globalCompositeOperation = "destination-over";
-						ctx.fillStyle = "#fff";
+						ctx.fillStyle = "#9c88ff";
 						ctx.fillRect(0, 0, chart.width, chart.height);
 						ctx.restore();
 					},
@@ -286,15 +286,15 @@ export default {
 		};
 
 		const data2 = {
-			labels: labels2,
+			labels: labels,
 			datasets: [
 				{
 					label: "Dépense",
-					backgroundColor: "#fff" /* */,
+					backgroundColor: "#fff",
 					borderColor: "#fff",
 					/* 					borderColor: "rgb(255, 99, 132)", */
 
-					data: this.kpiYearlyRecette,
+					data: this.kpiMonthlyDepense,
 					borderWidth: 5,
 					hoverBackgroundColor: "#514785 ",
 					hoverBorderColor: "yellow",
@@ -305,7 +305,7 @@ export default {
 					label: "Recette",
 					backgroundColor: "#514785" /* #c0392b*/,
 					borderColor: "#514785",
-					data: this.kpiYearlyDepense,
+					data: this.kpiMonthlyRecette,
 					borderWidth: 5,
 					hoverBackgroundColor: "#514785",
 					hoverBorderColor: "#514785",
@@ -327,6 +327,7 @@ export default {
 					x: {
 						grid: {
 							display: false,
+							borderColor: "#514785",
 						},
 
 						ticks: {
@@ -391,7 +392,8 @@ export default {
 				},
 			],
 		};
-		const config3 = {
+		data3;
+		/* 		const config3 = {
 			type: "line",
 			responsive: true,
 			scaleFontColor: "#FFFFFF",
@@ -451,16 +453,16 @@ export default {
 					},
 				},
 			],
-		};
-		const myChart = new Chart(document.getElementById("recetteChart"), config1);
+		}; */
+		const myChart = new Chart(document.getElementById("recetteChart"), config2);
 		myChart;
 		/* 		const myChart2 = new Chart(
 			document.getElementById("depenseChart"),
 			config2
 		);
 		myChart2; */
-		config3;
-		const myChart3 = new Chart(document.getElementById("annuelChart"), config2);
+		/* config3; */
+		const myChart3 = new Chart(document.getElementById("annuelChart"), config1);
 		myChart3;
 	},
 	created() {

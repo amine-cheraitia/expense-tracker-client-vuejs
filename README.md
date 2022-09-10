@@ -1,5 +1,8 @@
 # expense-tracker-client
 
+##Api used with this App
+https://github.com/amine-cheraitia/expense-tracker-laravel-api
+
 ## Project setup
 ```
 npm install

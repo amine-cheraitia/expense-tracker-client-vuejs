@@ -99,6 +99,9 @@ export default {
 			try {
 				await this.$store.dispatch("mouvements/loadMouvement");
 				await this.$store.dispatch("ressources/loadRessources");
+				await this.$store.dispatch("ressources/loadRessources");
+				await this.$store.dispatch("mouvements/loadEntréSortie");
+				/* await this.$store.dispatch("mouvements/loadKpi"); */
 			} catch (error) {
 				error;
 				/* 	this.error = true;
@@ -172,9 +175,9 @@ export default {
 	},
 	beforeMount() {
 		console.log("beforemount");
-		this.loadKpi();
 	},
-	mounted() {
+	async mounted() {
+		await this.loadKpi();
 		const labels = [
 			"Jan.",
 			"Fev.",
@@ -467,6 +470,7 @@ export default {
 	},
 	created() {
 		this.loadMouvement();
+		/* this.loadKpi(); */
 	},
 };
 </script>

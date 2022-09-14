@@ -115,9 +115,10 @@ export default {
 	methods: {
 		formatDate(data) {
 			const date = new Date(data);
+			const month = date.getMonth() + 1;
 			return [
 				date.getDate().toString().padStart(2, "0"),
-				date.getMonth().toString().padStart(2, "0"),
+				month.toString().padStart(2, "0"),
 				date.getFullYear().toString().padStart(2, "0"),
 			].join("/");
 		},

@@ -1,5 +1,9 @@
 # expense-tracker-client
 
+## Api used with this App
+```
+https://github.com/amine-cheraitia/expense-tracker-laravel-api
+```
 ## Project setup
 ```
 npm install
@@ -23,4 +27,4 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-Need the api.
+ 

@@ -245,6 +245,7 @@ button {
 	border: 0px;
 	border-radius: 5px;
 	padding: 3px 5px;
+	border-radius: 30px;
 }
 
 .x:hover {

@@ -1,6 +1,10 @@
 <template>
 	<div class="wrapper">
-		<h2>Liste des ressources</h2>
+		<div class="breadcrumb">
+			<router-link to="/" style="text-align: left">Tableau de bord</router-link>
+			/ Liste des ressources
+		</div>
+		<h3>Liste des ressources</h3>
 		<div class="main">
 			<table class="table">
 				<thead>
@@ -27,21 +31,7 @@
 						<span>Il y'a pas de ressource enregistrer pour l'instant</span>
 					</td>
 				</tr>
-				<!-- 				<tr>
-					<td>a</td>
-					<td>z</td>
 
-					<td>e</td>
-					<td>
-						<button class="x">
-							<i class="fa-solid fa-x"></i>
-						</button>
-						&nbsp;
-						<button class="minus">
-							<i class="fa-solid fa-minus"></i>
-						</button>
-					</td>
-				</tr> -->
 				<transition-group name="list" tag="tbody" v-else>
 					<tr v-for="(ressource, index) in ressources" :key="index">
 						<td>{{ ressource.nom_ressource }}</td>
@@ -50,7 +40,7 @@
 						</td>
 
 						<td>{{ soldeFormat(ressource.solde) }}</td>
-						<td>
+						<td class="action">
 							<button class="x" @click="deleteRessource(ressource.id)">
 								<i class="fa-solid fa-x"></i>
 							</button>
@@ -201,6 +191,7 @@ export default {
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
+	margin-top: 40px;
 }
 
 table {
@@ -226,7 +217,11 @@ td {
 }
 
 /* Stylized */
-
+.action {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 /* Adding Striped Effect for odd rows */
 
 tr {
@@ -246,6 +241,21 @@ button {
 	border-radius: 5px;
 	padding: 3px 5px;
 	border-radius: 30px;
+}
+
+h3,
+.breadcrumb {
+	text-align: left;
+	margin-left: 65px;
+	color: #2c3e50;
+	font-weight: 400;
+}
+h3 {
+	font-weight: 600;
+}
+a {
+	text-decoration: none;
+	color: #6d5eb4;
 }
 
 .x:hover {
@@ -304,4 +314,17 @@ td {
 /* .list-leave-active {
 	position: absolute; 
 } */
+@media (max-width: 602px) {
+	.table {
+		font-size: 14px;
+		overflow: auto;
+	}
+	.table td {
+		font-size: 13px;
+	}
+	.x,
+	.minus {
+		font-size: 12px;
+	}
+}
 </style>

@@ -53,6 +53,7 @@
 				</transition-group>
 			</table>
 			<button class="btn" @click="open = !open">Ajouter Ressource</button>
+
 			<ModalRessource
 				v-on:toggleModal="toggleHiden"
 				:open="open"

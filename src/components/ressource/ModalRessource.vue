@@ -1,61 +1,66 @@
 <template>
-	<div class="overlay" v-if="open" @click="toggleHiden"></div>
-	<transition name="dialog">
-		<div class="modal" v-if="open">
-			<h3 style="color: #9c88ff">Ajouter une ressource</h3>
-			<form id="form" @submit.prevent="sendData">
-				<div
-					class="form-control"
-					:class="{ invalid: Errors.nom_ressourceError }"
-				>
-					<label for="text">Ressource</label>
-					<input
-						type="text"
-						id="text"
-						v-model="ressource.nom_ressource"
-						placeholder="Saisissez le nom de la ressource..."
-					/>
-				</div>
-				<div class="form-control" :class="{ invalid: Errors.num_compteError }">
-					<label for="text">N° de compte</label>
-					<input
-						type="text"
-						id="text"
-						v-model="ressource.num_compte"
-						placeholder="Saisissez le N° de compte..."
-					/>
-				</div>
+	<Teleport to="body">
+		<div class="overlay" v-if="open" @click="toggleHiden"></div>
+		<transition name="dialog">
+			<div class="modal" v-if="open">
+				<h3 style="color: #9c88ff">Ajouter une ressource</h3>
+				<form id="form" @submit.prevent="sendData">
+					<div
+						class="form-control"
+						:class="{ invalid: Errors.nom_ressourceError }"
+					>
+						<label for="text">Ressource</label>
+						<input
+							type="text"
+							id="text"
+							v-model="ressource.nom_ressource"
+							placeholder="Saisissez le nom de la ressource..."
+						/>
+					</div>
+					<div
+						class="form-control"
+						:class="{ invalid: Errors.num_compteError }"
+					>
+						<label for="text">N° de compte</label>
+						<input
+							type="text"
+							id="text"
+							v-model="ressource.num_compte"
+							placeholder="Saisissez le N° de compte..."
+						/>
+					</div>
 
-				<div
-					class="form-control"
-					:class="{ invalid: Errors.type_ressources_idError }"
-				>
-					<label for="type_mvm">Ressources</label>
-					<select v-model="ressource.type_ressources_id">
-						<option value="">...</option>
-						<option
-							v-for="(item, index) in typeRessource"
-							:key="index"
-							:value="item.id"
-						>
-							{{ item.description }}
-						</option>
-					</select>
-				</div>
+					<div
+						class="form-control"
+						:class="{ invalid: Errors.type_ressources_idError }"
+					>
+						<label for="type_mvm">Ressources</label>
+						<select v-model="ressource.type_ressources_id">
+							<option value="">...</option>
+							<option
+								v-for="(item, index) in typeRessource"
+								:key="index"
+								:value="item.id"
+							>
+								{{ item.description }}
+							</option>
+						</select>
+					</div>
 
-				<div class="form-control" :class="{ invalid: Errors.soldeError }">
-					<label for="amount">Montant du solde <br /> </label>
-					<input
-						type="number"
-						id="amount"
-						v-model="ressource.solde"
-						placeholder="Saisissez le montant..."
-					/>
-				</div>
-				<button class="btn">Ajouter la ressource</button>
-			</form>
-		</div>
-	</transition>
+					<div class="form-control" :class="{ invalid: Errors.soldeError }">
+						<label for="amount">Montant du solde <br /> </label>
+						<input
+							type="number"
+							id="amount"
+							v-model="ressource.solde"
+							placeholder="Saisissez le montant..."
+						/>
+					</div>
+					<button class="btn">Ajouter la ressource</button>
+				</form>
+			</div>
+		</transition>
+	</Teleport>
 </template>
 
 <script>
@@ -199,7 +204,7 @@ export default {
 	padding: 50px;
 	width: 450px;
 	border-radius: 15px;
-
+	z-index: 3;
 	-webkit-box-shadow: 1px 1px 15px 1px #443b6d;
 	box-shadow: 1px 1px 15px 1px #9c88ff;
 }
@@ -213,6 +218,7 @@ export default {
 	bottom: 0;
 	height: 100vh;
 	width: 100%;
+	z-index: 2;
 }
 
 @import url("https://fonts.googleapis.com/css?family=Lato&display=swap");

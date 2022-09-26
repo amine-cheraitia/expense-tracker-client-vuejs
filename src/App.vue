@@ -2,7 +2,8 @@
 	<div v-if="loading" class="center-spinner">
 		<Spinner></Spinner>
 	</div>
-	<div v-else>
+	<div v-else class="main-wrapper">
+		<div class="burger"><i class="fa-sharp fa-solid fa-bars"></i></div>
 		<sidebar class="sidebar" v-if="isAuth"></sidebar>
 		<div id="main" :style="{ 'margin-left': sidebarWith }">
 			<!-- 		<div id="navigation-icon">
@@ -80,6 +81,24 @@ export default {
 .wrapper {
 	padding-top: 30px;
 }
+.main-wrapper {
+	position: relative;
+}
+.burger {
+	position: absolute;
+	right: 30px;
+	top: 30px;
+	height: 40px;
+	width: 40px;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+.fa-bars {
+	font-size: 30px;
+	color: #9c88ff;
+}
 body {
 	background-color: #f7f7f7;
 	/* display: flex;
@@ -143,6 +162,11 @@ nav a.router-link-exact-active {
 	transform: translateY(0px);
 }
 /* responsive */
+@media (max-width: 550px) {
+	.burger {
+		display: flex;
+	}
+}
 @media (max-width: 600px) {
 	.sidebar {
 		display: none;

@@ -251,6 +251,14 @@ h3,
 	color: #2c3e50;
 	font-weight: 400;
 }
+@media (max-width: 550px) {
+	.breadcrumb {
+		margin-left: 35px;
+	}
+	h3 {
+		margin-left: 35px;
+	}
+}
 h3 {
 	font-weight: 600;
 }

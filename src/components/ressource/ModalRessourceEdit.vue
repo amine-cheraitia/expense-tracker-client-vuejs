@@ -367,4 +367,9 @@ select {
 		width: 380px;
 	}
 }
+@media (max-width: 450px) {
+	.modal {
+		width: 320px;
+	}
+}
 </style>

@@ -342,4 +342,16 @@ select {
 	transform: translate(-50%, -50%);
 	top: 50%;
 }
+
+@media (max-width: 550px) {
+	.modal {
+		width: 380px;
+	}
+}
+
+@media (max-width: 450px) {
+	.modal {
+		width: 320px;
+	}
+}
 </style>

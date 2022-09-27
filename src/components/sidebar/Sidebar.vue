@@ -105,10 +105,22 @@ export default {
 	opacity: 0;
 }
 
-/*  */
-@media (max-width: 550px) {
+@media (max-width: 600px) {
 	.sidebar {
 		display: none;
 	}
 }
+/*  */
+/* @media (max-width: 550px) {
+	.sidebar-active {
+		display: block;
+		width: 100%;
+		padding: 0;
+		margin: 0;
+		border-radius: 0;
+	}
+
+	.sidebar.active a {
+	}
+} */
 </style>

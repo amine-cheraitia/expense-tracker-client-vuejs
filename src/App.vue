@@ -3,8 +3,15 @@
 		<Spinner></Spinner>
 	</div>
 	<div v-else class="main-wrapper">
-		<div class="burger"><i class="fa-sharp fa-solid fa-bars"></i></div>
-		<sidebar class="sidebar" v-if="isAuth"></sidebar>
+		<div class="burger" @click="toggleSidebar">
+			<i class="fa-sharp fa-solid fa-bars"></i>
+		</div>
+		<sidebar
+			@setClose="setClose"
+			class="sidebar"
+			v-if="isAuth"
+			:class="{ 'sidebar-active': activeSideBar }"
+		></sidebar>
 		<div id="main" :style="{ 'margin-left': sidebarWith }">
 			<!-- 		<div id="navigation-icon">
 			<i class="fas fa-bars"></i>
@@ -18,6 +25,7 @@
 					<component :is="slotProps.Component"></component>
 				</transition>
 			</router-view>
+			{{ this.windowWidth }}
 		</div>
 		<!-- 		<router-view v-slot="slotProps" v-if="!isAuth">
 			<transition name="route" appear mode="out-in">
@@ -34,45 +42,79 @@ import Spinner from "./components/ui/Spinner.vue";
 export default {
 	data() {
 		return {
-			windowWidth: window.innerWidth,
+			/* windowWidth: window.innerWidth, */
+			windowWidth: 0,
 			loading: true,
+			activeSideBar: false,
 		};
 	},
 	components: { sidebar, Spinner },
 	computed: {
 		sidebarWith() {
 			/* console.log(this.$store.getters.Sidebarwiths); */
-			return this.$store.getters.Sidebarwiths;
+			/* 			if (this.windowWidth < 550) {
+				return 100;
+			} */
+			if (this.windowWidth < 650) {
+				return 0;
+			} else {
+				return this.$store.getters.Sidebarwiths;
+			}
 		},
 		isAuth() {
 			return this.$store.getters["auth/userId"];
 		},
+		/* 		windowWidth() {
+			let z;
+			window.onresize = () => {
+				z = window.innerWidth;
+			};
+			return z;
+		}, */
 	},
 	watch: {
 		windowWidth(value) {
-			if (value < 550) {
+			if (value < 650) {
+				this.$store.commit("setClose");
+				this.activeSideBar = false;
 				this.$store.commit("setSIDEBAR_WITH_COLLAPSED", 0);
 			} else {
+				this.$store.commit("setClose");
+				this.activeSideBar = false;
 				this.$store.commit("setSIDEBAR_WITH_COLLAPSED", 38);
 			}
 		},
 	},
 	methods: {
+		setClose(value) {
+			this.activeSideBar = value;
+		},
 		async trytologin() {
 			await this.$store.dispatch("auth/tryLogin");
 			await this.$store.dispatch("mouvements/loadKpi");
 			this.loading = false;
 		},
+		toggleSidebar() {
+			this.activeSideBar = !this.activeSideBar;
+			this.$store.dispatch("toggleSidebar");
+		},
+		handleResize() {
+			this.windowWidth = window.innerWidth;
+		},
+	},
+	unmounted() {
+		window.removeEventListener("resize", this.handleResize);
 	},
 	mounted() {
-		/* this.$store.dispatch("ressources/loadRessources"); */
-
+		console.log("mounted");
 		window.onresize = () => {
 			this.windowWidth = window.innerWidth;
 		};
+		/* new version of resize */
+		window.addEventListener("resize", this.handleResize);
+		this.handleResize();
 	},
 	created() {
-		/* this.$store.dispatch("auth/tryLogin"); */
 		this.trytologin();
 	},
 };
@@ -162,15 +204,15 @@ nav a.router-link-exact-active {
 	transform: translateY(0px);
 }
 /* responsive */
-@media (max-width: 550px) {
+
+@media (max-width: 640px) {
 	.burger {
 		display: flex;
 	}
-}
-@media (max-width: 600px) {
-	.sidebar {
-		display: none;
+	#main {
+		margin-left: 0% !important;
 	}
+
 	.container {
 		margin: 0 auto;
 		width: 90%;
@@ -206,5 +248,8 @@ nav a.router-link-exact-active {
 	.money.plus {
 		flex-shrink: 1;
 	}
+	/* 	.sidebar {
+		display: flex;
+	} */
 }
 </style>

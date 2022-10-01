@@ -36,21 +36,59 @@ import sidebarlink from "./SidebarLink.vue";
 import SidebarLink from "./SidebarLink.vue";
 export default {
 	name: "name",
+	data() {
+		return {
+			windowWidth: 0,
+		};
+	},
 	components: { sidebarlink, SidebarLink },
+	emits: ["setClose"],
 	methods: {
 		toggleSidebar() {
+			this.$emit("setClose", false);
 			this.$store.dispatch("toggleSidebar");
+		},
+		handleResize() {
+			this.windowWidth = window.innerWidth;
 		},
 	},
 	computed: {
 		sidebarWith() {
 			/* console.log(this.$store.getters.Sidebarwiths); */
+
 			return this.$store.getters.Sidebarwiths;
 		},
 		collapsed() {
 			/* console.log(this.$store.getters.collapsed); */
 			return this.$store.getters.collapsed;
 		},
+		respo() {
+			if (this.windowWidth > 650) {
+				console.log("flex--------------------------------");
+				return "flex";
+			} else {
+				console.log("none--------------------------------");
+				return "none";
+			}
+		},
+	},
+	watch: {
+		windowWidth(value) {
+			console.log(value);
+			/* 			if (value < 550) {
+				this.respo = "flex";
+				 this.responsive = "none"; 
+			} else {
+				this.respo = "none";
+			} */
+		},
+	},
+	mounted() {
+		/* 		window.onresize = () => {
+			this.windowWidth = window.innerWidth;
+		}; */
+		window.addEventListener("resize", this.handleResize);
+		this.handleResize();
 	},
 };
 </script>
@@ -75,7 +113,7 @@ export default {
 	bottom: 0;
 	padding: 0.7em;
 
-	transition: 0.3s ease;
+	transition: all 0.3s ease !important;
 	display: flex;
 	flex-direction: column;
 }
@@ -104,23 +142,26 @@ export default {
 .swap-leave-to {
 	opacity: 0;
 }
-
-@media (max-width: 600px) {
-	.sidebar {
-		display: none;
-	}
+.sidebar-active {
+	/* 	display: none;
+	transition: 0.7s ease-in-out; */
 }
+
 /*  */
-/* @media (max-width: 550px) {
+@media (max-width: 640px) {
+	.sidebar {
+		/* display: v-bind(respo); */
+		display: none;
+		transition: 0.7s ease-in-out;
+	}
+
 	.sidebar-active {
-		display: block;
-		width: 100%;
+		display: flex;
+
 		padding: 0;
 		margin: 0;
 		border-radius: 0;
+		transition: 0.7s ease-in-out;
 	}
-
-	.sidebar.active a {
-	}
-} */
+}
 </style>

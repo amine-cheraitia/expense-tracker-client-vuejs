@@ -651,5 +651,6 @@ i {
 	.inc-exp-container > div:first-of-type {
 		border-right: 0px;
 	}
+	/* todo Add media query to IPAD */
 }
 </style>

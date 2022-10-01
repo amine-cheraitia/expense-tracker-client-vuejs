@@ -30,13 +30,16 @@ export default createStore({
 		},
 	},
 	mutations: {
+		setClose(state) {
+			state.collapsed = true;
+		},
 		toggleSidebar(state) {
 			state.collapsed = !state.collapsed;
 		},
 		setSIDEBAR_WITH_COLLAPSED(state, payload) {
 			state.SIDEBAR_WITH_COLLAPSED = payload;
 			if (payload === 0) {
-				state.SIDEBAR_WITH = 0;
+				state.SIDEBAR_WITH = 180;
 			} else {
 				state.SIDEBAR_WITH = 180;
 			}

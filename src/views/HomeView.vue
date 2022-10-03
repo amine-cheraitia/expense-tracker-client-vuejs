@@ -519,6 +519,7 @@ export default {
 	align-items: center;
 	/* min-height: 90vh; */
 	flex-direction: column;
+	justify-content: center;
 }
 .number-section,
 .chart-section {
@@ -531,24 +532,25 @@ export default {
 
 .number-section {
 	width: 90%;
-	height: 150px;
+	justify-content: center;
 	margin-bottom: 20px;
 	display: flex;
 	align-items: center;
-	justify-content: space-evenly;
+	flex-wrap: wrap;
 }
 .chart-section {
-	/* width: 100%; */
+	width: 90%;
 	/* height: 500px; */
 	display: flex;
 	justify-content: center;
+	flex-wrap: wrap;
 }
 .number-box {
 	padding: 15px;
 	border: #9c88ff 0.5px solid;
-	width: 280px;
+	/* width: 280px; */
 	height: 100px;
-	flex: 0 0 280px;
+	flex: 0 0 25%;
 	display: flex;
 	flex-direction: column;
 	/* justify-content: center; */
@@ -557,6 +559,7 @@ export default {
 	box-shadow: 2px 2px 5px #9c88ff;
 	background: #fff;
 	border-radius: 18px;
+	margin: 15px;
 }
 
 .number-box .titre,
@@ -615,7 +618,7 @@ export default {
 	padding: 20px;
 	position: absolute;
 	top: -35px;
-	left: -145px;
+	left: -155px;
 	border-radius: 18px;
 }
 .mark .fa-arrow-trend-down {
@@ -626,7 +629,7 @@ export default {
 	padding: 20px;
 	position: absolute;
 	top: -35px;
-	left: -145px;
+	left: -155px;
 	border-radius: 18px;
 }
 .mark .fa-sack-dollar {
@@ -637,7 +640,7 @@ export default {
 	padding: 20px;
 	position: absolute;
 	top: -35px;
-	left: -145px;
+	left: -155px;
 	border-radius: 18px;
 }
 .money {
@@ -655,5 +658,191 @@ export default {
 }
 .money.solde {
 	font-weight: 700;
+}
+
+@media (min-width: 1550px) {
+	.mark .fa-arrow-trend-up {
+		left: -170px;
+	}
+	.mark .fa-arrow-trend-down {
+		left: -170px;
+	}
+	.mark .fa-sack-dollar {
+		left: -170px;
+	}
+}
+@media (min-width: 1750px) {
+	.mark .fa-arrow-trend-up {
+		left: -200px;
+	}
+	.mark .fa-arrow-trend-down {
+		left: -200px;
+	}
+	.mark .fa-sack-dollar {
+		left: -200px;
+	}
+}
+@media (max-width: 1370px) {
+	.chart-section {
+		width: 100%;
+	}
+}
+@media (max-width: 1300px) {
+	.mark .fa-arrow-trend-up {
+		left: -130px;
+	}
+	.mark .fa-arrow-trend-down {
+		left: -130px;
+	}
+	.mark .fa-sack-dollar {
+		left: -130px;
+	}
+}
+@media (max-width: 1180px) {
+	.number-section {
+		justify-content: flex-start;
+	}
+	.number-box {
+		flex: 0 2 43%;
+	}
+	.mark .fa-arrow-trend-up {
+		left: -190px;
+	}
+	.mark .fa-arrow-trend-down {
+		left: -190px;
+	}
+	.mark .fa-sack-dollar {
+		left: -190px;
+	}
+}
+
+@media (max-width: 1015px) {
+	.number-section {
+		justify-content: center;
+	}
+	.number-box {
+		flex: 0 1 70%;
+	}
+	.mark .fa-arrow-trend-up {
+		left: -270px;
+	}
+	.mark .fa-arrow-trend-down {
+		left: -270px;
+	}
+	.mark .fa-sack-dollar {
+		left: -270px;
+	}
+}
+@media (max-width: 850px) {
+	.number-section,
+	.chart-section {
+		justify-content: center;
+	}
+	.number-box {
+		flex: 0 1 70%;
+	}
+	.mark .fa-arrow-trend-up {
+		left: -230px;
+	}
+	.mark .fa-arrow-trend-down {
+		left: -230px;
+	}
+	.mark .fa-sack-dollar {
+		left: -230px;
+	}
+}
+
+@media (max-width: 740px) {
+	.number-section,
+	.chart-section {
+		justify-content: center;
+	}
+	.number-box {
+		flex: 0 1 70%;
+	}
+	.mark .fa-arrow-trend-up {
+		left: -200px;
+	}
+	.mark .fa-arrow-trend-down {
+		left: -200px;
+	}
+	.mark .fa-sack-dollar {
+		left: -200px;
+	}
+}
+@media (max-width: 600px) {
+	.mark .fa-arrow-trend-up {
+		left: -170px;
+	}
+	.mark .fa-arrow-trend-down {
+		left: -170px;
+	}
+	.mark .fa-sack-dollar {
+		left: -170px;
+	}
+}
+@media (max-width: 580px) {
+	.chart-box {
+		width: 95%;
+	}
+	.chart-box {
+		margin: 40px 15px;
+	}
+	.chart-wrapper {
+		width: 100%;
+	}
+}
+@media (max-width: 520px) {
+	.mark .fa-arrow-trend-up {
+		left: -150px;
+	}
+	.mark .fa-arrow-trend-down {
+		left: -150px;
+	}
+	.mark .fa-sack-dollar {
+		left: -150px;
+	}
+}
+@media (max-width: 350px) {
+	.chart-box {
+		width: 100%;
+	}
+	.chart-box {
+		margin: 25px 10px;
+	}
+	.chart-wrapper {
+		width: 100%;
+	}
+}
+@media (max-width: 580px) {
+	.chart-box {
+		width: 95%;
+	}
+	.chart-box {
+		margin: 40px 15px;
+	}
+	.chart-wrapper {
+		width: 100%;
+	}
+	.number-box {
+		flex: 0 1 90%;
+	}
+}
+
+@media (max-width: 579px) {
+	.chart-box {
+		width: 100%;
+	}
+	.chart-box {
+		margin: 25px 10px;
+	}
+	.chart-wrapper {
+		width: 100%;
+	}
+	.number-box {
+		flex: 0 1 95%;
+		margin-left: 0;
+		margin-right: 0;
+	}
 }
 </style>

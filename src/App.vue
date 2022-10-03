@@ -25,7 +25,6 @@
 					<component :is="slotProps.Component"></component>
 				</transition>
 			</router-view>
-			{{ this.windowWidth }}
 		</div>
 		<!-- 		<router-view v-slot="slotProps" v-if="!isAuth">
 			<transition name="route" appear mode="out-in">
@@ -74,7 +73,7 @@ export default {
 	},
 	watch: {
 		windowWidth(value) {
-			if (value < 650) {
+			if (value < 640) {
 				this.$store.commit("setClose");
 				this.activeSideBar = false;
 				this.$store.commit("setSIDEBAR_WITH_COLLAPSED", 0);

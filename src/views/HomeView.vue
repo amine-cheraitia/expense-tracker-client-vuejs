@@ -716,7 +716,7 @@ export default {
 	}
 }
 
-@media (max-width: 1015px) {
+@media (max-width: 1016px) {
 	.number-section {
 		justify-content: center;
 	}

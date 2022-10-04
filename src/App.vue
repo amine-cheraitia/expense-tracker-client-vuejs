@@ -124,6 +124,7 @@ export default {
 }
 .main-wrapper {
 	position: relative;
+	overflow-x: hidden;
 }
 .burger {
 	position: absolute;

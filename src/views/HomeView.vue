@@ -700,7 +700,7 @@ export default {
 }
 @media (max-width: 1180px) {
 	.number-section {
-		justify-content: flex-start;
+		justify-content: baseline;
 	}
 	.number-box {
 		flex: 0 2 43%;
@@ -792,28 +792,6 @@ export default {
 		width: 100%;
 	}
 }
-@media (max-width: 520px) {
-	.mark .fa-arrow-trend-up {
-		left: -150px;
-	}
-	.mark .fa-arrow-trend-down {
-		left: -150px;
-	}
-	.mark .fa-sack-dollar {
-		left: -150px;
-	}
-}
-@media (max-width: 350px) {
-	.chart-box {
-		width: 100%;
-	}
-	.chart-box {
-		margin: 25px 10px;
-	}
-	.chart-wrapper {
-		width: 100%;
-	}
-}
 @media (max-width: 580px) {
 	.chart-box {
 		width: 95%;
@@ -845,4 +823,57 @@ export default {
 		margin-right: 0;
 	}
 }
+@media (max-width: 520px) {
+	.mark .fa-arrow-trend-up {
+		left: -150px;
+	}
+	.mark .fa-arrow-trend-down {
+		left: -150px;
+	}
+	.mark .fa-sack-dollar {
+		left: -150px;
+	}
+	.chart-box {
+		height: 290px;
+	}
+	.sub-title {
+		bottom: 70px;
+	}
+}
+@media (max-width: 460px) {
+	.chart-box {
+		height: 260px;
+	}
+	.sub-title {
+		bottom: 100px;
+	}
+}
+@media (max-width: 450px) {
+	.chart-box {
+		height: 240px;
+	}
+	.sub-title {
+		bottom: 120px;
+	}
+}
+@media (max-width: 350px) {
+	.chart-box {
+		width: 100%;
+	}
+	.chart-box {
+		margin: 25px 10px;
+	}
+	.chart-wrapper {
+		width: 100%;
+	}
+	.chart-box {
+		height: 200px;
+	}
+	.sub-title {
+		bottom: 150px;
+		left: 5px;
+	}
+}
 </style>
+
+<!--to do dashboard modal size media query -->

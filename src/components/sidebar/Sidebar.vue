@@ -112,7 +112,7 @@ export default {
 	left: 0;
 	bottom: 0;
 	padding: 0.7em;
-
+	transition: 0.7s ease-in-out;
 	transition: all 0.3s ease !important;
 	display: flex;
 	flex-direction: column;
@@ -143,6 +143,7 @@ export default {
 	opacity: 0;
 }
 .sidebar-active {
+	transition: 0.7s ease-in-out;
 	/* 	display: none;
 	transition: 0.7s ease-in-out; */
 }
@@ -152,7 +153,6 @@ export default {
 	.sidebar {
 		/* display: v-bind(respo); */
 		display: none;
-		transition: 0.7s ease-in-out;
 	}
 
 	.sidebar-active {
@@ -161,7 +161,6 @@ export default {
 		padding: 0;
 		margin: 0;
 		border-radius: 0;
-		transition: 0.7s ease-in-out;
 	}
 }
 </style>

@@ -279,7 +279,7 @@ export default {
 	padding: 50px;
 	width: 450px;
 	border-radius: 15px;
-
+	z-index: 3;
 	-webkit-box-shadow: 1px 1px 15px 1px #443b6d;
 	box-shadow: 1px 1px 15px 1px #9c88ff;
 }
@@ -502,5 +502,16 @@ select {
 	opacity: 1;
 	transform: translate(-50%, -50%);
 	top: 50%;
+}
+@media (max-width: 550px) {
+	.modal {
+		width: 380px;
+	}
+}
+
+@media (max-width: 450px) {
+	.modal {
+		width: 320px;
+	}
 }
 </style>

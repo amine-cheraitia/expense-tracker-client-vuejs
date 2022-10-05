@@ -266,6 +266,7 @@ export default {
 	left: 50%;
 	background: #f1f1f1;
 	/* opacity: 1; */
+	z-index: 3;
 	transform: translate(-50%, -50%);
 	padding: 50px;
 	width: 450px;
@@ -494,5 +495,16 @@ select {
 	opacity: 1;
 	transform: translate(-50%, -50%);
 	top: 50%;
+}
+@media (max-width: 550px) {
+	.modal {
+		width: 380px;
+	}
+}
+
+@media (max-width: 450px) {
+	.modal {
+		width: 320px;
+	}
 }
 </style>

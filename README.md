@@ -2,7 +2,7 @@
 
 ## Api used with this App
 ```
-https://github.com/amine-cheraitia/expense-tracker-laravel-api
+https://github.com/amine-cheraitia/expense-tracker-laravel-api .
 ```
 ## Project setup
 ```

@@ -1,10 +1,11 @@
 <template>
 	<div class="wrapper">
-		<div class="breadcrumb">
+		<!-- 		<div class="breadcrumb">
 			<router-link to="/" style="text-align: left">Tableau de bord</router-link>
 			/ Liste des ressources
-		</div>
-		<h3>Liste des ressources</h3>
+		</div> -->
+		<Breadcrumb pageName="Liste des ressources" />
+		<h2 class="titlePage">Liste des ressources</h2>
 		<div class="main">
 			<table class="table">
 				<thead>
@@ -78,6 +79,7 @@ import ModalConfirmation from "../components/ui/ModalConfirmation.vue";
 import Spinner from "../components/ui/Spinner.vue";
 import ModalRessource from "../components/ressource/ModalRessource.vue";
 import ModalRessourceEdit from "../components/ressource/ModalRessourceEdit.vue";
+import Breadcrumb from "@/components/ui/Breadcrumb";
 /* import BaseModal from "../components/ui/BaseModal.vue"; */
 export default {
 	components: {
@@ -85,6 +87,7 @@ export default {
 		ModalRessourceEdit,
 		Spinner,
 		ModalConfirmation,
+		Breadcrumb,
 	},
 	data() {
 		return {
@@ -244,24 +247,23 @@ button {
 	border-radius: 30px;
 }
 
-h3,
-.breadcrumb {
+h2.titlePage {
 	text-align: left;
 	margin-left: 65px;
 	color: #2c3e50;
-	font-weight: 400;
-}
-@media (max-width: 550px) {
-	.breadcrumb {
-		margin-left: 35px;
-	}
-	h3 {
-		margin-left: 35px;
-	}
-}
-h3 {
+
 	font-weight: 600;
 }
+@media (max-width: 550px) {
+	/* 	.breadcrumb {
+		margin-left: 35px;
+	} */
+	h2.titlePage {
+		margin-left: 35px;
+		font-size: 1em;
+	}
+}
+
 a {
 	text-decoration: none;
 	color: #6d5eb4;

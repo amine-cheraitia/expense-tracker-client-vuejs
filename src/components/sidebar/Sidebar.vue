@@ -10,12 +10,11 @@
 			</transition>
 		</h2>
 		<sidebarlink to="/" icon="fas fa-home"> home </sidebarlink>
-		<sidebarlink to="dashboard" icon="fas fa-columns"> Dashboard </sidebarlink>
-
-		<sidebarlink to="ressources" icon="fas fa-users"> Ressources </sidebarlink>
-		<sidebarlink to="Analytics" icon="fas fa-chart-bar">
-			Analytics
+		<sidebarlink to="mouvements" icon="fas fa-columns">
+			Mouvements
 		</sidebarlink>
+
+		<sidebarlink to="ressources" icon="fa fa-list"> Ressources </sidebarlink>
 		<sidebar-link to="logout" icon="fa fa-sign-out">
 			Se deconnecter
 		</sidebar-link>
@@ -113,7 +112,7 @@ export default {
 	bottom: 0;
 	padding: 0.7em;
 	transition: 0.7s ease-in-out;
-	transition: all 0.3s ease !important;
+	transition: all 0.5s ease !important;
 	display: flex;
 	flex-direction: column;
 }

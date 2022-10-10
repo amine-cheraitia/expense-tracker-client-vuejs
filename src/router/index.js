@@ -27,7 +27,7 @@ const routes = [
 	},
 
 	{
-		path: "/dashboard",
+		path: "/mouvements",
 		name: "dashboard",
 		component: Dashboard,
 		meta: { requiresAuth: true },
@@ -86,7 +86,7 @@ const routes = [
 	{
 		path: "/:pathMatch(.*)*",
 		name: "NotFound",
-		component: Dashboard,
+		component: HomeView,
 		meta: { requiresAuth: true },
 	},
 ];

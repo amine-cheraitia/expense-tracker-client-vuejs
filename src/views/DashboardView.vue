@@ -1,6 +1,8 @@
 <template>
 	<div class="wrapper">
-		<h2>Expense Tracker</h2>
+		<Breadcrumb pageName="Liste des ressources" />
+		<h2 class="titlePage">Liste des mouvements</h2>
+		<!-- <h2>Expense Tracker</h2> -->
 
 		<div class="container">
 			<h4>Votre Solde</h4>
@@ -92,12 +94,13 @@
 	--déploiement
 */
 /* import { mapState, mapGetters } from "vuex"; */
+import Breadcrumb from "@/components/ui/Breadcrumb";
 import Spinner from "../components/ui/Spinner.vue";
 import Modal from "../components/ui/Modal.vue";
 
 import ModalEdit from "../components/ui/ModalEdit.vue";
 export default {
-	components: { Modal, Spinner, ModalEdit },
+	components: { Modal, Spinner, ModalEdit, Breadcrumb },
 	data() {
 		return {
 			hidden: false,
@@ -583,7 +586,13 @@ i {
 .list li:hover .edit-btn {
 	opacity: 1;
 }
+h2.titlePage {
+	text-align: left;
+	margin-left: 65px;
+	color: #2c3e50;
 
+	font-weight: 600;
+}
 @media (max-width: 600px) {
 	.sidebar {
 		display: none;
@@ -629,6 +638,15 @@ i {
 	}
 }
 
+@media (max-width: 550px) {
+	/* 	.breadcrumb {
+		margin-left: 35px;
+	} */
+	h2.titlePage {
+		margin-left: 35px;
+		font-size: 1em;
+	}
+}
 @media (max-width: 500px) {
 	#balance {
 		font-size: 28px;

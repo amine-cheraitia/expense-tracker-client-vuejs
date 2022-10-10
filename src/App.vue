@@ -8,7 +8,6 @@
 		</div>
 		<sidebar
 			@setClose="setClose"
-			class="sidebar"
 			v-if="isAuth"
 			:class="{ 'sidebar-active': activeSideBar }"
 		></sidebar>

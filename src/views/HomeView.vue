@@ -200,7 +200,7 @@ export default {
 			labels: labels2,
 			datasets: [
 				{
-					label: "Dépenses",
+					label: "Recette",
 					backgroundColor: "#fff",
 					borderColor: "#fff",
 					data: this.kpiYearlyRecette,
@@ -210,7 +210,7 @@ export default {
 					scaleStepWidth: 4,
 				},
 				{
-					label: "Recette",
+					label: "Dépenses",
 					backgroundColor: "#514785" /* #c0392b*/,
 					borderColor: "#514785",
 					data: this.kpiYearlyDepense,

@@ -18,7 +18,7 @@ export default {
 			return this.$route.name == this.to;
 		},
 		collapsed() {
-			/* console.log(this.$store.getters.collapsed); */
+			/* console.log(this.$store.getters.collapsed) ; */
 			return this.$store.getters.collapsed;
 		},
 	},

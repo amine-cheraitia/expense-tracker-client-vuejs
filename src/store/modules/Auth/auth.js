@@ -6,7 +6,7 @@ export default {
 	state() {
 		return {
 			userId: null,
-			user: null,
+			user: null,/*  */
 			token: null,
 		};
 	},
